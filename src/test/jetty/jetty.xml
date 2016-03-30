@@ -4,7 +4,7 @@
 <!-- Configure a HTTP connector.                                  -->
 <!-- ============================================================= -->
 <Configure>
-	<New id="httpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
+	<New idInterfaz="httpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
 		<Set name="secureScheme">https</Set>
 		<Set name="securePort">
 			<Property name="jetty.secure.port" default="8443" />
