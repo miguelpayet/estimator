@@ -1,0 +1,15 @@
+<!DOCTYPE dataset SYSTEM "C:\Users\mpayet\Documents\Java\estimator\src\test\resources\dataset.dtd">
+<dataset>
+    <table name="tipo_de_cambio">
+        <column>idtipocambio</column>
+        <column>nombre</column>
+        <row>
+            <value>1</value>
+            <value>Nuevo</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Modificado</value>
+        </row>
+    </table>
+</dataset>
