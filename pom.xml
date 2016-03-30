@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -26,12 +25,13 @@
         <jetty9.version>9.2.13.v20150730</jetty9.version>
         <log4j.version>2.5</log4j.version>
         <junit.version>4.12</junit.version>
+        <dbunitVersion>2.5.1</dbunitVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
         <wtp.version>none</wtp.version>
     </properties>
     <dependencies>
-        <!--  WICKET DEPENDENCIES -->
+        <!-- WICKET DEPENDENCIES -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
@@ -59,18 +59,31 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.1.0.Final</version>
         </dependency>
-        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+        <!-- JUNIT DEPENDENCY FOR TESTING -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--  JETTY DEPENDENCIES FOR TESTING  -->
+        <!-- JETTY DEPENDENCIES FOR TESTING -->
         <dependency>
             <groupId>org.eclipse.jetty.aggregate</groupId>
             <artifactId>jetty-all</artifactId>
             <version>${jetty9.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- dbunit -->
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${dbunitVersion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -151,6 +164,11 @@
 
     <repositories>
         <repository>
+            <id>sonatype-oss-snapshots</id>
+            <name>Sonatype OSS Snapshots Repo</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
             <id>Apache Nexus</id>
             <url>https://repository.apache.org/content/repositories/snapshots/</url>
             <releases>
@@ -161,4 +179,5 @@
             </snapshots>
         </repository>
     </repositories>
+
 </project>
