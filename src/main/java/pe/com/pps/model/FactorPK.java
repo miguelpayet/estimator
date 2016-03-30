@@ -7,6 +7,7 @@ import javax.persistence.*;
  * The primary key class for the factor database table.
  * 
  */
+@Deprecated
 @Embeddable
 public class FactorPK implements Serializable {
 	//default serial version id, required for serializable classes.

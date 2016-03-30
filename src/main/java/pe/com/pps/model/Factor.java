@@ -1,83 +1,83 @@
 package pe.com.pps.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
-
-/**
- * The persistent class for the factor database table.
- * 
- */
 @Entity
-@NamedQuery(name="Factor.findAll", query="SELECT f FROM Factor f")
+@Table(name = "factor")
 public class Factor implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private FactorPK id;
-
+	@OneToMany
+	@JoinColumn(name = "idfactor")
+	private List<EstimacionFactor> factoresEstimacion;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String nombre;
-
 	private float peso;
-
-	private int valormaximo;
-
-	private int valorminimo;
-
-	//bi-directional many-to-one association to Clase
 	@ManyToOne
-	@JoinColumn(name="idclase")
-	private Clase clase;
-
+	@JoinColumn(name = "idtipofactor")
+	private TipoDeFactor tipoDeFactor;
+	private int valormaximo;
+	private int valorminimo;
 	public Factor() {
 	}
 
-	public FactorPK getId() {
-		return this.id;
+	public List<EstimacionFactor> getFactoresEstimacion() {
+		return factoresEstimacion;
 	}
 
-	public void setId(FactorPK id) {
-		this.id = id;
+	public int getId() {
+		return this.id;
 	}
 
 	public String getNombre() {
 		return this.nombre;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
 	public float getPeso() {
 		return this.peso;
 	}
 
-	public void setPeso(float peso) {
-		this.peso = peso;
+	public TipoDeFactor getTipoDeFactor() {
+		return this.tipoDeFactor;
 	}
 
 	public int getValormaximo() {
 		return this.valormaximo;
 	}
 
-	public void setValormaximo(int valormaximo) {
-		this.valormaximo = valormaximo;
-	}
-
 	public int getValorminimo() {
 		return this.valorminimo;
 	}
 
+	public void setFactoresEstimacion(List<EstimacionFactor> factoresEstimacion) {
+		this.factoresEstimacion = factoresEstimacion;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
+
+	public void setTipoDeFactor(TipoDeFactor tipoDeFactor) {
+		this.tipoDeFactor = tipoDeFactor;
+	}
+
+	public void setValormaximo(int valormaximo) {
+		this.valormaximo = valormaximo;
+	}
+
 	public void setValorminimo(int valorminimo) {
 		this.valorminimo = valorminimo;
-	}
-
-	public Clase getClase() {
-		return this.clase;
-	}
-
-	public void setClase(Clase clase) {
-		this.clase = clase;
 	}
 
 }

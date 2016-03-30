@@ -1,43 +1,39 @@
 package pe.com.pps.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
-
-/**
- * The persistent class for the interfaz database table.
- * 
- */
 @Entity
-@NamedQuery(name="Interfaz.findAll", query="SELECT i FROM Interfaz i")
+@Table(name = "interfaz")
 public class Interfaz implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private InterfazPK id;
-
-	//bi-directional many-to-one association to Tipo
+	@ManyToMany(mappedBy = "interfaces")
+	private List<Funcionalidad> funcionalidades;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idInterfaz;
 	@ManyToOne
-	@JoinColumn(name="idtipo")
-	private Tipo tipo;
+	@JoinColumn(name = "idtipocambio")
+	private TipoDeCambio tipoDeCambio;
 
 	public Interfaz() {
 	}
 
-	public InterfazPK getId() {
-		return this.id;
+	public int getIdInterfaz() {
+		return this.idInterfaz;
 	}
 
-	public void setId(InterfazPK id) {
-		this.id = id;
+	public TipoDeCambio getTipoDeCambio() {
+		return this.tipoDeCambio;
 	}
 
-	public Tipo getTipo() {
-		return this.tipo;
+	public void setIdInterfaz(int idInterfaz) {
+		this.idInterfaz = idInterfaz;
 	}
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public void setTipoDeCambio(TipoDeCambio tipoDeCambio) {
+		this.tipoDeCambio = tipoDeCambio;
 	}
 
 }

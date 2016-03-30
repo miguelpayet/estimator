@@ -1,80 +1,67 @@
 package pe.com.pps.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 
-
-/**
- * The persistent class for the plataforma_valor database table.
- * 
- */
 @Entity
-@Table(name="plataforma_valor")
-@NamedQuery(name="PlataformaValor.findAll", query="SELECT p FROM PlataformaValor p")
+@Table(name = "plataforma_valor")
 public class PlataformaValor implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PlataformaValorPK id;
-
-	private int puntajefuncional;
-
-	//bi-directional many-to-one association to Complejidad
 	@ManyToOne
-	@JoinColumn(name="idcomplejidad")
+	@JoinColumn(name = "idcomplejidad")
 	private Complejidad complejidad;
-
-	//bi-directional many-to-one association to Tipo
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	@ManyToOne
-	@JoinColumn(name="idtipo")
-	private Tipo tipo;
-
-	//bi-directional many-to-one association to Plataforma
-	@ManyToOne
-	@JoinColumn(name="idplataforma")
+	@JoinColumn(name = "idplataforma")
 	private Plataforma plataforma;
+	private int puntajeFuncional;
+	@ManyToOne
+	@JoinColumn(name = "idtipocambio")
+	private TipoDeCambio tipoDeCambio;
 
 	public PlataformaValor() {
-	}
-
-	public PlataformaValorPK getId() {
-		return this.id;
-	}
-
-	public void setId(PlataformaValorPK id) {
-		this.id = id;
-	}
-
-	public int getPuntajefuncional() {
-		return this.puntajefuncional;
-	}
-
-	public void setPuntajefuncional(int puntajefuncional) {
-		this.puntajefuncional = puntajefuncional;
 	}
 
 	public Complejidad getComplejidad() {
 		return this.complejidad;
 	}
 
-	public void setComplejidad(Complejidad complejidad) {
-		this.complejidad = complejidad;
-	}
-
-	public Tipo getTipo() {
-		return this.tipo;
-	}
-
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public int getId() {
+		return this.id;
 	}
 
 	public Plataforma getPlataforma() {
 		return this.plataforma;
 	}
 
+	public int getPuntajeFuncional() {
+		return this.puntajeFuncional;
+	}
+
+	public TipoDeCambio getTipoDeCambio() {
+		return this.tipoDeCambio;
+	}
+
+	public void setComplejidad(Complejidad complejidad) {
+		this.complejidad = complejidad;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setPlataforma(Plataforma plataforma) {
 		this.plataforma = plataforma;
+	}
+
+	public void setPuntajeFuncional(int puntajeFuncional) {
+		this.puntajeFuncional = puntajeFuncional;
+	}
+
+	public void setTipoDeCambio(TipoDeCambio tipoDeCambio) {
+		this.tipoDeCambio = tipoDeCambio;
 	}
 
 }

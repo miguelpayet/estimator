@@ -4,44 +4,35 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the proveedor database table.
- * 
- */
 @Entity
-@NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p")
+@Table(name="proveedor")
 public class Proveedor implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idproveedor;
-
-	private float costoxhora;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idProveedor;
+	private float costoPorHora;
 	private String nombre;
-
-	//bi-directional many-to-one association to Tarea
 	@OneToMany(mappedBy="proveedor")
 	private List<Tarea> tareas;
 
 	public Proveedor() {
 	}
 
-	public int getIdproveedor() {
-		return this.idproveedor;
+	public int getIdProveedor() {
+		return this.idProveedor;
 	}
 
-	public void setIdproveedor(int idproveedor) {
-		this.idproveedor = idproveedor;
+	public void setIdProveedor(int idProveedor) {
+		this.idProveedor = idProveedor;
 	}
 
-	public float getCostoxhora() {
-		return this.costoxhora;
+	public float getCostoPorHora() {
+		return this.costoPorHora;
 	}
 
-	public void setCostoxhora(float costoxhora) {
-		this.costoxhora = costoxhora;
+	public void setCostoPorHora(float costoPorHora) {
+		this.costoPorHora = costoPorHora;
 	}
 
 	public String getNombre() {
@@ -63,14 +54,12 @@ public class Proveedor implements Serializable {
 	public Tarea addTarea(Tarea tarea) {
 		getTareas().add(tarea);
 		tarea.setProveedor(this);
-
 		return tarea;
 	}
 
 	public Tarea removeTarea(Tarea tarea) {
 		getTareas().remove(tarea);
 		tarea.setProveedor(null);
-
 		return tarea;
 	}
 

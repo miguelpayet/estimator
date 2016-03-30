@@ -1,44 +1,20 @@
 package pe.com.pps.model;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
-import javax.persistence.*;
 
-/**
- * The primary key class for the plataforma_valor database table.
- * 
- */
+@Deprecated
 @Embeddable
 public class PlataformaValorPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
 
-	private int idplataformavalor;
-
-	@Column(insertable=false, updatable=false)
-	private int idtipo;
-
-	@Column(insertable=false, updatable=false)
-	private int idcomplejidad;
+	@Column(insertable = false, updatable = false)
+	private int idComplejidad;
+	private int idPlataformaValor;
+	@Column(insertable = false, updatable = false)
+	private int idTipoCambio;
 
 	public PlataformaValorPK() {
-	}
-	public int getIdplataformavalor() {
-		return this.idplataformavalor;
-	}
-	public void setIdplataformavalor(int idplataformavalor) {
-		this.idplataformavalor = idplataformavalor;
-	}
-	public int getIdtipo() {
-		return this.idtipo;
-	}
-	public void setIdtipo(int idtipo) {
-		this.idtipo = idtipo;
-	}
-	public int getIdcomplejidad() {
-		return this.idcomplejidad;
-	}
-	public void setIdcomplejidad(int idcomplejidad) {
-		this.idcomplejidad = idcomplejidad;
 	}
 
 	public boolean equals(Object other) {
@@ -48,20 +24,41 @@ public class PlataformaValorPK implements Serializable {
 		if (!(other instanceof PlataformaValorPK)) {
 			return false;
 		}
-		PlataformaValorPK castOther = (PlataformaValorPK)other;
-		return 
-			(this.idplataformavalor == castOther.idplataformavalor)
-			&& (this.idtipo == castOther.idtipo)
-			&& (this.idcomplejidad == castOther.idcomplejidad);
+		PlataformaValorPK castOther = (PlataformaValorPK) other;
+		return (this.idPlataformaValor == castOther.idPlataformaValor) && (this.idTipoCambio == castOther.idTipoCambio) && (this.idComplejidad == castOther.idComplejidad);
+	}
+
+	public int getIdComplejidad() {
+		return this.idComplejidad;
+	}
+
+	public int getIdPlataformaValor() {
+		return this.idPlataformaValor;
+	}
+
+	public int getIdTipoCambio() {
+		return this.idTipoCambio;
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.idplataformavalor;
-		hash = hash * prime + this.idtipo;
-		hash = hash * prime + this.idcomplejidad;
-		
+		hash = hash * prime + this.idPlataformaValor;
+		hash = hash * prime + this.idTipoCambio;
+		hash = hash * prime + this.idComplejidad;
 		return hash;
 	}
+
+	public void setIdComplejidad(int idComplejidad) {
+		this.idComplejidad = idComplejidad;
+	}
+
+	public void setIdPlataformaValor(int idPlataformaValor) {
+		this.idPlataformaValor = idPlataformaValor;
+	}
+
+	public void setIdTipoCambio(int idTipoCambio) {
+		this.idTipoCambio = idTipoCambio;
+	}
+
 }

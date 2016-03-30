@@ -7,6 +7,7 @@ import javax.persistence.*;
  * The primary key class for the tarea database table.
  * 
  */
+@Deprecated
 @Embeddable
 public class TareaPK implements Serializable {
 	//default serial version id, required for serializable classes.

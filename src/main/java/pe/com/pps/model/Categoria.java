@@ -1,21 +1,15 @@
 package pe.com.pps.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 
-
-/**
- * The persistent class for the categoria database table.
- * 
- */
 @Entity
-@NamedQuery(name="Categoria.findAll", query="SELECT c FROM Categoria c")
+@Table(name = "categoria")
 public class Categoria implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcategoria;
-
 	private String nombre;
 
 	public Categoria() {
@@ -25,12 +19,12 @@ public class Categoria implements Serializable {
 		return this.idcategoria;
 	}
 
-	public void setIdcategoria(int idcategoria) {
-		this.idcategoria = idcategoria;
-	}
-
 	public String getNombre() {
 		return this.nombre;
+	}
+
+	public void setIdcategoria(int idcategoria) {
+		this.idcategoria = idcategoria;
 	}
 
 	public void setNombre(String nombre) {

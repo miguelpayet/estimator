@@ -1,67 +1,58 @@
 package pe.com.pps.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-
-/**
- * The persistent class for the complejidad database table.
- * 
- */
 @Entity
-@NamedQuery(name="Complejidad.findAll", query="SELECT c FROM Complejidad c")
+@Table(name = "complejidad")
 public class Complejidad implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idcomplejidad;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idComplejidad;
 	private String nombre;
-
 	//bi-directional many-to-one association to PlataformaValor
-	@OneToMany(mappedBy="complejidad")
+	@OneToMany(mappedBy = "complejidad")
 	private List<PlataformaValor> plataformaValors;
 
 	public Complejidad() {
 	}
 
-	public int getIdcomplejidad() {
-		return this.idcomplejidad;
+	public PlataformaValor addPlataformaValor(PlataformaValor plataformaValor) {
+		getPlataformaValors().add(plataformaValor);
+		plataformaValor.setComplejidad(this);
+		return plataformaValor;
 	}
 
-	public void setIdcomplejidad(int idcomplejidad) {
-		this.idcomplejidad = idcomplejidad;
+	public int getIdComplejidad() {
+		return this.idComplejidad;
 	}
 
 	public String getNombre() {
 		return this.nombre;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
 	public List<PlataformaValor> getPlataformaValors() {
 		return this.plataformaValors;
-	}
-
-	public void setPlataformaValors(List<PlataformaValor> plataformaValors) {
-		this.plataformaValors = plataformaValors;
-	}
-
-	public PlataformaValor addPlataformaValor(PlataformaValor plataformaValor) {
-		getPlataformaValors().add(plataformaValor);
-		plataformaValor.setComplejidad(this);
-
-		return plataformaValor;
 	}
 
 	public PlataformaValor removePlataformaValor(PlataformaValor plataformaValor) {
 		getPlataformaValors().remove(plataformaValor);
 		plataformaValor.setComplejidad(null);
-
 		return plataformaValor;
+	}
+
+	public void setIdComplejidad(int idComplejidad) {
+		this.idComplejidad = idComplejidad;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setPlataformaValors(List<PlataformaValor> plataformaValors) {
+		this.plataformaValors = plataformaValors;
 	}
 
 }
