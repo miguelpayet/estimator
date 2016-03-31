@@ -17,7 +17,7 @@ public class Factor implements Serializable {
 	private String nombre;
 	private float peso;
 	@ManyToOne
-	@JoinColumn(name = "idtipofactor")
+	@JoinColumn(name = "idTipoFactor")
 	private TipoDeFactor tipoDeFactor;
 	private int valormaximo;
 	private int valorminimo;

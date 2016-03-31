@@ -11,11 +11,11 @@ public class TipoDeCambio implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idTipoCambio;
-	@OneToMany(mappedBy = "idtipocambio")
+	@OneToMany(mappedBy = "idInterfaz")
 	private List<Interfaz> interfaces;
 	private String nombre;
-	@OneToMany(mappedBy = "tipo")
-	private List<PlataformaValor> plataformaValors;
+	@OneToMany(mappedBy = "tipoDeCambio")
+	private List<PlataformaValor> plataformaValores;
 
 	public TipoDeCambio() {
 	}
@@ -28,7 +28,7 @@ public class TipoDeCambio implements Serializable {
 	}
 
 	public PlataformaValor addPlataformaValor(PlataformaValor plataformaValor) {
-		getPlataformaValors().add(plataformaValor);
+		getPlataformaValores().add(plataformaValor);
 		plataformaValor.setTipoDeCambio(this);
 		return plataformaValor;
 	}
@@ -45,19 +45,18 @@ public class TipoDeCambio implements Serializable {
 		return this.nombre;
 	}
 
-	public List<PlataformaValor> getPlataformaValors() {
-		return this.plataformaValors;
+	public List<PlataformaValor> getPlataformaValores() {
+		return this.plataformaValores;
 	}
 
 	public Interfaz removeInterfaz(Interfaz interfaz) {
 		getInterfaces().remove(interfaz);
 		interfaz.setTipoDeCambio(null);
-
 		return interfaz;
 	}
 
 	public PlataformaValor removePlataformaValor(PlataformaValor plataformaValor) {
-		getPlataformaValors().remove(plataformaValor);
+		getPlataformaValores().remove(plataformaValor);
 		plataformaValor.setTipoDeCambio(null);
 		return plataformaValor;
 	}
@@ -74,8 +73,8 @@ public class TipoDeCambio implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public void setPlataformaValors(List<PlataformaValor> plataformaValors) {
-		this.plataformaValors = plataformaValors;
+	public void setPlataformaValores(List<PlataformaValor> plataformaValores) {
+		this.plataformaValores = plataformaValores;
 	}
 
 }

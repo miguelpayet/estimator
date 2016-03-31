@@ -14,7 +14,7 @@ public class Interfaz implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInterfaz;
 	@ManyToOne
-	@JoinColumn(name = "idtipocambio")
+	@JoinColumn(name = "interfaces")
 	private TipoDeCambio tipoDeCambio;
 
 	public Interfaz() {

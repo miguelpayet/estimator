@@ -12,13 +12,13 @@ public class PlataformaValor implements Serializable {
 	private Complejidad complejidad;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int idPlataformaValor;
 	@ManyToOne
 	@JoinColumn(name = "idplataforma")
 	private Plataforma plataforma;
 	private int puntajeFuncional;
 	@ManyToOne
-	@JoinColumn(name = "idtipocambio")
+	@JoinColumn(name = "idTipoCambio")
 	private TipoDeCambio tipoDeCambio;
 
 	public PlataformaValor() {
@@ -29,7 +29,7 @@ public class PlataformaValor implements Serializable {
 	}
 
 	public int getId() {
-		return this.id;
+		return this.idPlataformaValor;
 	}
 
 	public Plataforma getPlataforma() {
@@ -48,8 +48,8 @@ public class PlataformaValor implements Serializable {
 		this.complejidad = complejidad;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setidPlataformaValor(int id) {
+		this.idPlataformaValor = id;
 	}
 
 	public void setPlataforma(Plataforma plataforma) {

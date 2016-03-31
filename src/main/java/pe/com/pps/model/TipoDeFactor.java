@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "tipo_de_factor")
 public class TipoDeFactor implements Serializable {
 
-	@OneToMany(mappedBy = "idtipofactor")
+	@OneToMany(mappedBy = "tipoDeFactor")
 	private List<Factor> factores;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
