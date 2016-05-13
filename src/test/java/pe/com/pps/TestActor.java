@@ -9,6 +9,7 @@ import pe.com.pps.dao.DaoActor;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.Actor;
+import pe.com.pps.model.ActorPK;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.Plataforma;
 
@@ -26,15 +27,16 @@ public class TestActor extends TestBase<Actor> {
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(1);
 		Assert.assertNotNull(est);
-		Actor a = new Actor();
+		DaoActor da = new DaoActor();
+		ActorPK pk = new ActorPK();
+		pk.setNumActor(1);
+		pk.setEstimacion(est.getIdEstimacion());
+		Actor a = da.get(pk);
 		a.setComplejidad(1);
 		a.setDescripcion("Prueba");
-		a.setNumActor(1);
 		DaoPlataforma dp = new DaoPlataforma();
 		Plataforma p = dp.get(1);
 		a.setPlataforma(p);
-		a.setEstimacion(est.getIdEstimacion());
-		DaoActor da = new DaoActor();
 		da.grabar(a);
 		logger.info("grabarActor()");
 	}

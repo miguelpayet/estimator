@@ -16,7 +16,6 @@ public class ActorPK implements Serializable {
 
 	public ActorPK() {
 	}
-
 	public ActorPK(Integer unIdEstimacion, Integer unNumero) {
 		estimacion = unIdEstimacion;
 		numActor = unNumero;
@@ -45,6 +44,14 @@ public class ActorPK implements Serializable {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(43, 47).append(estimacion).append(numActor).toHashCode();
+	}
+
+	public void setEstimacion(Integer estimacion) {
+		this.estimacion = estimacion;
+	}
+
+	public void setNumActor(Integer numActor) {
+		this.numActor = numActor;
 	}
 
 }
