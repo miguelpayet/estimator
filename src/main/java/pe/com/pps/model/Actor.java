@@ -13,10 +13,9 @@ public class Actor implements Serializable {
 	@Column(name = "descripcion")
 	private String descripcion;
 	@Id
-//	@ManyToOne
-//	@JoinColumn(name = "idestimacion", referencedColumnName = "idestimacion")
-	@Column(name = "idestimacion")
-	private Integer estimacion;
+	@ManyToOne
+	@JoinColumn(name = "idestimacion", referencedColumnName = "idestimacion")
+	private Estimacion estimacion;
 	@Id
 	@Column(name = "numactor")
 	private Integer numActor;
@@ -35,7 +34,7 @@ public class Actor implements Serializable {
 		return descripcion;
 	}
 
-	public Integer getEstimacion() {
+	public Estimacion getEstimacion() {
 		return estimacion;
 	}
 
@@ -55,7 +54,7 @@ public class Actor implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public void setEstimacion(Integer estimacion) {
+	public void setEstimacion(Estimacion estimacion) {
 		this.estimacion = estimacion;
 	}
 
@@ -69,7 +68,7 @@ public class Actor implements Serializable {
 
 	public String toString() {
 		if (descripcion != null) {
-			return String.format("%s - %s", getClass().getName(), descripcion);
+			return String.format("%s - %s", getClass().getSimpleName(), descripcion);
 		} else {
 			return super.toString();
 		}

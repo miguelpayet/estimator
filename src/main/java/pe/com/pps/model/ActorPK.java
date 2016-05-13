@@ -4,19 +4,23 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
 public class ActorPK implements Serializable {
 
-	@Column(name = "idestimacion", insertable = false, updatable = false)
-	protected Integer estimacion;
+	@ManyToOne
+	@JoinColumn(name = "idestimacion", referencedColumnName = "idestimacion", insertable = false, updatable = false)
+	protected Estimacion estimacion;
 	@Column(insertable = false, updatable = false)
 	protected Integer numActor;
 
 	public ActorPK() {
 	}
-	public ActorPK(Integer unIdEstimacion, Integer unNumero) {
+
+	public ActorPK(Estimacion unIdEstimacion, Integer unNumero) {
 		estimacion = unIdEstimacion;
 		numActor = unNumero;
 	}
@@ -33,7 +37,7 @@ public class ActorPK implements Serializable {
 		}
 	}
 
-	public Integer getEstimacion() {
+	public Estimacion getEstimacion() {
 		return estimacion;
 	}
 
@@ -46,7 +50,7 @@ public class ActorPK implements Serializable {
 		return new HashCodeBuilder(43, 47).append(estimacion).append(numActor).toHashCode();
 	}
 
-	public void setEstimacion(Integer estimacion) {
+	public void setEstimacion(Estimacion estimacion) {
 		this.estimacion = estimacion;
 	}
 

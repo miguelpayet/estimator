@@ -30,7 +30,7 @@ public class TestActor extends TestBase<Actor> {
 		DaoActor da = new DaoActor();
 		ActorPK pk = new ActorPK();
 		pk.setNumActor(1);
-		pk.setEstimacion(est.getIdEstimacion());
+		pk.setEstimacion(est);
 		Actor a = da.get(pk);
 		a.setComplejidad(1);
 		a.setDescripcion("Prueba");

@@ -43,7 +43,7 @@ public class Estimacion implements Serializable {
 
 	public void addActor(Actor unActor) {
 		actores.add(unActor);
-		unActor.setEstimacion(this.getIdEstimacion());
+		unActor.setEstimacion(this);
 	}
 
 	public void addCasoDeUso(CasoDeUso unCaso) {
