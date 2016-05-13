@@ -2,82 +2,101 @@ package pe.com.pps.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "factor")
 public class Factor implements Serializable {
 
+	@Column(name = "descripcion")
+	private String descripcion;
 	@OneToMany
 	@JoinColumn(name = "idfactor")
-	private List<EstimacionFactor> factoresEstimacion;
+	Set<FactorEstimacion> factoresEstimacion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name = "idfactor")
+	private Integer idFactor;
+	@Column(name = "maximo")
+	private Integer maximo;
+	@Column(name = "minimo")
+	private Integer minimo;
+	@Column(name = "nombre")
 	private String nombre;
-	private float peso;
-	@ManyToOne
-	@JoinColumn(name = "idTipoFactor")
-	private TipoDeFactor tipoDeFactor;
-	private int valormaximo;
-	private int valorminimo;
+	@Column(name = "peso")
+	private Float peso;
+	@Column(name = "tipofactor")
+	private Integer tipoFactor;
+
 	public Factor() {
 	}
 
-	public List<EstimacionFactor> getFactoresEstimacion() {
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
 	}
 
-	public int getId() {
-		return this.id;
+	public Integer getIdFactor() {
+		return idFactor;
+	}
+
+	public Integer getMaximo() {
+		return maximo;
+	}
+
+	public Integer getMinimo() {
+		return minimo;
 	}
 
 	public String getNombre() {
-		return this.nombre;
+		return nombre;
 	}
 
-	public float getPeso() {
-		return this.peso;
+	public Float getPeso() {
+		return peso;
 	}
 
-	public TipoDeFactor getTipoDeFactor() {
-		return this.tipoDeFactor;
+	public Integer getTipoFactor() {
+		return tipoFactor;
 	}
 
-	public int getValormaximo() {
-		return this.valormaximo;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public int getValorminimo() {
-		return this.valorminimo;
-	}
-
-	public void setFactoresEstimacion(List<EstimacionFactor> factoresEstimacion) {
+	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
 		this.factoresEstimacion = factoresEstimacion;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdFactor(Integer idFactor) {
+		this.idFactor = idFactor;
+	}
+
+	public void setMaximo(Integer maximo) {
+		this.maximo = maximo;
+	}
+
+	public void setMinimo(Integer minimo) {
+		this.minimo = minimo;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public void setPeso(float peso) {
+	public void setPeso(Float peso) {
 		this.peso = peso;
 	}
 
-	public void setTipoDeFactor(TipoDeFactor tipoDeFactor) {
-		this.tipoDeFactor = tipoDeFactor;
+	public void setTipoFactor(Integer tipoFactor) {
+		this.tipoFactor = tipoFactor;
 	}
 
-	public void setValormaximo(int valormaximo) {
-		this.valormaximo = valormaximo;
-	}
-
-	public void setValorminimo(int valorminimo) {
-		this.valorminimo = valorminimo;
+	public String toString() {
+		return String.format("%s - tipo %s", nombre, tipoFactor);
 	}
 
 }

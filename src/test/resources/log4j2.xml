@@ -6,10 +6,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="org.apache.wicket" level="INFO" additivity="false">
+        <logger name="org.apache.wicket" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps" level="INFO" additivity="false">
+        <logger name="org.hibernate" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="pe.com.pps" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <Root level="WARN">

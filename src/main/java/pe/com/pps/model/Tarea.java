@@ -9,46 +9,22 @@ public class Tarea implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer idtarea;
+	@Column(name = "incluir")
+	private Boolean incluir;
+	@Column(name = "nombre")
 	private String nombre;
-	private float peso;
+	@Column(name = "orden")
+	private Integer orden;
+	@Column(name = "porcentaje")
+	private Float porcentaje;
 	@ManyToOne
 	@JoinColumn(name = "idproveedor")
 	private Proveedor proveedor;
+	@Column(name = "tipocosto")
+	private Integer tipoCosto;
 
 	public Tarea() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public String getNombre() {
-		return this.nombre;
-	}
-
-	public float getPeso() {
-		return this.peso;
-	}
-
-	public Proveedor getProveedor() {
-		return this.proveedor;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public void setPeso(float peso) {
-		this.peso = peso;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
 	}
 
 }

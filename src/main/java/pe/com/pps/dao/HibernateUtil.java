@@ -13,23 +13,31 @@ public class HibernateUtil {
 
 	static {
 		configuration = new Configuration();
-		configuration.addAnnotatedClass(Categoria.class);
-		configuration.addAnnotatedClass(Complejidad.class);
-		configuration.addAnnotatedClass(Estimacion.class);
-		configuration.addAnnotatedClass(EstimacionFactor.class);
-		configuration.addAnnotatedClass(Factor.class);
-		configuration.addAnnotatedClass(Funcionalidad.class);
-		configuration.addAnnotatedClass(Interfaz.class);
-		configuration.addAnnotatedClass(Plataforma.class);
-		configuration.addAnnotatedClass(PlataformaValor.class);
-		configuration.addAnnotatedClass(Proveedor.class);
-		configuration.addAnnotatedClass(Tarea.class);
-		configuration.addAnnotatedClass(TipoDeCambio.class);
-		configuration.addAnnotatedClass(TipoDeFactor.class);
-		configuration.addAnnotatedClass(TipoDeInterfaz.class);
+		añadirClasesAnotadas();
 		configuration.configure();
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	}
+
+	private static void añadirClasesAnotadas() {
+		configuration.addAnnotatedClass(Actor.class);
+		configuration.addAnnotatedClass(ActorPK.class);
+		configuration.addAnnotatedClass(CasoDeUso.class);
+		configuration.addAnnotatedClass(CasoDeUsoPK.class);
+		configuration.addAnnotatedClass(Complejidad.class);
+		configuration.addAnnotatedClass(Cronograma.class);
+		configuration.addAnnotatedClass(CronogramaPK.class);
+		configuration.addAnnotatedClass(Estimacion.class);
+		configuration.addAnnotatedClass(Factor.class);
+		configuration.addAnnotatedClass(FactorEstimacion.class);
+		configuration.addAnnotatedClass(FactorEstimacionPK.class);
+		configuration.addAnnotatedClass(Plataforma.class);
+		configuration.addAnnotatedClass(Proveedor.class);
+		configuration.addAnnotatedClass(PuntoCasoDeUso.class);
+		configuration.addAnnotatedClass(Tarea.class);
+		configuration.addAnnotatedClass(TipoCosto.class);
+		configuration.addAnnotatedClass(TipoFactor.class);
+		configuration.addAnnotatedClass(TipoPunto.class);
 	}
 
 	public static SessionFactory getSessionFactory() {

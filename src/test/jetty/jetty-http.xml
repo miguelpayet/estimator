@@ -5,7 +5,7 @@
 <!-- by adding a HTTP connector.                                   -->
 <!-- This configuration must be used in conjunction with jetty.xml -->
 <!-- ============================================================= -->
-<Configure idInterfaz="Server" class="org.eclipse.jetty.server.Server">
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
   <!-- =========================================================== -->
   <!-- Add a HTTP Connector.                                       -->
   <!-- Configure an o.e.j.server.ServerConnector with a single     -->

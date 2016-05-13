@@ -2,7 +2,8 @@ package pe.com.pps;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
-import org.junit.Test;
+import pe.com.pps.app.WicketApplication;
+import pe.com.pps.ui.HomePage;
 
 /**
  * Simple test using the WicketTester
