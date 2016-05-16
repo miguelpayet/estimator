@@ -8,4 +8,8 @@ public class DaoEstimacion extends Dao<Estimacion> {
 		super(Estimacion.class);
 	}
 
+	public void borrar(Estimacion unaEstimacion) {
+		getSesion().delete(unaEstimacion);
+	}
+
 }

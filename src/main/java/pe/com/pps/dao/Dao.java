@@ -5,7 +5,7 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 public class Dao<T> {
 
-	private Class claseModelo;
+	protected Class claseModelo;
 
 	public Dao(Class unaClase) {
 		claseModelo = unaClase;

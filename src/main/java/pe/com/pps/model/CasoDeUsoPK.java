@@ -3,17 +3,23 @@ package pe.com.pps.model;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 public class CasoDeUsoPK implements Serializable {
 
-	@Column(insertable = false, updatable = false)
-	protected Integer idEstimacion;
+	@ManyToOne
+	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	protected Estimacion estimacion;
 	@Column(insertable = false, updatable = false)
 	protected Integer numCaso;
 
-	public CasoDeUsoPK(Integer unIdEstimacion, Integer unNumero) {
-		idEstimacion = unIdEstimacion;
+	public CasoDeUsoPK() {
+	}
+
+	public CasoDeUsoPK(Estimacion unIdEstimacion, Integer unNumero) {
+		estimacion = unIdEstimacion;
 		numCaso = unNumero;
 	}
 
@@ -25,12 +31,12 @@ public class CasoDeUsoPK implements Serializable {
 			return true;
 		} else {
 			CasoDeUsoPK pk = (CasoDeUsoPK) unObjeto;
-			return pk.idEstimacion == pk.getIdEstimacion() && numCaso == pk.getNumCaso();
+			return pk.estimacion == pk.getEstimacion() && numCaso == pk.getNumCaso();
 		}
 	}
 
-	public Integer getIdEstimacion() {
-		return idEstimacion;
+	public Estimacion getEstimacion() {
+		return estimacion;
 	}
 
 	public Integer getNumCaso() {
@@ -39,11 +45,11 @@ public class CasoDeUsoPK implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(43, 47).append(idEstimacion).append(numCaso).toHashCode();
+		return new HashCodeBuilder(43, 47).append(estimacion).append(numCaso).toHashCode();
 	}
 
-	public void setIdEstimacion(Integer idEstimacion) {
-		this.idEstimacion = idEstimacion;
+	public void setEstimacion(Estimacion estimacion) {
+		this.estimacion = estimacion;
 	}
 
 	public void setNumCaso(Integer numCaso) {

@@ -5,7 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
+import org.dbunit.database.DatabaseConfig;
+import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -53,7 +56,10 @@ public abstract class TestBase<T> {
 		IDataSet dataSet = getDataSet();
 		if (dataSet != null) {
 			databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
-			databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
+			IDatabaseConnection connection =  databaseTester.getConnection();
+			DatabaseConfig config = connection.getConfig();
+			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
+			databaseTester.setSetUpOperation(DatabaseOperation.INSERT);
 			databaseTester.setDataSet(dataSet);
 			databaseTester.onSetup();
 			logger.info("cargarData()");
@@ -76,8 +82,10 @@ public abstract class TestBase<T> {
 	@After
 	public void descargarData() throws Exception {
 		if (databaseTester != null) {
-			databaseTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
+			databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
 			databaseTester.onTearDown();
+			//databaseTester.setSetUpOperation(DatabaseOperation.DELETE);
+			//databaseTester.onSetup();
 			logger.info("descargarData()");
 		}
 	}

@@ -13,6 +13,7 @@
 *.swp
 *.war
 *~
+*.xlsx
 .classpath
 .clover/
 .idea

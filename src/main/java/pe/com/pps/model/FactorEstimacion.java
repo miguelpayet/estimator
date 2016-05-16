@@ -5,16 +5,17 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "factor_estimacion")
+@IdClass(FactorEstimacionPK.class)
 public class FactorEstimacion implements Serializable {
 
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion")
 	Estimacion estimacion;
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idfactor")
 	Factor factor;
-	@EmbeddedId
-	private FactorEstimacionPK id;
 	@Column(name = "valor")
 	private Integer valor;
 
@@ -24,10 +25,6 @@ public class FactorEstimacion implements Serializable {
 
 	public Factor getFactor() {
 		return factor;
-	}
-
-	public FactorEstimacionPK getId() {
-		return id;
 	}
 
 	public Integer getValor() {
@@ -40,10 +37,6 @@ public class FactorEstimacion implements Serializable {
 
 	public void setFactor(Factor factor) {
 		this.factor = factor;
-	}
-
-	public void setId(FactorEstimacionPK id) {
-		this.id = id;
 	}
 
 	public void setValor(Integer valor) {

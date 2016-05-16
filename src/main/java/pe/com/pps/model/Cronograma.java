@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "cronograma")
+@IdClass(CronogramaPK.class)
 public class Cronograma implements Serializable {
 
-	@EmbeddedId
-	private CronogramaPK CronogramaPK;
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion")
 	private Estimacion estimacion;
@@ -18,10 +18,12 @@ public class Cronograma implements Serializable {
 	private Float porcentaje;
 	@Column(name = "recursos")
 	private Integer recursos;
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idtarea")
 	private Tarea tarea;
 
-	public Cronograma() {}
+	public Cronograma() {
+	}
 
 }

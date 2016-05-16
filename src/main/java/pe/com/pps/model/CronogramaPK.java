@@ -2,21 +2,24 @@ package pe.com.pps.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
 public class CronogramaPK implements Serializable {
 
-	@Column(insertable = false, updatable = false)
-	protected Integer idEstimacion;
-	@Column(insertable = false, updatable = false)
-	protected Integer numCronograma;
+	@ManyToOne
+	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	protected Estimacion estimacion;
+	@ManyToOne
+	@JoinColumn(name = "idtarea")
+	private Tarea tarea;
 
-	public CronogramaPK(Integer unIdEstimacion, Integer unNumero) {
-		idEstimacion = unIdEstimacion;
-		numCronograma = unNumero;
+	public CronogramaPK(Estimacion unIdEstimacion, Tarea unaTarea) {
+		estimacion = unIdEstimacion;
+		tarea = unaTarea;
 	}
 
 	@Override
@@ -27,29 +30,29 @@ public class CronogramaPK implements Serializable {
 			return true;
 		} else {
 			CronogramaPK pk = (CronogramaPK) unObjeto;
-			return pk.idEstimacion == pk.getIdEstimacion() && numCronograma == pk.getNumCronograma();
+			return getEstimacion().equals(pk.getEstimacion()) && getTarea().equals(pk.getTarea());
 		}
 	}
 
-	public Integer getIdEstimacion() {
-		return idEstimacion;
+	public Estimacion getEstimacion() {
+		return estimacion;
 	}
 
-	public Integer getNumCronograma() {
-		return numCronograma;
+	public Tarea getTarea() {
+		return tarea;
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(23, 31).append(idEstimacion).append(numCronograma).toHashCode();
+		return new HashCodeBuilder(23, 31).append(getEstimacion()).append(getTarea()).toHashCode();
 	}
 
-	public void setIdEstimacion(Integer idEstimacion) {
-		this.idEstimacion = idEstimacion;
+	public void setEstimacion(Estimacion estimacion) {
+		this.estimacion = estimacion;
 	}
 
-	public void setNumCronograma(Integer numCronograma) {
-		this.numCronograma = numCronograma;
+	public void setTarea(Tarea tarea) {
+		this.tarea = tarea;
 	}
 
 }

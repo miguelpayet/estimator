@@ -2,18 +2,23 @@ package pe.com.pps.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-
 public class FactorEstimacionPK implements Serializable {
 
-	@Column(insertable = false, updatable = false)
-	private Integer idEstimacion;
-	@Column(insertable = false, updatable = false)
-	private Integer idFactor;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	Estimacion estimacion;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "idfactor", insertable = false, updatable = false)
+	Factor factor;
 
 	@Override
 	public boolean equals(Object unObjeto) {
@@ -23,29 +28,29 @@ public class FactorEstimacionPK implements Serializable {
 			return true;
 		} else {
 			FactorEstimacionPK pk = (FactorEstimacionPK) unObjeto;
-			return pk.idEstimacion == pk.getIdEstimacion() && idFactor == pk.getIdFactor();
+			return getEstimacion().equals(pk.getEstimacion()) && getFactor().equals(pk.getFactor());
 		}
 	}
 
-	public Integer getIdEstimacion() {
-		return idEstimacion;
+	public Estimacion getEstimacion() {
+		return estimacion;
 	}
 
-	public Integer getIdFactor() {
-		return idFactor;
+	public Factor getFactor() {
+		return factor;
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(43, 47).append(idEstimacion).append(idFactor).toHashCode();
+		return new HashCodeBuilder(43, 47).append(getEstimacion()).append(getFactor()).toHashCode();
 	}
 
-	public void setIdEstimacion(Integer idEstimacion) {
-		this.idEstimacion = idEstimacion;
+	public void setEstimacion(Estimacion estimacion) {
+		this.estimacion = estimacion;
 	}
 
-	public void setIdFactor(Integer idFactor) {
-		this.idFactor = idFactor;
+	public void setFactor(Factor factor) {
+		this.factor = factor;
 	}
 
 }

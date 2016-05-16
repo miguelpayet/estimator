@@ -4,18 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "casodeuso")
+@Table(name = "caso_de_uso")
+@IdClass(CasoDeUsoPK.class)
 public class CasoDeUso implements Serializable {
 
 	@Column(name = "complejidad")
 	Integer complejidad;
 	@Column(name = "descripcion")
 	private String descripcion;
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion")
 	private Estimacion estimacion;
-	@EmbeddedId
-	private CasoDeUsoPK id;
+	@Id
 	@Column(name = "numcaso")
 	private Integer numCaso;
 	@ManyToOne
@@ -34,8 +35,8 @@ public class CasoDeUso implements Serializable {
 		return estimacion;
 	}
 
-	public CasoDeUsoPK getId() {
-		return id;
+	public Integer getNumCaso() {
+		return numCaso;
 	}
 
 	public Plataforma getPlataforma() {
@@ -54,8 +55,8 @@ public class CasoDeUso implements Serializable {
 		this.estimacion = estimacion;
 	}
 
-	public void setId(CasoDeUsoPK id) {
-		this.id = id;
+	public void setNumCaso(Integer numCaso) {
+		this.numCaso = numCaso;
 	}
 
 	public void setPlataforma(Plataforma plataforma) {

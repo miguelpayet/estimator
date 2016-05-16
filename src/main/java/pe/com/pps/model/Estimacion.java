@@ -15,7 +15,7 @@ public class Estimacion implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "idestimacion")
 	private Set<Actor> actores;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "idestimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@Column(name = "eds")

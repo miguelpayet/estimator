@@ -4,6 +4,9 @@
         <Console name="CONSOLE" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+        <File name="FILE" fileName="dbunit.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <logger name="org.apache.wicket" level="WARN" additivity="false">
@@ -13,6 +16,9 @@
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <logger name="pe.com.pps" level="DEBUG" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="org.dbunit" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <Root level="WARN">
