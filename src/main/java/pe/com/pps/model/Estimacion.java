@@ -1,5 +1,8 @@
 package pe.com.pps.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +13,8 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "estimacion")
 public class Estimacion implements Serializable {
+
+	private final static Logger log = LogManager.getLogger(Estimacion.class);
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
@@ -58,24 +63,28 @@ public class Estimacion implements Serializable {
 	private Float calcularFactor(Set<FactorEstimacion> unosFactores) {
 		Float factor = 0f;
 		for (FactorEstimacion f : unosFactores) {
+			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
 			factor += (f.getValor() * f.getFactor().getPeso());
 		}
+		log.debug("factor de complejidad " + factor);
 		return factor;
 	}
 
 	private Float calcularFactorAmbiental() {
 		Float factor = calcularFactor(getFactoresAmbientales());
-		factor = 0.6f + (factor * 0.01f);
+		factor = 1.4f + (factor * -0.03f);
+		log.debug(String.format("estimación %s - factor ambiental %s", getIdEstimacion(), factor));
 		return factor;
 	}
 
 	private Float calcularFactorTecnico() {
 		Float factor = calcularFactor(getFactoresTecnicos());
-		factor = 1.4f + (factor * -0.03f);
+		factor = 0.6f + (factor * 0.01f);
+		log.debug(String.format("estimación %s - factor técnico %s", getIdEstimacion(), factor));
 		return factor;
 	}
 
-	public Set<FactorEstimacion> extraerFactores(Integer unTipo) {
+	private Set<FactorEstimacion> extraerFactores(Integer unTipo) {
 		return factoresEstimacion.stream().filter(f -> f.getFactor().getTipoFactor().equals(unTipo)).collect(Collectors.toSet());
 	}
 
@@ -95,7 +104,7 @@ public class Estimacion implements Serializable {
 		return esfuerzo;
 	}
 
-	public Set<FactorEstimacion> getFactoresAmbientales() {
+	private Set<FactorEstimacion> getFactoresAmbientales() {
 		return extraerFactores(TipoFactor.AMBIENTE);
 	}
 
@@ -103,7 +112,7 @@ public class Estimacion implements Serializable {
 		return factoresEstimacion;
 	}
 
-	public Set<FactorEstimacion> getFactoresTecnicos() {
+	private Set<FactorEstimacion> getFactoresTecnicos() {
 		return extraerFactores(TipoFactor.TECNICO);
 	}
 
@@ -162,15 +171,17 @@ public class Estimacion implements Serializable {
 		this.puntos = puntos;
 	}
 
-	private void totalizarPuntos() {
-		Float puntos = 0f;
+	public void totalizarPuntos() {
+		puntos = 0f;
 		for (Actor act : getActores()) {
 			puntos += act.getPunto().getPuntos();
 		}
 		for (CasoDeUso cas : getCasosDeUso()) {
 			puntos += cas.getPunto().getPuntos();
 		}
-		setPuntos(puntos * calcularFactorTecnico() * calcularFactorAmbiental());
+		log.debug(String.format("estimación %s - puntos antes de ajuste %s", getIdEstimacion(), puntos));
+		puntos = puntos * calcularFactorTecnico() * calcularFactorAmbiental();
+		log.debug(String.format("estimación %s - puntos ajustados %s", getIdEstimacion(), puntos));
 	}
 
 }

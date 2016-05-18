@@ -16,25 +16,42 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
 import pe.com.pps.dao.HibernateUtil;
 
 import java.util.List;
 
-// T es la clase de la entidad que prueba la subclase que extiende TestBase
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public abstract class TestBase<T> {
 
-	protected static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	protected static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydb";
-	protected static final String USER = "root";
-	protected static final String PASSWORD = "root";
-	protected IDatabaseTester databaseTester;
-	private final Logger logger = LogManager.getLogger(TestBase.class);
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydb";
+	private static final String USER = "root";
+	private static final String PASSWORD = "root";
+	private static final Logger logger = LogManager.getLogger(TestBase.class);
+	private static IDatabaseTester databaseTester;
 
 	Session sesion;
 	Transaction transaccion;
+
+	public static IDatabaseTester cargarData(IDataSet dataset) throws Exception {
+		logger.info("cargarData()");
+		IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
+		IDatabaseConnection connection = databaseTester.getConnection();
+		DatabaseConfig config = connection.getConfig();
+		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
+		databaseTester.setSetUpOperation(DatabaseOperation.INSERT);
+		databaseTester.setDataSet(dataset);
+		databaseTester.onSetup();
+		return databaseTester;
+	}
+
+	public static void descargarData(IDatabaseTester databaseTester) throws Exception {
+		logger.info("descargarData()");
+		databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
+		databaseTester.onTearDown();
+	}
 
 	@BeforeClass
 	public static void setup() {
@@ -51,24 +68,8 @@ public abstract class TestBase<T> {
 		transaccion = sesion.beginTransaction();
 	}
 
-	@Before
-	public void cargarData() throws Exception {
-		IDataSet dataSet = getDataSet();
-		if (dataSet != null) {
-			databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
-			IDatabaseConnection connection =  databaseTester.getConnection();
-			DatabaseConfig config = connection.getConfig();
-			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
-			databaseTester.setSetUpOperation(DatabaseOperation.INSERT);
-			databaseTester.setDataSet(dataSet);
-			databaseTester.onSetup();
-			logger.info("cargarData()");
-		}
-	}
-
 	@After
 	public void cerrarTransaccion() {
-		logger.debug("commit?");
 		if (transaccion != null && transaccion.getStatus().equals(TransactionStatus.ACTIVE)) {
 			logger.debug("commit!");
 			sesion.getTransaction().commit();
@@ -78,19 +79,6 @@ public abstract class TestBase<T> {
 	protected Criteria crearCriteria(Class unaClase) {
 		return sesion.createCriteria(unaClase);
 	}
-
-	@After
-	public void descargarData() throws Exception {
-		if (databaseTester != null) {
-			databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
-			databaseTester.onTearDown();
-			//databaseTester.setSetUpOperation(DatabaseOperation.DELETE);
-			//databaseTester.onSetup();
-			logger.info("descargarData()");
-		}
-	}
-
-	abstract protected IDataSet getDataSet() throws Exception;
 
 	protected List<T> listar(Class unaClase) {
 		Criteria criterio = crearCriteria(unaClase);

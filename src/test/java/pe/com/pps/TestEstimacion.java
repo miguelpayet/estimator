@@ -2,11 +2,9 @@ package pe.com.pps;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dbunit.dataset.IDataSet;
+import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.excel.XlsDataSet;
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.MethodSorters;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoFactorAmbiental;
@@ -20,9 +18,19 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestEstimacion extends TestBase<Estimacion> {
 
-	public static final Integer ESTIMACION = 11312;
+	private static final Integer ESTIMACION = 11312;
+	private static IDatabaseTester databaseTester;
+	private static final Logger logger = LogManager.getLogger(TestBase.class);
 
-	private final Logger logger = LogManager.getLogger(TestBase.class);
+	@BeforeClass
+	public static void cargarDataActor() throws Exception {
+		databaseTester = TestBase.cargarData(new XlsDataSet(new FileInputStream("datasetEstimacion.xlsx")));
+	}
+
+	@AfterClass
+	public static void descargarDataActor() throws Exception {
+		TestBase.descargarData(databaseTester);
+	}
 
 	@Test
 	public void borrarEstimacion() {
@@ -107,20 +115,18 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		logger.info("grabado");
 	}
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		return new XlsDataSet(new FileInputStream("datasetEstimacion.xlsx"));
-	}
-
 	@Test
 	public void leerEstimacion() {
 		logger.info("leerEstimacion()");
-		// nueva estimación
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
+		est.setEsfuerzo(1f);
+		est.totalizarPuntos();
+		logger.info(est.getNombre());
+		logger.info("puntos: " + est.getPuntos());
 		Assert.assertNotNull(est);
-		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("Prueba"));
+		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("11312 - Reporte de Impresión para Cascos"));
 	}
 
 }

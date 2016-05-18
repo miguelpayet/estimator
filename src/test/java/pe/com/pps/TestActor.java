@@ -2,9 +2,11 @@ package pe.com.pps;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dbunit.dataset.IDataSet;
+import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.excel.XlsDataSet;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import pe.com.pps.dao.DaoActor;
 import pe.com.pps.dao.DaoEstimacion;
@@ -18,11 +20,17 @@ import java.util.Map;
 
 public class TestActor extends TestBase<Actor> {
 
-	private final Logger logger = LogManager.getLogger(TestActor.class);
+	private static final Logger logger = LogManager.getLogger(TestActor.class);
+	private static IDatabaseTester databaseTester;
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		return new XlsDataSet(new FileInputStream("datasetActor.xlsx"));
+	@BeforeClass
+	public static void cargarDataActor() throws Exception {
+		databaseTester = TestBase.cargarData(new XlsDataSet(new FileInputStream("datasetActor.xlsx")));
+	}
+
+	@AfterClass
+	public static void descargarDataActor() throws Exception {
+		TestBase.descargarData(databaseTester);
 	}
 
 	@Test
