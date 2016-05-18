@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@DiscriminatorColumn(name = "tipofactor", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "factor")
-public class Factor implements Serializable {
+public abstract class Factor implements Serializable {
 
 	@Column(name = "descripcion")
 	private String descripcion;
-	@OneToMany
-	@JoinColumn(name = "idfactor")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="factor")
 	Set<FactorEstimacion> factoresEstimacion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class Factor implements Serializable {
 	private String nombre;
 	@Column(name = "peso")
 	private Float peso;
-	@Column(name = "tipofactor")
+	@Column(name = "tipofactor", insertable = false, updatable = false)
 	private Integer tipoFactor;
 
 	public Factor() {

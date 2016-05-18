@@ -1,7 +1,11 @@
 package pe.com.pps.model;
 
+import pe.com.pps.dao.DaoPuntoCasoDeUso;
+
 import javax.persistence.*;
 import java.io.Serializable;
+
+import static pe.com.pps.model.TipoPunto.ACTOR;
 
 @Entity
 @Table(name = "actor")
@@ -14,15 +18,14 @@ public class Actor implements Serializable {
 	private String descripcion;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idestimacion", referencedColumnName = "idestimacion")
-	private Estimacion estimacion;
+	@JoinColumn(name = "idestimacion", nullable = false)
+	Estimacion estimacion;
 	@Id
 	@Column(name = "numactor")
 	private Integer numActor;
 	@ManyToOne
-	@JoinColumn(name = "idplataforma")
+	@JoinColumn(name = "idplataforma", nullable = false)
 	private Plataforma plataforma;
-
 	public Actor() {
 	}
 
@@ -46,6 +49,12 @@ public class Actor implements Serializable {
 		return plataforma;
 	}
 
+	public PuntoCasoDeUso getPunto() {
+		DaoPuntoCasoDeUso dp = new DaoPuntoCasoDeUso();
+		PuntoCasoDeUso p = dp.get(ACTOR, getComplejidad());
+		return p;
+	}
+
 	public void setComplejidad(Integer complejidad) {
 		this.complejidad = complejidad;
 	}
@@ -54,8 +63,8 @@ public class Actor implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public void setEstimacion(Estimacion estimacion) {
-		this.estimacion = estimacion;
+	public void setEstimacion(Estimacion idestimacion) {
+		this.estimacion = idestimacion;
 	}
 
 	public void setNumActor(Integer numActor) {

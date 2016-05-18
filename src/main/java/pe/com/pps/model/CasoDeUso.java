@@ -1,7 +1,11 @@
 package pe.com.pps.model;
 
+import pe.com.pps.dao.DaoPuntoCasoDeUso;
+
 import javax.persistence.*;
 import java.io.Serializable;
+
+import static pe.com.pps.model.TipoPunto.CASO_DE_USO;
 
 @Entity
 @Table(name = "caso_de_uso")
@@ -14,13 +18,13 @@ public class CasoDeUso implements Serializable {
 	private String descripcion;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idestimacion")
+	@JoinColumn(name = "idestimacion", nullable = false)
 	private Estimacion estimacion;
 	@Id
 	@Column(name = "numcaso")
 	private Integer numCaso;
 	@ManyToOne
-	@JoinColumn(name = "idplataforma")
+	@JoinColumn(name = "idplataforma", nullable = false)
 	private Plataforma plataforma;
 
 	public Integer getComplejidad() {
@@ -41,6 +45,12 @@ public class CasoDeUso implements Serializable {
 
 	public Plataforma getPlataforma() {
 		return plataforma;
+	}
+
+	public PuntoCasoDeUso getPunto() {
+		DaoPuntoCasoDeUso dp = new DaoPuntoCasoDeUso();
+		PuntoCasoDeUso p = dp.get(CASO_DE_USO, getComplejidad());
+		return p;
 	}
 
 	public void setComplejidad(Integer complejidad) {

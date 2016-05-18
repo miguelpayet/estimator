@@ -12,6 +12,8 @@ import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
 
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestCasoDeUso extends TestBase<Factor> {
 
@@ -24,6 +26,7 @@ public class TestCasoDeUso extends TestBase<Factor> {
 
 	@Test
 	public void grabarCasoDeUso() {
+		logger.info("grabarCasoDeUso()");
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(1);
 		Assert.assertNotNull(est);
@@ -41,7 +44,28 @@ public class TestCasoDeUso extends TestBase<Factor> {
 			c.setPlataforma(p);
 		}
 		dc.grabar(c);
-		logger.info("grabarCasoDeUso()");
+	}
+
+
+	@Test
+	public void leerCasoDeUso() {
+		logger.info("leerCasoDeUso()");
+		DaoEstimacion de = new DaoEstimacion();
+		Estimacion est = de.get(1);
+		Assert.assertNotNull(est);
+		DaoCasoDeUso da = new DaoCasoDeUso();
+		Map<Integer, Integer> casos = new HashMap<>();
+		casos.put(1, 5);
+		casos.put(2, 10);
+		casos.put(3, 15);
+		for (Map.Entry<Integer, Integer> entry : casos.entrySet()) {
+			CasoDeUsoPK pk = new CasoDeUsoPK();
+			pk.setNumCaso(entry.getKey());
+			pk.setEstimacion(est);
+			CasoDeUso a = da.get(pk);
+			Assert.assertNotNull(a);
+			Assert.assertThat(a.getPunto().getPuntos(), org.hamcrest.CoreMatchers.is(entry.getValue()));
+		}
 	}
 
 }

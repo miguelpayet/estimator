@@ -29,7 +29,11 @@ public class HibernateUtil {
 		configuration.addAnnotatedClass(CronogramaPK.class);
 		configuration.addAnnotatedClass(Estimacion.class);
 		configuration.addAnnotatedClass(Factor.class);
+		configuration.addAnnotatedClass(FactorAmbiental.class);
+		configuration.addAnnotatedClass(FactorTecnico.class);
 		configuration.addAnnotatedClass(FactorEstimacion.class);
+		//configuration.addAnnotatedClass(FactorEstimacionAmbiental.class);
+		//configuration.addAnnotatedClass(FactorEstimacionTecnico.class);
 		configuration.addAnnotatedClass(FactorEstimacionPK.class);
 		configuration.addAnnotatedClass(Plataforma.class);
 		configuration.addAnnotatedClass(Proveedor.class);

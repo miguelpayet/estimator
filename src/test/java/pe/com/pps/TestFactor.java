@@ -8,7 +8,11 @@ import org.hibernate.Session;
 import org.junit.Assert;
 import org.junit.Test;
 import pe.com.pps.dao.DaoFactor;
+import pe.com.pps.dao.DaoFactorAmbiental;
+import pe.com.pps.dao.DaoFactorTecnico;
 import pe.com.pps.model.Factor;
+import pe.com.pps.model.FactorAmbiental;
+import pe.com.pps.model.FactorTecnico;
 
 import java.io.FileInputStream;
 
@@ -22,13 +26,22 @@ public class TestFactor extends TestBase<Factor> {
 	}
 
 	@Test
-	public void probarExisteFactor() {
-		DaoFactor df = new DaoFactor();
-		Factor f = df.get(1);
+	public void probarExisteFactorTecnico() {
+		logger.info("probarExisteFactorTecnico()");
+		DaoFactorTecnico df = new DaoFactorTecnico();
+		FactorTecnico f = df.get(1);
 		Assert.assertNotNull(f);
 		Assert.assertThat(f.getIdFactor(), org.hamcrest.CoreMatchers.is(1));
 		Assert.assertEquals(f.getNombre(), "Sistema Distribuido");
-		logger.info("probarExisteFactor()");
 	}
 
+	@Test
+	public void probarExisteFactorAmbiental() {
+		logger.info("probarExisteFactorAmbiental()");
+		DaoFactorAmbiental df = new DaoFactorAmbiental();
+		FactorAmbiental f = df.get(14);
+		Assert.assertNotNull(f);
+		Assert.assertThat(f.getIdFactor(), org.hamcrest.CoreMatchers.is(14));
+		Assert.assertEquals(f.getNombre(), "Familiaridad con el modelo del proyecto utilizado");
+	}
 }

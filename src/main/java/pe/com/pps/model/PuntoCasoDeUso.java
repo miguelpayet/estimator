@@ -1,10 +1,11 @@
 package pe.com.pps.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "punto_caso_de_uso")
-public class PuntoCasoDeUso {
+@Table(name = "punto_funcional")
+public class PuntoCasoDeUso implements Serializable {
 
 	@Column(name = "complejidad")
 	private Integer complejidad;
@@ -18,6 +19,38 @@ public class PuntoCasoDeUso {
 	private Integer tipo;
 
 	public PuntoCasoDeUso() {
+	}
+
+	public Integer getComplejidad() {
+		return complejidad;
+	}
+
+	public Integer getIdPuntoCasoDeUso() {
+		return idPuntoCasoDeUso;
+	}
+
+	public Integer getPuntos() {
+		return puntos;
+	}
+
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setComplejidad(Integer complejidad) {
+		this.complejidad = complejidad;
+	}
+
+	public void setIdPuntoCasoDeUso(Integer idPuntoCasoDeUso) {
+		this.idPuntoCasoDeUso = idPuntoCasoDeUso;
+	}
+
+	public void setPuntos(Integer puntos) {
+		this.puntos = puntos;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 }

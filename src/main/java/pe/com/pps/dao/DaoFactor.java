@@ -2,19 +2,20 @@ package pe.com.pps.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import pe.com.pps.model.Factor;
 
 import java.util.List;
 
-public class DaoFactor extends Dao<Factor> {
+public abstract class DaoFactor<T extends Factor> extends Dao<T> {
 
-	public DaoFactor() {
-		super(Factor.class);
+	public DaoFactor(Class unaClase) {
+		super(unaClase);
 	}
 
-	public List<Factor> getAll() {
-		Criteria crit = getSesion().createCriteria(Factor.class);
-		crit.addOrder(Order.asc("tipoFactor"));
+	public List<T> getPorTipo(Integer unTipo) {
+		Criteria crit = getSesion().createCriteria(getClaseModelo());
+		crit.add(Restrictions.eq("tipoFactor", unTipo));
 		crit.addOrder(Order.asc("nombre"));
 		return crit.list();
 	}

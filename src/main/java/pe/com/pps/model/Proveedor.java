@@ -16,8 +16,7 @@ public class Proveedor implements Serializable {
 	private Integer idProveedor;
 	@Column(name = "nombre")
 	private String nombre;
-	@OneToMany
-	@JoinColumn(name = "idproveedor")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
 	private List<Tarea> tareas;
 
 	public Proveedor() {

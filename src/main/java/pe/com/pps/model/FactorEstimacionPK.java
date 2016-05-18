@@ -13,11 +13,11 @@ public class FactorEstimacionPK implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	@JoinColumn(name = "idestimacion", insertable = false, updatable = false, nullable = false)
 	Estimacion estimacion;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idfactor", insertable = false, updatable = false)
+	@JoinColumn(name = "idfactor", insertable = false, updatable = false, nullable = false)
 	Factor factor;
 
 	@Override

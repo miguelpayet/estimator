@@ -11,10 +11,10 @@ import java.io.Serializable;
 public class CronogramaPK implements Serializable {
 
 	@ManyToOne
-	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	@JoinColumn(name = "idestimacion", insertable = false, nullable = false, updatable = false)
 	protected Estimacion estimacion;
 	@ManyToOne
-	@JoinColumn(name = "idtarea")
+	@JoinColumn(name = "idtarea", insertable = false, nullable = false, updatable = false)
 	private Tarea tarea;
 
 	public CronogramaPK(Estimacion unIdEstimacion, Tarea unaTarea) {

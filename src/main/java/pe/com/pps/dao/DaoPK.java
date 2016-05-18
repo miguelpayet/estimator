@@ -1,8 +1,5 @@
 package pe.com.pps.dao;
 
-import pe.com.pps.model.Actor;
-import pe.com.pps.model.ActorPK;
-
 import java.io.Serializable;
 
 public class DaoPK<T, V extends Serializable> extends Dao<T> {

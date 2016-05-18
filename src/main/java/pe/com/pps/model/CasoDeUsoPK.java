@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class CasoDeUsoPK implements Serializable {
 
 	@ManyToOne
-	@JoinColumn(name = "idestimacion", insertable = false, updatable = false)
+	@JoinColumn(name = "idestimacion", insertable = false, nullable = false, updatable = false)
 	protected Estimacion estimacion;
-	@Column(insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false, nullable = false)
 	protected Integer numCaso;
 
 	public CasoDeUsoPK() {

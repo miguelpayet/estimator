@@ -9,7 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import pe.com.pps.dao.DaoEstimacion;
-import pe.com.pps.dao.DaoFactor;
+import pe.com.pps.dao.DaoFactorAmbiental;
+import pe.com.pps.dao.DaoFactorTecnico;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
 
@@ -19,14 +20,28 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestEstimacion extends TestBase<Estimacion> {
 
+	public static final Integer ESTIMACION = 11312;
+
 	private final Logger logger = LogManager.getLogger(TestBase.class);
 
 	@Test
+	public void borrarEstimacion() {
+		DaoEstimacion de = new DaoEstimacion();
+		{
+			Estimacion est = de.get(ESTIMACION);
+			if (est != null) {
+				// borrarla si ya existe
+				de.borrar(est);
+			}
+		}
+	}
+
+	@Test
 	public void crearEstimacion() {
+		logger.info("crearEstimacion()");
 		// nueva estimación
-		Integer numEst = 11312;
 		Estimacion est = new Estimacion();
-		est.setIdEstimacion(numEst);
+		est.setIdEstimacion(ESTIMACION);
 		est.setEds("Kenji Dettleff");
 		est.setNombre("Reporte de Impresión para Cascos");
 		// casos de uso
@@ -66,25 +81,30 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			est.addActor(act);
 		}
 		// factores
-		DaoFactor df = new DaoFactor();
-		List<Factor> factores = df.getAll();
-		for (Factor f : factores) {
-			FactorEstimacion fe = new FactorEstimacion();
-			fe.setFactor(f);
-			fe.setValor(1);
-			est.addFactorEstimacion(fe);
+		DaoFactorTecnico dft = new DaoFactorTecnico();
+		List<FactorTecnico> factoresTecnicos = dft.getPorTipo(2);
+		for (FactorTecnico f : factoresTecnicos) {
+			FactorEstimacionTecnico fet = new FactorEstimacionTecnico();
+			fet.setFactor(f);
+			fet.setValor(1);
+			est.addFactorEstimacion(fet);
 		}
+		DaoFactorAmbiental dfa = new DaoFactorAmbiental();
+		List<FactorAmbiental> factoresAmbientales = dfa.getPorTipo(1);
+		for (FactorAmbiental f : factoresAmbientales) {
+			FactorEstimacionAmbiental fea = new FactorEstimacionAmbiental();
+			fea.setFactor(f);
+			fea.setValor(1);
+			est.addFactorEstimacion(fea);
+		}
+		// pruebas
+		Assert.assertThat(est.getActores().size(), org.hamcrest.CoreMatchers.is(2));
+		Assert.assertThat(est.getCasosDeUso().size(), org.hamcrest.CoreMatchers.is(2));
+		Assert.assertThat(est.getFactoresEstimacion().size(), org.hamcrest.CoreMatchers.is(factoresTecnicos.size() + factoresAmbientales.size()));
 		// grabar
 		DaoEstimacion de = new DaoEstimacion();
 		de.grabar(est);
 		logger.info("grabado");
-		de.borrar(est);
-		logger.info("y luego borrado");
-		// pruebas
-		Assert.assertThat(est.getActores().size(), org.hamcrest.CoreMatchers.is(2));
-		Assert.assertThat(est.getCasosDeUso().size(), org.hamcrest.CoreMatchers.is(2));
-		Assert.assertThat(est.getFactoresEstimacion().size(), org.hamcrest.CoreMatchers.is(factores.size()));
-		logger.info("crearEstimacion()");
 	}
 
 	@Override
@@ -94,13 +114,13 @@ public class TestEstimacion extends TestBase<Estimacion> {
 
 	@Test
 	public void leerEstimacion() {
+		logger.info("leerEstimacion()");
 		// nueva estimación
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
 		Assert.assertNotNull(est);
-		logger.info("estimación es: " + est.getNombre());
-		logger.info("leerEstimacion()");
+		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("Prueba"));
 	}
 
 }

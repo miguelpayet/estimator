@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class ActorPK implements Serializable {
 
 	@ManyToOne
-	@JoinColumn(name = "idestimacion", referencedColumnName = "idestimacion", insertable = false, updatable = false)
+	@JoinColumn(name = "idestimacion", insertable = false, nullable = false,  updatable = false)
 	protected Estimacion estimacion;
-	@Column(insertable = false, updatable = false)
+	@Column(insertable = false, nullable = false, updatable = false)
 	protected Integer numActor;
 
 	public ActorPK() {

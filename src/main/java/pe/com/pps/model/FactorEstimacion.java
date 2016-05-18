@@ -3,21 +3,23 @@ package pe.com.pps.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+//@DiscriminatorColumn(name = "tipofactor", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
-@Table(name = "factor_estimacion")
 @IdClass(FactorEstimacionPK.class)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "factor_estimacion")
 public class FactorEstimacion implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idestimacion")
-	Estimacion estimacion;
+	@JoinColumn(name = "idestimacion", nullable = false)
+	protected Estimacion estimacion;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idfactor")
-	Factor factor;
+	@JoinColumn(name = "idfactor", nullable = false)
+	protected Factor factor;
 	@Column(name = "valor")
-	private Integer valor;
+	protected Integer valor;
 
 	public Estimacion getEstimacion() {
 		return estimacion;

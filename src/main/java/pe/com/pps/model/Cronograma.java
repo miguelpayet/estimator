@@ -10,7 +10,7 @@ public class Cronograma implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idestimacion")
+	@JoinColumn(name = "idestimacion", nullable = false)
 	private Estimacion estimacion;
 	@Column(name = "incluir")
 	private Boolean incluir;
@@ -20,7 +20,7 @@ public class Cronograma implements Serializable {
 	private Integer recursos;
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idtarea")
+	@JoinColumn(name = "idtarea", nullable = false)
 	private Tarea tarea;
 
 	public Cronograma() {

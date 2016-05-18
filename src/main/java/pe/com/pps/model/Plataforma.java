@@ -8,11 +8,9 @@ import java.util.List;
 @Table(name = "plataforma")
 public class Plataforma implements Serializable {
 
-	@OneToMany
-	@JoinColumn(name = "idplataforma")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
 	private List<Actor> actores;
-	@OneToMany
-	@JoinColumn(name = "idplataforma")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
 	private List<CasoDeUso> casosDeUso;
 	@Column(name = "factorproductividad")
 	private Float factorProductividad;

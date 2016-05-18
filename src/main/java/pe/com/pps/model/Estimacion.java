@@ -10,25 +10,20 @@ import java.util.Set;
 @Table(name = "estimacion")
 public class Estimacion implements Serializable {
 
-	@PrePersist
-	private void crearPK() {}
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "idestimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "idestimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@Column(name = "eds")
 	private String eds;
 	@Column(name = "esfuerzo")
 	private Float esfuerzo;
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name = "idestimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	Set<FactorEstimacion> factoresEstimacion;
 	@Column(name = "fechacierre")
 	private Date fechaCierre;
 	@Id
-	@Column(name = "idestimacion")
+	@Column(name = "idestimacion", nullable = false)
 	private Integer idEstimacion;
 	@Column(name = "nombre")
 	private String nombre;
@@ -36,24 +31,27 @@ public class Estimacion implements Serializable {
 	private Float puntos;
 
 	public Estimacion() {
-		casosDeUso = new HashSet<CasoDeUso>();
-		actores = new HashSet<Actor>();
-		factoresEstimacion = new HashSet<FactorEstimacion>();
+		casosDeUso = new HashSet<>();
+		actores = new HashSet<>();
+		factoresEstimacion = new HashSet<>();
 	}
 
 	public void addActor(Actor unActor) {
 		actores.add(unActor);
 		unActor.setEstimacion(this);
+		totalizarPuntos();
 	}
 
 	public void addCasoDeUso(CasoDeUso unCaso) {
 		casosDeUso.add(unCaso);
 		unCaso.setEstimacion(this);
+		totalizarPuntos();
 	}
 
 	public void addFactorEstimacion(FactorEstimacion unFactorEstimacion) {
 		factoresEstimacion.add(unFactorEstimacion);
 		unFactorEstimacion.setEstimacion(this);
+		totalizarPuntos();
 	}
 
 	public Set<Actor> getActores() {
@@ -94,10 +92,12 @@ public class Estimacion implements Serializable {
 
 	public void setActores(Set<Actor> actores) {
 		this.actores = actores;
+		totalizarPuntos();
 	}
 
 	public void setCasosDeUso(Set<CasoDeUso> casosDeUso) {
 		this.casosDeUso = casosDeUso;
+		totalizarPuntos();
 	}
 
 	public void setEds(String eds) {
@@ -110,6 +110,7 @@ public class Estimacion implements Serializable {
 
 	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
 		this.factoresEstimacion = factoresEstimacion;
+		totalizarPuntos();
 	}
 
 	public void setFechaCierre(Date fechaCierre) {
@@ -124,8 +125,19 @@ public class Estimacion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public void setPuntos(Float puntos) {
+	private void setPuntos(Float puntos) {
 		this.puntos = puntos;
+	}
+
+	private void totalizarPuntos() {
+		Float puntos = 0f;
+		for (Actor act : getActores()) {
+			puntos += act.getPunto().getPuntos();
+		}
+		for (CasoDeUso cas : getCasosDeUso()) {
+			puntos += cas.getPunto().getPuntos();
+		}
+		//setPuntos(puntos * spt.calcularFactor() * spf.calcularFactor());
 	}
 
 }
