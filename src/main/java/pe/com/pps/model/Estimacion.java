@@ -1,13 +1,11 @@
 package pe.com.pps.model;
 
-import org.hibernate.event.spi.PostLoadEvent;
-import org.hibernate.event.spi.PostLoadEventListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "estimacion")
@@ -57,6 +55,30 @@ public class Estimacion implements Serializable {
 		totalizarPuntos();
 	}
 
+	private Float calcularFactor(Set<FactorEstimacion> unosFactores) {
+		Float factor = 0f;
+		for (FactorEstimacion f : unosFactores) {
+			factor += (f.getValor() * f.getFactor().getPeso());
+		}
+		return factor;
+	}
+
+	private Float calcularFactorAmbiental() {
+		Float factor = calcularFactor(getFactoresAmbientales());
+		factor = 0.6f + (factor * 0.01f);
+		return factor;
+	}
+
+	private Float calcularFactorTecnico() {
+		Float factor = calcularFactor(getFactoresTecnicos());
+		factor = 1.4f + (factor * -0.03f);
+		return factor;
+	}
+
+	public Set<FactorEstimacion> extraerFactores(Integer unTipo) {
+		return factoresEstimacion.stream().filter(f -> f.getFactor().getTipoFactor().equals(unTipo)).collect(Collectors.toSet());
+	}
+
 	public Set<Actor> getActores() {
 		return actores;
 	}
@@ -73,8 +95,16 @@ public class Estimacion implements Serializable {
 		return esfuerzo;
 	}
 
+	public Set<FactorEstimacion> getFactoresAmbientales() {
+		return extraerFactores(TipoFactor.AMBIENTE);
+	}
+
 	public Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
+	}
+
+	public Set<FactorEstimacion> getFactoresTecnicos() {
+		return extraerFactores(TipoFactor.TECNICO);
 	}
 
 	public Date getFechaCierre() {
@@ -140,7 +170,7 @@ public class Estimacion implements Serializable {
 		for (CasoDeUso cas : getCasosDeUso()) {
 			puntos += cas.getPunto().getPuntos();
 		}
-		//setPuntos(puntos * spt.calcularFactor() * spf.calcularFactor());
+		setPuntos(puntos * calcularFactorTecnico() * calcularFactorAmbiental());
 	}
 
 }
