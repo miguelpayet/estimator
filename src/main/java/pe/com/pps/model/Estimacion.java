@@ -1,5 +1,8 @@
 package pe.com.pps.model;
 
+import org.hibernate.event.spi.PostLoadEvent;
+import org.hibernate.event.spi.PostLoadEventListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

@@ -2,19 +2,19 @@ package pe.com.pps.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import pe.com.pps.model.PuntoCasoDeUso;
+import pe.com.pps.model.Punto;
 
-public class DaoPuntoCasoDeUso extends Dao<PuntoCasoDeUso> {
+public class DaoPunto extends Dao<Punto> {
 
-	public DaoPuntoCasoDeUso() {
-		super(PuntoCasoDeUso.class);
+	public DaoPunto() {
+		super(Punto.class);
 	}
 
-	public PuntoCasoDeUso get(Integer unTipo, Integer unaComplejidad) {
+	public Punto get(Integer unTipo, Integer unaComplejidad) {
 		Criteria crit = getSesion().createCriteria(getClaseModelo());
 		crit.add(Restrictions.eq("tipo", unTipo));
 		crit.add(Restrictions.eq("complejidad", unaComplejidad));
-		return (PuntoCasoDeUso) crit.uniqueResult();
+		return (Punto) crit.uniqueResult();
 	}
 
 }

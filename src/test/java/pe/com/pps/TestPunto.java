@@ -3,13 +3,10 @@ package pe.com.pps;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.Test;
-import pe.com.pps.model.PuntoCasoDeUso;
+import pe.com.pps.model.Punto;
 
-import java.io.FileInputStream;
-
-public class TestPunto extends TestBase<PuntoCasoDeUso> {
+public class TestPunto extends TestBase<Punto> {
 
 	private final Logger logger = LogManager.getLogger(TestBase.class);
 
