@@ -92,7 +92,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		DaoFactorTecnico dft = new DaoFactorTecnico();
 		List<FactorTecnico> factoresTecnicos = dft.getPorTipo(2);
 		for (FactorTecnico f : factoresTecnicos) {
-			FactorEstimacionTecnico fet = new FactorEstimacionTecnico();
+			FactorEstimacion fet = new FactorEstimacion();
 			fet.setFactor(f);
 			fet.setValor(1);
 			est.addFactorEstimacion(fet);
@@ -100,11 +100,14 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		DaoFactorAmbiental dfa = new DaoFactorAmbiental();
 		List<FactorAmbiental> factoresAmbientales = dfa.getPorTipo(1);
 		for (FactorAmbiental f : factoresAmbientales) {
-			FactorEstimacionAmbiental fea = new FactorEstimacionAmbiental();
+			FactorEstimacion fea = new FactorEstimacion();
 			fea.setFactor(f);
 			fea.setValor(1);
 			est.addFactorEstimacion(fea);
 		}
+		// resultado
+		logger.info("puntos: " + est.getPuntos());
+		logger.info("esfuerzo: " + est.getEsfuerzo());
 		// pruebas
 		Assert.assertThat(est.getActores().size(), org.hamcrest.CoreMatchers.is(2));
 		Assert.assertThat(est.getCasosDeUso().size(), org.hamcrest.CoreMatchers.is(2));
@@ -121,14 +124,16 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
-		est.setEsfuerzo(1.0);
-		est.totalizarPuntos();
 		logger.info(est.getNombre());
+		est.totalizar();
 		logger.info("puntos: " + est.getPuntos());
+		logger.info("esfuerzo: " + est.getEsfuerzo());
 		Assert.assertNotNull(est);
 		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("11312 - Reporte de Impresión para Cascos"));
 		Double puntos = Math.round(est.getPuntos() * 100.0) / 100.0;
 		Assert.assertThat(puntos, org.hamcrest.CoreMatchers.is(20.64));
+		Double esfuerzo = Math.round(est.getEsfuerzo() * 100.0) / 100.0;
+		Assert.assertThat(esfuerzo, org.hamcrest.CoreMatchers.is(578.04));
 	}
 
 }

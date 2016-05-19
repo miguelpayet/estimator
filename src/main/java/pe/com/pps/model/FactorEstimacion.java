@@ -3,10 +3,8 @@ package pe.com.pps.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-//@DiscriminatorColumn(name = "tipofactor", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
 @IdClass(FactorEstimacionPK.class)
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "factor_estimacion")
 public class FactorEstimacion implements Serializable {
 

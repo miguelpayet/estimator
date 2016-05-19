@@ -24,4 +24,36 @@ public class Plataforma implements Serializable {
 	public Plataforma() {
 	}
 
+	public List<Actor> getActores() {
+		return actores;
+	}
+
+	public List<CasoDeUso> getCasosDeUso() {
+		return casosDeUso;
+	}
+
+	public Double getFactorProductividad() {
+		return factorProductividad;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setActores(List<Actor> actores) {
+		this.actores = actores;
+	}
+
+	public void setCasosDeUso(List<CasoDeUso> casosDeUso) {
+		this.casosDeUso = casosDeUso;
+	}
+
+	public void setFactorProductividad(Double factorProductividad) {
+		this.factorProductividad = factorProductividad;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 }

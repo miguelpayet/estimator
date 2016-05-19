@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class Puntuable implements Serializable {
+public abstract class Puntuable implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Actor.class);
 
@@ -18,6 +18,7 @@ public class Puntuable implements Serializable {
 	Integer complejidadAnterior;
 	@Column(name = "descripcion")
 	protected String descripcion;
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
 	Estimacion estimacion;
@@ -42,6 +43,8 @@ public class Puntuable implements Serializable {
 	public Plataforma getPlataforma() {
 		return plataforma;
 	}
+
+	public abstract Punto getPunto();
 
 	public Punto getPunto(Integer unTipo) {
 		if (punto == null || (complejidad != null && !complejidad.equals(complejidadAnterior))) {

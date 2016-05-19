@@ -5,9 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -45,19 +43,19 @@ public class Estimacion implements Serializable {
 	public void addActor(Actor unActor) {
 		actores.add(unActor);
 		unActor.setEstimacion(this);
-		totalizarPuntos();
+		totalizar();
 	}
 
 	public void addCasoDeUso(CasoDeUso unCaso) {
 		casosDeUso.add(unCaso);
 		unCaso.setEstimacion(this);
-		totalizarPuntos();
+		totalizar();
 	}
 
 	public void addFactorEstimacion(FactorEstimacion unFactorEstimacion) {
 		factoresEstimacion.add(unFactorEstimacion);
 		unFactorEstimacion.setEstimacion(this);
-		totalizarPuntos();
+		totalizar();
 	}
 
 	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
@@ -79,7 +77,7 @@ public class Estimacion implements Serializable {
 
 	private Double calcularFactorTecnico() {
 		Double factor = calcularFactor(getFactoresTecnicos());
-		factor = 0.6f + (factor * 0.01f);
+		factor = 0.6 + (factor * 0.01);
 		log.debug(String.format("estimación %s - factor técnico %s", getIdEstimacion(), factor));
 		return factor;
 	}
@@ -134,12 +132,12 @@ public class Estimacion implements Serializable {
 
 	public void setActores(Set<Actor> actores) {
 		this.actores = actores;
-		totalizarPuntos();
+		totalizar();
 	}
 
 	public void setCasosDeUso(Set<CasoDeUso> casosDeUso) {
 		this.casosDeUso = casosDeUso;
-		totalizarPuntos();
+		totalizar();
 	}
 
 	public void setEds(String eds) {
@@ -152,7 +150,7 @@ public class Estimacion implements Serializable {
 
 	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
 		this.factoresEstimacion = factoresEstimacion;
-		totalizarPuntos();
+		totalizar();
 	}
 
 	public void setFechaCierre(Date fechaCierre) {
@@ -171,7 +169,21 @@ public class Estimacion implements Serializable {
 		this.puntos = puntos;
 	}
 
-	public void totalizarPuntos() {
+	private void sumarEsfuerzo(Double unFactor) {
+		esfuerzo = 0.0;
+		sumarEsfuerzoParcial(getActores(), unFactor);
+		sumarEsfuerzoParcial(getCasosDeUso(), unFactor);
+	}
+
+	private void sumarEsfuerzoParcial(Set<? extends Puntuable> unosPuntuables, Double unFactor) {
+		for (Puntuable p : unosPuntuables) {
+			Integer puntos = p.getPunto().getPuntos();
+			Double productividad = p.getPlataforma().getFactorProductividad();
+			esfuerzo += puntos * unFactor * productividad;
+		}
+	}
+
+	private void sumarPuntos(Double unFactor) {
 		puntos = 0.0;
 		for (Actor act : getActores()) {
 			puntos += act.getPunto().getPuntos();
@@ -180,8 +192,14 @@ public class Estimacion implements Serializable {
 			puntos += cas.getPunto().getPuntos();
 		}
 		log.debug(String.format("estimación %s - puntos antes de ajuste %s", getIdEstimacion(), puntos));
-		puntos = puntos * calcularFactorTecnico() * calcularFactorAmbiental();
+		puntos = puntos * unFactor;
 		log.debug(String.format("estimación %s - puntos ajustados %s", getIdEstimacion(), puntos));
+	}
+
+	public void totalizar() {
+		Double factorAjuste = calcularFactorTecnico() * calcularFactorAmbiental();
+		sumarPuntos(factorAjuste);
+		sumarEsfuerzo(factorAjuste);
 	}
 
 }
