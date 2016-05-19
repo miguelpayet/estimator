@@ -13,7 +13,7 @@ public class Plataforma implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
 	private List<CasoDeUso> casosDeUso;
 	@Column(name = "factorproductividad")
-	private Float factorProductividad;
+	private Double factorProductividad;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idplataforma")

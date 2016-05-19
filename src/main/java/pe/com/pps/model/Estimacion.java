@@ -23,7 +23,7 @@ public class Estimacion implements Serializable {
 	@Column(name = "eds")
 	private String eds;
 	@Column(name = "esfuerzo")
-	private Float esfuerzo;
+	private Double esfuerzo;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	Set<FactorEstimacion> factoresEstimacion;
 	@Column(name = "fechacierre")
@@ -34,7 +34,7 @@ public class Estimacion implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	@Column(name = "puntos")
-	private Float puntos;
+	private Double puntos;
 
 	public Estimacion() {
 		casosDeUso = new HashSet<>();
@@ -60,8 +60,8 @@ public class Estimacion implements Serializable {
 		totalizarPuntos();
 	}
 
-	private Float calcularFactor(Set<FactorEstimacion> unosFactores) {
-		Float factor = 0f;
+	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
+		Double factor = 0.0;
 		for (FactorEstimacion f : unosFactores) {
 			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
 			factor += (f.getValor() * f.getFactor().getPeso());
@@ -70,15 +70,15 @@ public class Estimacion implements Serializable {
 		return factor;
 	}
 
-	private Float calcularFactorAmbiental() {
-		Float factor = calcularFactor(getFactoresAmbientales());
-		factor = 1.4f + (factor * -0.03f);
+	private Double calcularFactorAmbiental() {
+		Double factor = calcularFactor(getFactoresAmbientales());
+		factor = 1.4 + (factor * -0.03);
 		log.debug(String.format("estimación %s - factor ambiental %s", getIdEstimacion(), factor));
 		return factor;
 	}
 
-	private Float calcularFactorTecnico() {
-		Float factor = calcularFactor(getFactoresTecnicos());
+	private Double calcularFactorTecnico() {
+		Double factor = calcularFactor(getFactoresTecnicos());
 		factor = 0.6f + (factor * 0.01f);
 		log.debug(String.format("estimación %s - factor técnico %s", getIdEstimacion(), factor));
 		return factor;
@@ -100,7 +100,7 @@ public class Estimacion implements Serializable {
 		return eds;
 	}
 
-	public Float getEsfuerzo() {
+	public Double getEsfuerzo() {
 		return esfuerzo;
 	}
 
@@ -128,7 +128,7 @@ public class Estimacion implements Serializable {
 		return nombre;
 	}
 
-	public Float getPuntos() {
+	public Double getPuntos() {
 		return puntos;
 	}
 
@@ -146,7 +146,7 @@ public class Estimacion implements Serializable {
 		this.eds = eds;
 	}
 
-	public void setEsfuerzo(Float esfuerzo) {
+	public void setEsfuerzo(Double esfuerzo) {
 		this.esfuerzo = esfuerzo;
 	}
 
@@ -167,12 +167,12 @@ public class Estimacion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	private void setPuntos(Float puntos) {
+	private void setPuntos(Double puntos) {
 		this.puntos = puntos;
 	}
 
 	public void totalizarPuntos() {
-		puntos = 0f;
+		puntos = 0.0;
 		for (Actor act : getActores()) {
 			puntos += act.getPunto().getPuntos();
 		}

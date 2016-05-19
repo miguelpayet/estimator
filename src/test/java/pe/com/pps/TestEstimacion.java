@@ -121,12 +121,14 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
-		est.setEsfuerzo(1f);
+		est.setEsfuerzo(1.0);
 		est.totalizarPuntos();
 		logger.info(est.getNombre());
 		logger.info("puntos: " + est.getPuntos());
 		Assert.assertNotNull(est);
 		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("11312 - Reporte de Impresión para Cascos"));
+		Double puntos = Math.round(est.getPuntos() * 100.0) / 100.0;
+		Assert.assertThat(puntos, org.hamcrest.CoreMatchers.is(20.64));
 	}
 
 }

@@ -25,7 +25,7 @@ public abstract class Factor implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	@Column(name = "peso")
-	private Float peso;
+	private Double peso;
 	@Column(name = "tipofactor", insertable = false, updatable = false)
 	private Integer tipoFactor;
 
@@ -56,7 +56,7 @@ public abstract class Factor implements Serializable {
 		return nombre;
 	}
 
-	public Float getPeso() {
+	public Double getPeso() {
 		return peso;
 	}
 
@@ -88,7 +88,7 @@ public abstract class Factor implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public void setPeso(Float peso) {
+	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
 

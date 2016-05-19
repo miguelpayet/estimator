@@ -17,7 +17,7 @@ public class Tarea implements Serializable {
 	@Column(name = "orden")
 	private Integer orden;
 	@Column(name = "porcentaje")
-	private Float porcentaje;
+	private Double porcentaje;
 	@ManyToOne
 	@JoinColumn(name = "idproveedor")
 	private Proveedor proveedor;

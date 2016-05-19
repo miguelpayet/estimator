@@ -15,7 +15,7 @@ public class Cronograma implements Serializable {
 	@Column(name = "incluir")
 	private Boolean incluir;
 	@Column(name = "porcentaje")
-	private Float porcentaje;
+	private Double porcentaje;
 	@Column(name = "recursos")
 	private Integer recursos;
 	@Id
