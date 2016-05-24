@@ -2,4 +2,27 @@
     <div>
         <p><span wicket:id="titulo"/></p>
     </div>
+    <div class="estimacion">
+        <form wicket:id="campos">
+            <div class="numero">
+                <div class="label numero ">número</div>
+                <input wicket:id="numero" type="text"/>
+            </div>
+            <div class="descripcion">
+                <div class="label nombre ">nombre</div>
+                <input wicket:id="nombre" type="text"/>
+            </div>
+            <div class="eds">
+                <div class="label eds">eds</div>
+                <input wicket:id="eds" type="text"/>
+            </div>
+            <div class="casos de uso">
+
+            </div>
+        </form>
+        <a wicket:id="grabar">grabar</a>
+        <a wicket:id="añadir-caso">añadir caso de uso</a>
+        <a wicket:id="añadir-actor">añadir actor</a>
+        <div wicket:id="feedback"></div>
+    </div>
 </wicket:extend>
