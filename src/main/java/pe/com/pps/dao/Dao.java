@@ -1,7 +1,10 @@
 package pe.com.pps.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
+
+import java.util.List;
+import java.util.Set;
 
 public class Dao<T> {
 
@@ -20,15 +23,16 @@ public class Dao<T> {
 	}
 
 	protected Session getSesion() {
-		Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-		if (sesion.getTransaction().getStatus() != TransactionStatus.ACTIVE) {
-			sesion.beginTransaction();
-		}
-		return sesion;
+		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
 
 	public void grabar(T unObjeto) {
 		getSesion().persist(unObjeto);
+	}
+
+	public List<T> listar() {
+		Criteria crit = getSesion().createCriteria(getClaseModelo());
+		return crit.list();
 	}
 
 }

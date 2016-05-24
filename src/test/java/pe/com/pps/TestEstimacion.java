@@ -124,16 +124,20 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
-		logger.info(est.getNombre());
-		est.totalizar();
-		logger.info("puntos: " + est.getPuntos());
-		logger.info("esfuerzo: " + est.getEsfuerzo());
 		Assert.assertNotNull(est);
+		logger.info(est.getNombre());
 		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("11312 - Reporte de Impresión para Cascos"));
+		logger.info("puntos: " + est.getPuntos());
 		Double puntos = Math.round(est.getPuntos() * 100.0) / 100.0;
 		Assert.assertThat(puntos, org.hamcrest.CoreMatchers.is(20.64));
+		logger.info("esfuerzo: " + est.getEsfuerzo());
 		Double esfuerzo = Math.round(est.getEsfuerzo() * 100.0) / 100.0;
 		Assert.assertThat(esfuerzo, org.hamcrest.CoreMatchers.is(578.04));
+		try {
+			est.generarCronograma();
+		} catch (ExcepcionCronograma e) {
+			Assert.fail("ooops " + e.getMessage());
+		}
 	}
 
 }

@@ -1,29 +1,66 @@
 package pe.com.pps.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.google.common.collect.HashMultimap;
 
-@Entity
-@Table(name = "cronograma")
-@IdClass(CronogramaPK.class)
-public class Cronograma implements Serializable {
+import java.util.Set;
 
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "idestimacion", nullable = false)
+public class Cronograma {
+
 	private Estimacion estimacion;
-	@Column(name = "incluir")
-	private Boolean incluir;
-	@Column(name = "porcentaje")
-	private Double porcentaje;
-	@Column(name = "recursos")
-	private Integer recursos;
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "idtarea", nullable = false)
-	private Tarea tarea;
+	private HashMultimap<Integer, TareaCronograma> mapaTareas;
 
-	public Cronograma() {
+	public Cronograma(Estimacion unaEstimacion) {
+		estimacion = unaEstimacion;
+		init();
+	}
+
+	public void calcular() throws ExcepcionCronograma {
+		double a = getTareaFija().getHoras();
+		double pctDuracion = getTareaDuracion().getPorcentaje();
+		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
+		double b = (pctDuracion * (pctDiseñoTecnico * (estimacion.getEsfuerzo() - a))) / (1 + (pctDuracion * pctDiseñoTecnico));
+		getTareaDuracion().setHoras(b);
+		for (TareaCronograma t : getTareasEsfuerzo()) {
+			t.setHoras((estimacion.getEsfuerzo() - a - b) * t.getPorcentaje());
+		}
+	}
+
+	private TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
+		Set<TareaCronograma> lista = mapaTareas.get(TipoCosto.ESFUERZO);
+		for (TareaCronograma t : mapaTareas.values()) {
+			if (t.getDiseñoTecnico().equals(1)) {
+				return t;
+			}
+		}
+		throw new ExcepcionCronograma("solamente una tarea de diseño técnico");
+	}
+
+	private TareaCronograma getTareaDuracion() throws ExcepcionCronograma {
+		return getTareaUnica(TipoCosto.DURACION);
+	}
+
+	private TareaCronograma getTareaFija() throws ExcepcionCronograma {
+		return getTareaUnica(TipoCosto.FIJO);
+	}
+
+	private TareaCronograma getTareaUnica(int unTipo) throws ExcepcionCronograma {
+		Set<TareaCronograma> lista = mapaTareas.get(unTipo);
+		if (lista.size() != 1) {
+			throw new ExcepcionCronograma("solamente una tarea de tipo: " + unTipo);
+		}
+		TareaCronograma t = lista.iterator().next();
+		return t;
+	}
+
+	private Set<TareaCronograma> getTareasEsfuerzo() {
+		return mapaTareas.get(TipoCosto.ESFUERZO);
+	}
+
+	private void init() {
+		mapaTareas = HashMultimap.create(4, 4);
+		for (TareaCronograma c : estimacion.getTareasCronograma()) {
+			mapaTareas.put(c.getTipoCosto(), c);
+		}
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-public class CronogramaPK implements Serializable {
+public class TareaCronogramaPK implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", insertable = false, nullable = false, updatable = false)
@@ -17,19 +17,22 @@ public class CronogramaPK implements Serializable {
 	@JoinColumn(name = "idtarea", insertable = false, nullable = false, updatable = false)
 	private Tarea tarea;
 
-	public CronogramaPK(Estimacion unIdEstimacion, Tarea unaTarea) {
+	public TareaCronogramaPK() {
+	}
+
+	public TareaCronogramaPK(Estimacion unIdEstimacion, Tarea unaTarea) {
 		estimacion = unIdEstimacion;
 		tarea = unaTarea;
 	}
 
 	@Override
 	public boolean equals(Object unObjeto) {
-		if (!(unObjeto instanceof CronogramaPK)) {
+		if (!(unObjeto instanceof TareaCronogramaPK)) {
 			return false;
 		} else if (this == unObjeto) {
 			return true;
 		} else {
-			CronogramaPK pk = (CronogramaPK) unObjeto;
+			TareaCronogramaPK pk = (TareaCronogramaPK) unObjeto;
 			return getEstimacion().equals(pk.getEstimacion()) && getTarea().equals(pk.getTarea());
 		}
 	}

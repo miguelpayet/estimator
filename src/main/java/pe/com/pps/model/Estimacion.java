@@ -2,10 +2,14 @@ package pe.com.pps.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pe.com.pps.dao.DaoCronograma;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -16,6 +20,8 @@ public class Estimacion implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
+	@Transient
+	private boolean actualizado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@Column(name = "eds")
@@ -33,8 +39,11 @@ public class Estimacion implements Serializable {
 	private String nombre;
 	@Column(name = "puntos")
 	private Double puntos;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	private List<TareaCronograma> tareasCronograma;
 
 	public Estimacion() {
+		actualizado = false;
 		casosDeUso = new HashSet<>();
 		actores = new HashSet<>();
 		factoresEstimacion = new HashSet<>();
@@ -43,19 +52,26 @@ public class Estimacion implements Serializable {
 	public void addActor(Actor unActor) {
 		actores.add(unActor);
 		unActor.setEstimacion(this);
-		totalizar();
+		actualizado = false;
 	}
 
 	public void addCasoDeUso(CasoDeUso unCaso) {
 		casosDeUso.add(unCaso);
 		unCaso.setEstimacion(this);
-		totalizar();
+		actualizado = false;
 	}
 
 	public void addFactorEstimacion(FactorEstimacion unFactorEstimacion) {
 		factoresEstimacion.add(unFactorEstimacion);
 		unFactorEstimacion.setEstimacion(this);
-		totalizar();
+		actualizado = false;
+	}
+
+	public void addTareaCronograma(Tarea unaTarea) {
+		TareaCronograma tc = new TareaCronograma();
+		tc.setEstimacion(this);
+		tc.setTarea(unaTarea);
+		tareasCronograma.add(tc);
 	}
 
 	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
@@ -86,6 +102,11 @@ public class Estimacion implements Serializable {
 		return factoresEstimacion.stream().filter(f -> f.getFactor().getTipoFactor().equals(unTipo)).collect(Collectors.toSet());
 	}
 
+	public void generarCronograma() throws ExcepcionCronograma {
+		Cronograma c = new Cronograma(this);
+		c.calcular();
+	}
+
 	public Set<Actor> getActores() {
 		return actores;
 	}
@@ -99,6 +120,7 @@ public class Estimacion implements Serializable {
 	}
 
 	public Double getEsfuerzo() {
+		totalizar();
 		return esfuerzo;
 	}
 
@@ -118,7 +140,7 @@ public class Estimacion implements Serializable {
 		return fechaCierre;
 	}
 
-	public int getIdEstimacion() {
+	public Integer getIdEstimacion() {
 		return idEstimacion;
 	}
 
@@ -127,17 +149,27 @@ public class Estimacion implements Serializable {
 	}
 
 	public Double getPuntos() {
+		totalizar();
 		return puntos;
+	}
+
+	public List<TareaCronograma> getTareasCronograma() {
+		return tareasCronograma;
+	}
+
+	public List<TareaCronograma> leerTareas() {
+		DaoCronograma dc = new DaoCronograma();
+		return dc.listar();
 	}
 
 	public void setActores(Set<Actor> actores) {
 		this.actores = actores;
-		totalizar();
+		actualizado = false;
 	}
 
 	public void setCasosDeUso(Set<CasoDeUso> casosDeUso) {
 		this.casosDeUso = casosDeUso;
-		totalizar();
+		actualizado = false;
 	}
 
 	public void setEds(String eds) {
@@ -150,7 +182,7 @@ public class Estimacion implements Serializable {
 
 	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
 		this.factoresEstimacion = factoresEstimacion;
-		totalizar();
+		actualizado = false;
 	}
 
 	public void setFechaCierre(Date fechaCierre) {
@@ -167,6 +199,10 @@ public class Estimacion implements Serializable {
 
 	private void setPuntos(Double puntos) {
 		this.puntos = puntos;
+	}
+
+	public void setTareasCronograma(List<TareaCronograma> tareasCronograma) {
+		this.tareasCronograma = tareasCronograma;
 	}
 
 	private void sumarEsfuerzo(Double unFactor) {
@@ -197,9 +233,12 @@ public class Estimacion implements Serializable {
 	}
 
 	public void totalizar() {
-		Double factorAjuste = calcularFactorTecnico() * calcularFactorAmbiental();
-		sumarPuntos(factorAjuste);
-		sumarEsfuerzo(factorAjuste);
+		if (!actualizado) {
+			Double factorAjuste = calcularFactorTecnico() * calcularFactorAmbiental();
+			sumarPuntos(factorAjuste);
+			sumarEsfuerzo(factorAjuste);
+			actualizado = true;
+		}
 	}
 
 }

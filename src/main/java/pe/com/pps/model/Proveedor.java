@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "proveedor")
 public class Proveedor implements Serializable {
 
-	@Column(name = "costo")
+	@Column(name = "costohora")
 	private float costo;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

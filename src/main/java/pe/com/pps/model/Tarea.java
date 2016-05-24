@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Table(name = "tarea")
 public class Tarea implements Serializable {
 
+	@Column(name = "disenotecnico")
+	private Integer diseñoTecnico;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idtarea;
@@ -25,6 +27,70 @@ public class Tarea implements Serializable {
 	private Integer tipoCosto;
 
 	public Tarea() {
+	}
+
+	public Integer getDiseñoTecnico() {
+		return diseñoTecnico;
+	}
+
+	public Integer getIdtarea() {
+		return idtarea;
+	}
+
+	public Boolean getIncluir() {
+		return incluir;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public Integer getOrden() {
+		return orden;
+	}
+
+	public Double getPorcentaje() {
+		return porcentaje;
+	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public Integer getTipoCosto() {
+		return tipoCosto;
+	}
+
+	public void setDiseñoTecnico(Integer diseñoTecnico) {
+		this.diseñoTecnico = diseñoTecnico;
+	}
+
+	public void setIdtarea(Integer idtarea) {
+		this.idtarea = idtarea;
+	}
+
+	public void setIncluir(Boolean incluir) {
+		this.incluir = incluir;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setOrden(Integer orden) {
+		this.orden = orden;
+	}
+
+	public void setPorcentaje(Double porcentaje) {
+		this.porcentaje = porcentaje;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public void setTipoCosto(Integer tipoCosto) {
+		this.tipoCosto = tipoCosto;
 	}
 
 }
