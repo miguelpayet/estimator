@@ -23,16 +23,17 @@ public class Cronograma {
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			t.setHoras((estimacion.getEsfuerzo() - a - b) * t.getPorcentaje());
 		}
+		getTareaGestion().setHoras(getTotalHoras() * getTareaGestion().getPorcentaje());
 	}
 
 	private TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
 		Set<TareaCronograma> lista = mapaTareas.get(TipoCosto.ESFUERZO);
-		for (TareaCronograma t : mapaTareas.values()) {
+		for (TareaCronograma t : lista) {
 			if (t.getDiseñoTecnico().equals(1)) {
 				return t;
 			}
 		}
-		throw new ExcepcionCronograma("solamente una tarea de diseño técnico");
+		throw new ExcepcionCronograma("no existe tarea de diseño técnico");
 	}
 
 	private TareaCronograma getTareaDuracion() throws ExcepcionCronograma {
@@ -43,17 +44,28 @@ public class Cronograma {
 		return getTareaUnica(TipoCosto.FIJO);
 	}
 
+	private TareaCronograma getTareaGestion() throws ExcepcionCronograma {
+		return getTareaUnica(TipoCosto.GESTION);
+	}
+
 	private TareaCronograma getTareaUnica(int unTipo) throws ExcepcionCronograma {
 		Set<TareaCronograma> lista = mapaTareas.get(unTipo);
 		if (lista.size() != 1) {
 			throw new ExcepcionCronograma("solamente una tarea de tipo: " + unTipo);
 		}
-		TareaCronograma t = lista.iterator().next();
-		return t;
+		return lista.iterator().next();
 	}
 
 	private Set<TareaCronograma> getTareasEsfuerzo() {
 		return mapaTareas.get(TipoCosto.ESFUERZO);
+	}
+
+	private Double getTotalHoras() {
+		Double totalHoras = 0.0;
+		for (TareaCronograma tc : mapaTareas.values()) {
+			totalHoras += tc.getHoras();
+		}
+		return totalHoras;
 	}
 
 	private void init() {
