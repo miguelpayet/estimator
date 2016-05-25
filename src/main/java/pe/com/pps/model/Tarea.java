@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "tarea")
+//@DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tarea implements Serializable {
 
 	@Column(name = "disenotecnico")
@@ -37,7 +39,7 @@ public class Tarea implements Serializable {
 		return idtarea;
 	}
 
-	public Boolean getIncluir() {
+	public Boolean isIncluir() {
 		return incluir;
 	}
 
