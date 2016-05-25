@@ -48,7 +48,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 	public void crearEstimacion() {
 		logger.info("crearEstimacion()");
 		// nueva estimación
-		Estimacion est = new Estimacion();
+		Estimacion est = EstimacionFactory.crear();
 		est.setIdEstimacion(ESTIMACION);
 		est.setEds("Kenji Dettleff");
 		est.setNombre("Reporte de Impresión para Cascos");
@@ -108,6 +108,14 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		// resultado
 		logger.info("puntos: " + est.getPuntos());
 		logger.info("esfuerzo: " + est.getEsfuerzo());
+		// cronograma
+		try {
+			TareaCronograma tc = est.getCronograma().getTareaFija();
+			tc.setDias(5.0);
+			est.generarCronograma();
+		} catch (ExcepcionCronograma e) {
+			Assert.fail("ooops: " + e.getMessage());
+		}
 		// pruebas
 		Assert.assertThat(est.getActores().size(), org.hamcrest.CoreMatchers.is(2));
 		Assert.assertThat(est.getCasosDeUso().size(), org.hamcrest.CoreMatchers.is(2));
