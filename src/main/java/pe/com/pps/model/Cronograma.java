@@ -15,7 +15,12 @@ public class Cronograma {
 	}
 
 	public void calcular() throws ExcepcionCronograma {
-		double a = getTareaFija().getHoras();
+		double a;
+		if (getTareaFija().getHoras() != null) {
+			a = getTareaFija().getHoras();
+		} else {
+			throw new ExcepcionCronograma("tarea fija no tiene horas");
+		}
 		double pctDuracion = getTareaDuracion().getPorcentaje();
 		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
 		double b = (pctDuracion * (pctDiseñoTecnico * (estimacion.getEsfuerzo() - a))) / (1 + (pctDuracion * pctDiseñoTecnico));
@@ -40,7 +45,7 @@ public class Cronograma {
 		return getTareaUnica(TipoCosto.DURACION);
 	}
 
-	private TareaCronograma getTareaFija() throws ExcepcionCronograma {
+	public TareaCronograma getTareaFija() throws ExcepcionCronograma {
 		return getTareaUnica(TipoCosto.FIJO);
 	}
 
