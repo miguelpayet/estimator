@@ -6,10 +6,7 @@ import pe.com.pps.dao.DaoCronograma;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -47,6 +44,11 @@ public class Estimacion implements Serializable {
 		casosDeUso = new HashSet<>();
 		actores = new HashSet<>();
 		factoresEstimacion = new HashSet<>();
+		tareasCronograma = new ArrayList<>();
+	}
+
+	public Cronograma getCronograma() {
+		return new Cronograma(this);
 	}
 
 	public void addActor(Actor unActor) {
