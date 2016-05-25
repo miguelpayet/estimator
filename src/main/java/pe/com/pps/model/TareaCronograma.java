@@ -70,16 +70,18 @@ public class TareaCronograma implements Serializable {
 		return getTarea() != null ? getTarea().getTipoCosto() : 0;
 	}
 
-	public void setDias(Double dias) {
-		this.dias = dias;
+	public void setDias(Double unosDias) {
+		dias = unosDias;
+		horas = unosDias * 8; // todo: horas del proveedor
 	}
 
 	public void setEstimacion(Estimacion estimacion) {
 		this.estimacion = estimacion;
 	}
 
-	public void setHoras(Double horas) {
-		this.horas = horas;
+	public void setHoras(Double unasHoras) {
+		horas = unasHoras;
+		dias = unasHoras / 8; // todo: horas del proveedor
 	}
 
 	public void setIncluir(Boolean incluir) {
@@ -94,8 +96,11 @@ public class TareaCronograma implements Serializable {
 		this.recursos = recursos;
 	}
 
-	public void setTarea(Tarea tarea) {
-		this.tarea = tarea;
+	public void setTarea(Tarea unaTarea) {
+		tarea = unaTarea;
+		porcentaje = unaTarea.getPorcentaje();
+		incluir = unaTarea.isIncluir();
+		recursos = 1;
 	}
 
 }
