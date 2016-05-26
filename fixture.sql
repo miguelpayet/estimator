@@ -102,7 +102,7 @@ VALUES (5, 3, 'Certificación', 1, 5, 0.3, 1, 0);
 INSERT INTO tarea (idtarea, idproveedor, nombre, incluir, orden, porcentaje, tipocosto, disenotecnico) 
 VALUES (6, 3, 'Pruebas de Stress', 1, 6, 0.1, 1, 0);
 INSERT INTO tarea (idtarea, idproveedor, nombre, incluir, orden, porcentaje, tipocosto, disenotecnico) 
-VALUES (7, 2, 'Gestión', 1, 7, NULL, 3, 0);
+VALUES (7, 2, 'Gestión', 1, 7, 0.15, 3, 0);
 
 -- puntos funcionales
 INSERT INTO punto (tipo, complejidad, puntos) 
