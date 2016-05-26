@@ -42,6 +42,12 @@
             <artifactId>wicket-extensions</artifactId>
             <version>${wicket.version}</version>
         </dependency>
+        <!-- wicket-stuff editable grid -->
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-editable-grid</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
