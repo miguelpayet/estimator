@@ -146,6 +146,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		} catch (ExcepcionCronograma e) {
 			Assert.fail("ooops " + e.getMessage());
 		}
+		de.grabar(est);
 	}
 
 }

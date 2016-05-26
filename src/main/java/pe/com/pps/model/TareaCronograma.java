@@ -31,7 +31,7 @@ public class TareaCronograma implements Serializable {
 	}
 
 	public Double getDias() {
-		return dias;
+		return dias != null ? dias : 0;
 	}
 
 	public Integer getDiseñoTecnico() {
@@ -43,7 +43,7 @@ public class TareaCronograma implements Serializable {
 	}
 
 	public Double getHoras() {
-		return horas;
+		return horas != null ? horas : 0;
 	}
 
 	public Boolean getIncluir() {
@@ -51,7 +51,7 @@ public class TareaCronograma implements Serializable {
 	}
 
 	public Double getPorcentaje() {
-		return porcentaje;
+		return porcentaje != null ? porcentaje : 0;
 	}
 
 	public Double getPorcentajeTarea() {
@@ -72,7 +72,11 @@ public class TareaCronograma implements Serializable {
 
 	public void setDias(Double unosDias) {
 		dias = unosDias;
-		horas = unosDias * 8; // todo: horas del proveedor
+		if (tarea != null) {
+			horas = tarea.convertirDiasAHoras(this);
+		} else {
+			horas = null;
+		}
 	}
 
 	public void setEstimacion(Estimacion estimacion) {
@@ -81,7 +85,11 @@ public class TareaCronograma implements Serializable {
 
 	public void setHoras(Double unasHoras) {
 		horas = unasHoras;
-		dias = unasHoras / 8; // todo: horas del proveedor
+		if (tarea != null) {
+			dias = tarea.convertirHorasADias(this);
+		} else {
+			dias = null;
+		}
 	}
 
 	public void setIncluir(Boolean incluir) {

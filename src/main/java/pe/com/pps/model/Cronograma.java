@@ -28,7 +28,7 @@ public class Cronograma {
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			t.setHoras((estimacion.getEsfuerzo() - a - b) * t.getPorcentaje());
 		}
-		getTareaGestion().setHoras(getTotalHoras() * getTareaGestion().getPorcentaje());
+		getTareaGestion().setDias(getTotalDias());
 	}
 
 	private TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
@@ -63,6 +63,16 @@ public class Cronograma {
 
 	private Set<TareaCronograma> getTareasEsfuerzo() {
 		return mapaTareas.get(TipoCosto.ESFUERZO);
+	}
+
+	private Double getTotalDias() {
+		Double totalDias = 0.0;
+		for (TareaCronograma tc : mapaTareas.values()) {
+			if (!tc.getTarea().getTipoCosto().equals(TipoCosto.DURACION)) {
+				totalDias += tc.getDias();
+			}
+		}
+		return totalDias;
 	}
 
 	private Double getTotalHoras() {

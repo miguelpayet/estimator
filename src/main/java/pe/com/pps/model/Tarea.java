@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "tarea")
-//@DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tarea implements Serializable {
 
 	@Column(name = "disenotecnico")
@@ -25,10 +25,26 @@ public class Tarea implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idproveedor")
 	private Proveedor proveedor;
-	@Column(name = "tipocosto")
+	@Column(name = "tipocosto", insertable = false, updatable = false)
 	private Integer tipoCosto;
 
 	public Tarea() {
+	}
+
+	public Double convertirDiasAHoras(TareaCronograma unaTarea) {
+		Double horas = null;
+		if (unaTarea != null) {
+			horas = unaTarea.getDias() * 8; // todo:horas del proveedor
+		}
+		return horas;
+	}
+
+	public Double convertirHorasADias(TareaCronograma unaTarea) {
+		Double dias = null;
+		if (unaTarea != null) {
+			dias = unaTarea.getHoras() / 8; // todo:horas del proveedor
+		}
+		return dias;
 	}
 
 	public Integer getDiseñoTecnico() {
@@ -37,10 +53,6 @@ public class Tarea implements Serializable {
 
 	public Integer getIdtarea() {
 		return idtarea;
-	}
-
-	public Boolean isIncluir() {
-		return incluir;
 	}
 
 	public String getNombre() {
@@ -61,6 +73,10 @@ public class Tarea implements Serializable {
 
 	public Integer getTipoCosto() {
 		return tipoCosto;
+	}
+
+	public Boolean isIncluir() {
+		return incluir;
 	}
 
 	public void setDiseñoTecnico(Integer diseñoTecnico) {

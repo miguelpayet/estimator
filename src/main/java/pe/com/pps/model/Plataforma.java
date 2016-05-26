@@ -56,4 +56,8 @@ public class Plataforma implements Serializable {
 		this.nombre = nombre;
 	}
 
+	public String toString() {
+		return nombre != null ? nombre : "Sin nombre";
+	}
+
 }
