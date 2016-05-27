@@ -20,7 +20,6 @@ import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import org.wicketstuff.egrid.provider.EditableListDataProvider;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
-import pe.com.pps.dao.HibernateUtil;
 import pe.com.pps.model.CasoDeUso;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.Plataforma;
@@ -99,13 +98,13 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarLinks() {
-		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
+		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("persistir", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				log.info("grabar");
+				log.info("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
-					de.grabar(modelo);
+					de.persistir(modelo);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());
@@ -129,7 +128,6 @@ public class PaginaEstimacion extends PaginaBase {
 
 	private List<AbstractEditablePropertyColumn<CasoDeUso, String>> columnasCasosDeUso() {
 		List<AbstractEditablePropertyColumn<CasoDeUso, String>> columns = new ArrayList<>();
-		columns.add(new RequiredEditableTextFieldColumn<CasoDeUso, String>(new Model<String>("Número"), "numCaso"));
 		columns.add(new RequiredEditableTextFieldColumn<CasoDeUso, String>(new Model<String>("Descripción"), "descripcion"));
 		columns.add(new AbstractEditablePropertyColumn<CasoDeUso, String>(new Model<String>("Complejidad"), "complejidad") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {

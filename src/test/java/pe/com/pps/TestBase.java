@@ -16,7 +16,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import pe.com.pps.dao.HibernateUtil;
 
@@ -27,11 +30,10 @@ public abstract class TestBase<T> {
 
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydb";
-	private static final String USER = "root";
 	private static final String PASSWORD = "root";
-	private static final Logger logger = LogManager.getLogger(TestBase.class);
+	private static final String USER = "root";
 	private static IDatabaseTester databaseTester;
-
+	private static final Logger logger = LogManager.getLogger(TestBase.class);
 	Session sesion;
 	Transaction transaccion;
 

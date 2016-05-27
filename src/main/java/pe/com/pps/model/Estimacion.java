@@ -15,11 +15,11 @@ public class Estimacion implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Estimacion.class);
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "estimacion")
 	private Set<Actor> actores;
 	@Transient
 	private boolean actualizado;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@Column(name = "eds")
 	private String eds;

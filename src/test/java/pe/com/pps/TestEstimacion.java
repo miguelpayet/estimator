@@ -52,6 +52,8 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		est.setIdEstimacion(ESTIMACION);
 		est.setEds("Kenji Dettleff");
 		est.setNombre("Reporte de Impresión para Cascos");
+		DaoEstimacion de = new DaoEstimacion();
+		de.persistir(est);
 		// casos de uso
 		DaoPlataforma dp = new DaoPlataforma();
 		Plataforma p = dp.get(1);
@@ -59,7 +61,6 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			CasoDeUso cu = new CasoDeUso();
 			cu.setComplejidad(Complejidad.ALTA);
 			cu.setDescripcion("");
-			cu.setNumCaso(1);
 			cu.setPlataforma(p);
 			est.addCasoDeUso(cu);
 		}
@@ -67,7 +68,6 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			CasoDeUso cu = new CasoDeUso();
 			cu.setComplejidad(Complejidad.ALTA);
 			cu.setDescripcion("");
-			cu.setNumCaso(2);
 			cu.setPlataforma(p);
 			est.addCasoDeUso(cu);
 		}
@@ -76,7 +76,6 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			Actor act = new Actor();
 			act.setComplejidad(Complejidad.ALTA);
 			act.setDescripcion("Actor 1");
-			act.setNumActor(1);
 			act.setPlataforma(p);
 			est.addActor(act);
 		}
@@ -84,7 +83,6 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			Actor act = new Actor();
 			act.setComplejidad(Complejidad.ALTA);
 			act.setDescripcion("Actor 2");
-			act.setNumActor(2);
 			act.setPlataforma(p);
 			est.addActor(act);
 		}
@@ -120,8 +118,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		Assert.assertThat(est.getActores().size(), org.hamcrest.CoreMatchers.is(2));
 		Assert.assertThat(est.getCasosDeUso().size(), org.hamcrest.CoreMatchers.is(2));
 		Assert.assertThat(est.getFactoresEstimacion().size(), org.hamcrest.CoreMatchers.is(factoresTecnicos.size() + factoresAmbientales.size()));
-		// grabar
-		DaoEstimacion de = new DaoEstimacion();
+		// persistir
 		de.grabar(est);
 		logger.info("grabado");
 	}
@@ -146,7 +143,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		} catch (ExcepcionCronograma e) {
 			Assert.fail("ooops " + e.getMessage());
 		}
-		de.grabar(est);
+		de.persistir(est);
 	}
 
 }

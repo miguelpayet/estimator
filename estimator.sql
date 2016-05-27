@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `actor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `actor` (
+  `idactor` int(11) NOT NULL AUTO_INCREMENT,
   `idestimacion` int(6) NOT NULL,
-  `numactor` int(11) NOT NULL,
   `complejidad` int(1) DEFAULT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
   `idplataforma` int(11) NOT NULL,
-  PRIMARY KEY (`idestimacion`,`numactor`),
+  PRIMARY KEY (`idactor`),
   KEY `fk_actor_estimacion1_idx` (`idestimacion`),
   KEY `fk_actor_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_actor_estimacion1` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -44,12 +44,12 @@ DROP TABLE IF EXISTS `caso_de_uso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `caso_de_uso` (
+  `idcaso` int(11) NOT NULL AUTO_INCREMENT,
   `idestimacion` int(6) NOT NULL,
-  `numcaso` int(11) NOT NULL,
   `complejidad` int(1) NOT NULL,
   `descripcion` varchar(45) NOT NULL,
   `idplataforma` int(11) NOT NULL,
-  PRIMARY KEY (`numcaso`,`idestimacion`),
+  PRIMARY KEY (`idcaso`),
   KEY `fk_caso_de_uso_estimacion_idx` (`idestimacion`),
   KEY `fk_caso_de_uso_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_caso_de_uso_estimacion` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -245,4 +245,4 @@ CREATE TABLE `tarea` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-27  9:12:43
+-- Dump completed on 2016-05-27  9:58:45

@@ -4,27 +4,23 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "caso_de_uso")
-@IdClass(CasoDeUsoPK.class)
 public class CasoDeUso extends Puntuable {
 
 	@Id
-	@Column(name = "numcaso")
-	private Integer numCaso;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idcaso")
+	private Integer idCaso;
 
 	public CasoDeUso() {
 		super();
 	}
 
-	public Integer getNumCaso() {
-		return numCaso;
+	public Integer getIdCaso() {
+		return idCaso;
 	}
 
 	public Punto getPunto() {
 		return super.getPunto(TipoPunto.CASO_DE_USO);
-	}
-
-	public void setNumCaso(Integer numCaso) {
-		this.numCaso = numCaso;
 	}
 
 	public String toString() {

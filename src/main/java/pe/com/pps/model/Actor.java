@@ -4,26 +4,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "actor")
-@IdClass(ActorPK.class)
 public class Actor extends Puntuable {
 
 	@Id
-	@Column(name = "numactor")
-	private Integer numActor;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idactor")
+	private Integer idActor;
 
 	public Actor() {
 	}
 
-	public Integer getNumActor() {
-		return numActor;
+	public Integer getIdActor() {
+		return idActor;
 	}
 
 	public Punto getPunto() {
 		return super.getPunto(TipoPunto.ACTOR);
-	}
-
-	public void setNumActor(Integer numActor) {
-		this.numActor = numActor;
 	}
 
 	public String toString() {

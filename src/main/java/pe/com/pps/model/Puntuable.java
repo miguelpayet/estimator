@@ -18,7 +18,6 @@ public abstract class Puntuable implements Serializable {
 	Integer complejidadAnterior;
 	@Column(name = "descripcion")
 	protected String descripcion;
-	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
 	Estimacion estimacion;

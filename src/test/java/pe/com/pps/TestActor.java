@@ -10,18 +10,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import pe.com.pps.dao.DaoActor;
 import pe.com.pps.dao.DaoEstimacion;
+import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.Actor;
-import pe.com.pps.model.ActorPK;
 import pe.com.pps.model.Estimacion;
 
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TestActor extends TestBase<Actor> {
 
-	private static final Logger logger = LogManager.getLogger(TestActor.class);
 	private static IDatabaseTester databaseTester;
+	private static final Logger logger = LogManager.getLogger(TestActor.class);
 
 	@BeforeClass
 	public static void cargarDataActor() throws Exception {
@@ -33,6 +31,21 @@ public class TestActor extends TestBase<Actor> {
 		TestBase.descargarData(databaseTester);
 	}
 
+	//@Test
+	public void crearActor() {
+		DaoEstimacion de = new DaoEstimacion();
+		Estimacion est = de.get(1);
+		Assert.assertNotNull(est);
+		DaoActor da = new DaoActor();
+		Actor a = new Actor();
+		a.setComplejidad(1);
+		a.setDescripcion("hola");
+		DaoPlataforma dp = new DaoPlataforma();
+		a.setPlataforma(dp.get(1));
+		est.addActor(a);
+		de.persistir(est);
+	}
+
 	@Test
 	public void leerActor() {
 		logger.info("leerActor()");
@@ -41,17 +54,11 @@ public class TestActor extends TestBase<Actor> {
 		Assert.assertNotNull(est);
 		DaoActor da = new DaoActor();
 		// actores
-		Map<Integer, Integer> actores = new HashMap<>();
-		actores.put(1, 1);
-		actores.put(2, 2);
-		actores.put(3, 3);
-		for (Map.Entry<Integer, Integer> entry : actores.entrySet()) {
-			ActorPK pk = new ActorPK();
-			pk.setNumActor(entry.getKey());
-			pk.setEstimacion(est);
-			Actor a = da.get(pk);
+		int[] actores = {1,2,3};
+		for (int i = 0; i <= 2; i++) {
+			Actor a = da.get(actores[i]);
 			Assert.assertNotNull(a);
-			Assert.assertThat(a.getPunto().getPuntos(), org.hamcrest.CoreMatchers.is(entry.getValue()));
+			Assert.assertThat(a.getPunto().getPuntos(), org.hamcrest.CoreMatchers.is(actores[i]));
 		}
 	}
 

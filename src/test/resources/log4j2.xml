@@ -18,7 +18,10 @@
         <logger name="pe.com.pps" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="org.dbunit" level="ERROR" additivity="false">
+        <logger name="org.dbunit" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="org.junit" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <Root level="WARN">

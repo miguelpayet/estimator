@@ -4,7 +4,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import java.util.List;
-import java.util.Set;
 
 public class Dao<T> {
 
@@ -27,12 +26,16 @@ public class Dao<T> {
 	}
 
 	public void grabar(T unObjeto) {
-		getSesion().persist(unObjeto);
+		getSesion().saveOrUpdate(unObjeto);
 	}
 
 	public List<T> listar() {
 		Criteria crit = getSesion().createCriteria(getClaseModelo());
 		return crit.list();
+	}
+
+	public void persistir(T unObjeto) {
+		getSesion().persist(unObjeto);
 	}
 
 }
