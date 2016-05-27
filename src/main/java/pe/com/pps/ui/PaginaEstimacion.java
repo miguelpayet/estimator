@@ -20,6 +20,7 @@ import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import org.wicketstuff.egrid.provider.EditableListDataProvider;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
+import pe.com.pps.dao.HibernateUtil;
 import pe.com.pps.model.CasoDeUso;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.Plataforma;

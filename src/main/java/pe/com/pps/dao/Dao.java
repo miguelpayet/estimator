@@ -27,7 +27,7 @@ public class Dao<T> {
 	}
 
 	public void grabar(T unObjeto) {
-		getSesion().saveOrUpdate(unObjeto);
+		getSesion().persist(unObjeto);
 	}
 
 	public List<T> listar() {
