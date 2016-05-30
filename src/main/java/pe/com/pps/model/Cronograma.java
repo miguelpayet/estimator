@@ -2,9 +2,10 @@ package pe.com.pps.model;
 
 import com.google.common.collect.HashMultimap;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Cronograma {
+public class Cronograma implements Serializable {
 
 	private Estimacion estimacion;
 	private HashMultimap<Integer, TareaCronograma> mapaTareas;

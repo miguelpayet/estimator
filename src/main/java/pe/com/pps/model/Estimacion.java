@@ -15,11 +15,11 @@ public class Estimacion implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Estimacion.class);
 
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
 	@Transient
 	private boolean actualizado;
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@Column(name = "eds")
 	private String eds;
@@ -45,10 +45,6 @@ public class Estimacion implements Serializable {
 		actores = new HashSet<>();
 		factoresEstimacion = new HashSet<>();
 		tareasCronograma = new ArrayList<>();
-	}
-
-	public Cronograma getCronograma() {
-		return new Cronograma(this);
 	}
 
 	public void addActor(Actor unActor) {
@@ -117,6 +113,10 @@ public class Estimacion implements Serializable {
 		return casosDeUso;
 	}
 
+	public Cronograma getCronograma() {
+		return new Cronograma(this);
+	}
+
 	public String getEds() {
 		return eds;
 	}
@@ -162,6 +162,24 @@ public class Estimacion implements Serializable {
 	public List<TareaCronograma> leerTareas() {
 		DaoCronograma dc = new DaoCronograma();
 		return dc.listar();
+	}
+
+	public void removeActor(Actor unActor) {
+		if (unActor != null) {
+			if (actores.contains(unActor)) {
+				actores.remove(unActor);
+				unActor.setEstimacion(null);
+			}
+		}
+	}
+
+	public void removeCasoDeUso(CasoDeUso unCaso) {
+		if (unCaso != null) {
+			if (casosDeUso.contains(unCaso)) {
+				casosDeUso.remove(unCaso);
+				unCaso.setEstimacion(null);
+			}
+		}
 	}
 
 	public void setActores(Set<Actor> actores) {

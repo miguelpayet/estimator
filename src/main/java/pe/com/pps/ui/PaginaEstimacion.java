@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -17,12 +18,9 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
-import org.wicketstuff.egrid.provider.EditableListDataProvider;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
-import pe.com.pps.model.CasoDeUso;
-import pe.com.pps.model.Estimacion;
-import pe.com.pps.model.Plataforma;
+import pe.com.pps.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +43,7 @@ public class PaginaEstimacion extends PaginaBase {
 		agregarLinks();
 		agregarFeedback();
 		agregarGridCasosDeUso();
+		agregarGridActores();
 	}
 
 	public PaginaEstimacion(final PageParameters parameters) {
@@ -68,10 +67,35 @@ public class PaginaEstimacion extends PaginaBase {
 		add(feedback);
 	}
 
+	private void agregarGridActores() {
+		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(modelo), 5, Actor.class) {
+
+			@Override
+			protected void onCancel(AjaxRequestTarget target) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onDelete(AjaxRequestTarget target, IModel<Actor> rowModel) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onSave(AjaxRequestTarget target, IModel<Actor> rowModel) {
+				target.add(feedback);
+			}
+
+		};
+		add(grid);
+	}
+
 	private void agregarGridCasosDeUso() {
-		List<AbstractEditablePropertyColumn<CasoDeUso, String>> columnas = columnasCasosDeUso();
-		EditableListDataProvider<CasoDeUso, String> provider = getProvider();
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasCasosDeUso(), new CasoDeUsoProvider(modelo), 5, CasoDeUso.class) {
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(modelo), 5, CasoDeUso.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -98,7 +122,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarLinks() {
-		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("persistir", campos) {
+		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				log.info("persistir");
@@ -126,19 +150,20 @@ public class PaginaEstimacion extends PaginaBase {
 		add(new Label("titulo", titulo));
 	}
 
-	private List<AbstractEditablePropertyColumn<CasoDeUso, String>> columnasCasosDeUso() {
-		List<AbstractEditablePropertyColumn<CasoDeUso, String>> columns = new ArrayList<>();
-		columns.add(new RequiredEditableTextFieldColumn<CasoDeUso, String>(new Model<String>("Descripción"), "descripcion"));
-		columns.add(new AbstractEditablePropertyColumn<CasoDeUso, String>(new Model<String>("Complejidad"), "complejidad") {
+	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
+	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
+		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
+		columns.add(new RequiredEditableTextFieldColumn<T, String>(new Model<String>("Descripción"), "descripcion"));
+		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<String>("Complejidad"), "complejidad") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<CasoDeUso, String>(componentId, this, Arrays.asList("1", "2", "3"));
+				return new EditableRequiredDropDownCellPanel<T, String>(componentId, this, Arrays.asList("1", "2", "3"));
 			}
 		});
 		DaoPlataforma dp = new DaoPlataforma();
 		List<Plataforma> plataformas = dp.listar();
-		columns.add(new AbstractEditablePropertyColumn<CasoDeUso, String>(new Model<String>("Plataforma"), "plataforma") {
+		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<String>("Plataforma"), "plataforma") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<CasoDeUso, String>(componentId, this, plataformas);
+				return new EditableRequiredDropDownCellPanel<T, String>(componentId, this, plataformas);
 			}
 		});
 		return columns;
@@ -148,12 +173,8 @@ public class PaginaEstimacion extends PaginaBase {
 		return modelo.getCasosDeUso();
 	}
 
-	private EditableListDataProvider<CasoDeUso, String> getProvider() {
-		return null;
-	}
-
 	private void init() {
-		modelo = new Estimacion();
+		modelo = EstimacionFactory.crear();
 	}
 
 }
