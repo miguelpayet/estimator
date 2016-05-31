@@ -69,6 +69,7 @@ public class Estimacion implements Serializable {
 		TareaCronograma tc = new TareaCronograma();
 		tc.setEstimacion(this);
 		tc.setTarea(unaTarea);
+		tc.setIncluir(unaTarea.isIncluir());
 		tareasCronograma.add(tc);
 	}
 

@@ -4,11 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -33,21 +33,29 @@ public class PaginaEstimacion extends PaginaBase {
 
 	private Form campos;
 	private FeedbackPanel feedback;
+	private Form formCronograma;
 	private Estimacion modelo;
 
 	public PaginaEstimacion() {
-		super();
-		init();
+		this(null);
+	}
+
+	public PaginaEstimacion(final PageParameters parameters) {
+		super(parameters);
+		// todo: código para crear una estimación a partir del parametro
+		if (modelo == null) {
+			init();
+		}
 		agregarTitulo(null);
 		agregarCampos();
 		agregarLinks();
 		agregarFeedback();
 		agregarGridCasosDeUso();
 		agregarGridActores();
-	}
-
-	public PaginaEstimacion(final PageParameters parameters) {
-		super(parameters);
+		crearFormCronograma();
+		agregarFactoresAmbiente();
+		agregarFactoresTecnicos();
+		agregarCronograma();
 	}
 
 	private void agregarCampos() {
@@ -59,6 +67,60 @@ public class PaginaEstimacion extends PaginaBase {
 		campos.add(eds);
 		TextField<String> descripcion = new TextField("nombre", new PropertyModel<String>(modelo, "nombre"));
 		campos.add(descripcion);
+	}
+
+	private void agregarCronograma() { // todo: refactorizar este metodo
+		RepeatingView rv = new RepeatingView("fila-cronograma");
+		rv.setOutputMarkupId(true);
+		formCronograma.add(rv);
+		Cronograma c = new Cronograma(modelo);
+		try {
+			String id = rv.newChildId();
+			rv.add(new PanelTareaFija(id, new Model<>(c.getTareaFija())));
+		} catch (ExcepcionCronograma e) {
+			log.error("no hay tarea fija");
+		}
+		try {
+			String id = rv.newChildId();
+			rv.add(new PanelTareaDuracion(id, new Model<TareaCronograma>(c.getTareaDuracion())));
+		} catch (ExcepcionCronograma e) {
+			log.error("no hay tarea de acompañamiento");
+		}
+		for (TareaCronograma t : c.getTareasEsfuerzo()) {
+			String id = rv.newChildId();
+			rv.add(new PanelTareaEsfuerzo(id, new Model<TareaCronograma>(t)));
+		}
+		try {
+			String id = rv.newChildId();
+			rv.add(new PanelTareaGestion(id, new Model<TareaCronograma>(c.getTareaGestion())));
+		} catch (ExcepcionCronograma e) {
+			log.error("no hay tarea de acompañamiento");
+		}
+		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
+			protected void onSubmit(AjaxRequestTarget target, Form unForm) {
+				log.info("actualizar cronograma");
+				try {
+					modelo.generarCronograma();
+					target.add(formCronograma);
+				} catch (ExcepcionCronograma e) {
+					error("error al generar cronograma: " + e.getMessage());
+					log.error(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void agregarFactoresAmbiente() {
+		RepeatingView rv = new RepeatingView("fila-factor-ambiente");
+		rv.setOutputMarkupId(true);
+		formCronograma.add(rv);
+	}
+
+	private void agregarFactoresTecnicos() {
+		RepeatingView rv = new RepeatingView("fila-factor-tecnico");
+		rv.setOutputMarkupId(true);
+		formCronograma.add(rv);
 	}
 
 	private void agregarFeedback() {
@@ -161,12 +223,18 @@ public class PaginaEstimacion extends PaginaBase {
 		});
 		DaoPlataforma dp = new DaoPlataforma();
 		List<Plataforma> plataformas = dp.listar();
+		// todo: esta columna que sea obligatoria
 		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<String>("Plataforma"), "plataforma") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<T, String>(componentId, this, plataformas);
 			}
 		});
 		return columns;
+	}
+
+	private void crearFormCronograma() {
+		formCronograma = new Form<Estimacion>("form-cronograma", new Model<Estimacion>(modelo));
+		add(formCronograma);
 	}
 
 	private Set<CasoDeUso> getCasosDeUso() {

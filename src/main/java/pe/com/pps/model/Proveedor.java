@@ -22,4 +22,24 @@ public class Proveedor implements Serializable {
 	public Proveedor() {
 	}
 
+	public float getCosto() {
+		return costo;
+	}
+
+	public Integer getIdProveedor() {
+		return idProveedor;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 }

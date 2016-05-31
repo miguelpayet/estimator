@@ -54,6 +54,13 @@ public class TareaCronograma implements Serializable {
 		return getTarea() != null ? getTarea().getNombre() : "sin nombre";
 	}
 
+	public String getNombreProveedor() {
+		if (getTarea() != null) {
+			return getTarea().getProveedor() != null ? getTarea().getProveedor().getNombre() : "sin proveedor";
+		}
+		return "sin tarea";
+	}
+
 	public Double getPorcentaje() {
 		return porcentaje != null ? porcentaje : 0;
 	}

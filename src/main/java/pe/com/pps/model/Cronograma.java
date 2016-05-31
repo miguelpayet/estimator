@@ -15,6 +15,7 @@ public class Cronograma implements Serializable {
 		init();
 	}
 
+	// todo: agregar lógica para excluir tareas
 	public void calcular() throws ExcepcionCronograma {
 		double a;
 		if (getTareaFija().getHoras() != null) {
@@ -32,7 +33,7 @@ public class Cronograma implements Serializable {
 		getTareaGestion().setDias(getTotalDias());
 	}
 
-	private TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
+	public TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
 		Set<TareaCronograma> lista = mapaTareas.get(TipoCosto.ESFUERZO);
 		for (TareaCronograma t : lista) {
 			if (t.getDiseñoTecnico().equals(1)) {
@@ -42,7 +43,7 @@ public class Cronograma implements Serializable {
 		throw new ExcepcionCronograma("no existe tarea de diseño técnico");
 	}
 
-	private TareaCronograma getTareaDuracion() throws ExcepcionCronograma {
+	public TareaCronograma getTareaDuracion() throws ExcepcionCronograma {
 		return getTareaUnica(TipoCosto.DURACION);
 	}
 
@@ -50,7 +51,7 @@ public class Cronograma implements Serializable {
 		return getTareaUnica(TipoCosto.FIJO);
 	}
 
-	private TareaCronograma getTareaGestion() throws ExcepcionCronograma {
+	public TareaCronograma getTareaGestion() throws ExcepcionCronograma {
 		return getTareaUnica(TipoCosto.GESTION);
 	}
 
@@ -62,7 +63,7 @@ public class Cronograma implements Serializable {
 		return lista.iterator().next();
 	}
 
-	private Set<TareaCronograma> getTareasEsfuerzo() {
+	public Set<TareaCronograma> getTareasEsfuerzo() {
 		return mapaTareas.get(TipoCosto.ESFUERZO);
 	}
 

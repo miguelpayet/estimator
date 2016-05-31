@@ -1,6 +1,6 @@
 <wicket:extend xmlns:wicket="http://www.w3.org/1999/xhtml">
     <div>
-        <p><span wicket:id="titulo"/></p>
+        <h1><span wicket:id="titulo"/></h1>
     </div>
     <div class="estimacion">
         <form wicket:id="campos">
@@ -18,28 +18,71 @@
             </div>
         </form>
         <div>
-            <p>casos de uso</p>
+            <h2>casos de uso</h2>
         </div>
         <div wicket:id="grid-casos-de-uso"></div>
         <div>
-            <p>actores</p>
+            <h2>actores</h2>
         </div>
         <div wicket:id="grid-actores"></div>
-        <div>
-            <p>cronograma</p>
-        </div>
-        <!--form>
-            <table wicket:id="tabla-cronograma">
-
-            </table>
-        </form-->
-        <div>
-            <p>
-                <a wicket:id="grabar">grabar</a>
-            </p>
-        </div>
-        <div>
-            <div wicket:id="feedback"></div>
-        </div>
+        <form wicket:id="form-cronograma">
+            <div class="factores">
+                <h2>factores de ajuste</h2>
+                <div class="tecnicos">
+                    <h3>técnicos</h3>
+                    <table> <!-- wicket:id="tabla-factores-tecnicos"-->
+                        <thead>
+                        <tr>
+                            <th>nombre</th>
+                            <th>complejidad</th>
+                            <th>peso</th>
+                            <th>factor de complejidad</th>
+                        </tr>
+                        </thead>
+                        <tr wicket:id="fila-factor-tecnico"></tr>
+                    </table>
+                </div>
+                <div class="ambiente">
+                    <h3>ambiente</h3>
+                    <table> <!-- wicket:id="tabla-factores-ambiente"-->
+                        <thead>
+                        <tr>
+                            <th>nombre</th>
+                            <th>complejidad</th>
+                            <th>peso</th>
+                            <th>factor de complejidad</th>
+                        </tr>
+                        </thead>
+                        <tr wicket:id="fila-factor-ambiente"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="cronograma">
+                <h2>cronograma</h2>
+                <table> <!-- wicket:id="tabla-cronograma"-->
+                    <thead>
+                    <tr>
+                        <th>incluir</th>
+                        <th>tarea</th>
+                        <th>proveedor</th>
+                        <th>porcentaje</th>
+                        <th>recursos</th>
+                        <th>dias</th>
+                        <th>horas</th>
+                    </tr>
+                    </thead>
+                    <tr wicket:id="fila-cronograma"></tr>
+                </table>
+            </div>
+            <a wicket:id="actualizar-cronograma">actualizar</a>
+        </form>
+    </div>
+    <div>
+        <p>
+            <a wicket:id="grabar">grabar</a>
+        </p>
+    </div>
+    <div>
+        <div wicket:id="feedback"></div>
     </div>
 </wicket:extend>
