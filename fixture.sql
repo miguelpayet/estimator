@@ -40,48 +40,48 @@ insert into plataforma (idplataforma, nombre, factorproductividad) values (8, 'B
 insert into plataforma (idplataforma, nombre, factorproductividad) values (9, 'HP Exstream', 28);
 
 -- factores
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (1, 2, 'Sistema Distribuido', 2);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (2, 2, 'Desempeño, Tiempo de Respuesta', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (3, 2, 'Eficiencia de Usuario Final', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (4, 2, 'Grado de Complejidad del Procesamiento Interno', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (5, 2, 'Reusabilidad del Código', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (6, 2, 'Facilidad de Instalación', 0.5);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (7, 2, 'Portabilidad', 2);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (8, 2, 'Facilidad al Cambio', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (9, 2, 'Concurrencia', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (10, 2, 'Características Especiales Seguridad', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (11, 2, 'Proporciona Acceso Directo a Software de Terceros', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (12, 2, 'Se requieren facilidades de Capacitación al usuario', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (13, 2, 'Grado de complejidad del proceso de certificación', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (14, 1, 'Familiaridad con el modelo del proyecto utilizado', 1.5);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (15, 1, 'Experiencia en la Aplicación', 0.5);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (16, 1, 'Experiencia en Orientación a Objetos', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (17, 1, 'Capacidades del Líder Técnico', 0.5);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (18, 1, 'Motivación', 1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (19, 1, 'Requerimientos Estables', 2);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (20, 1, 'Desarrolladores de Tiempo Parcial', -1);
-INSERT INTO factor (idfactor, tipofactor, nombre, peso) 
-VALUES (21, 1, 'Lenguaje de Programación', -2);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (1, 2, 'Sistema Distribuido', 2, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (2, 2, 'Desempeño, Tiempo de Respuesta', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (3, 2, 'Eficiencia de Usuario Final', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (4, 2, 'Grado de Complejidad del Procesamiento Interno', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (5, 2, 'Reusabilidad del Código', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (6, 2, 'Facilidad de Instalación', 0.5, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (7, 2, 'Portabilidad', 2, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (8, 2, 'Facilidad al Cambio', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (9, 2, 'Concurrencia', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (10, 2, 'Características Especiales Seguridad', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (11, 2, 'Proporciona Acceso Directo a Software de Terceros', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (12, 2, 'Se requieren facilidades de Capacitación al usuario', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (13, 2, 'Grado de complejidad del proceso de certificación', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (14, 1, 'Familiaridad con el modelo del proyecto utilizado', 1.5, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (15, 1, 'Experiencia en la Aplicación', 0.5, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (16, 1, 'Experiencia en Orientación a Objetos', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (17, 1, 'Capacidades del Líder Técnico', 0.5, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (18, 1, 'Motivación', 1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (19, 1, 'Requerimientos Estables', 2, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (20, 1, 'Desarrolladores de Tiempo Parcial', -1, 0, 5);
+INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
+VALUES (21, 1, 'Lenguaje de Programación', -2, 0, 5);
 
 -- proveedores
 insert into proveedor (idproveedor, nombre, costohora) values (1,'Pacífico', 40);
