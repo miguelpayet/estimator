@@ -70,7 +70,7 @@ public class Cronograma implements Serializable {
 	private Double getTotalDias() {
 		Double totalDias = 0.0;
 		for (TareaCronograma tc : mapaTareas.values()) {
-			if (!tc.getTarea().getTipoCosto().equals(TipoCosto.DURACION)) {
+			if (!tc.getTarea().getTipoCosto().equals(TipoCosto.DURACION) && !tc.getTarea().getTipoCosto().equals(TipoCosto.GESTION)) {
 				totalDias += tc.getDias();
 			}
 		}

@@ -45,11 +45,11 @@ public abstract class Factor implements Serializable {
 	}
 
 	public Integer getMaximo() {
-		return maximo;
+		return maximo != null ? maximo : 0;
 	}
 
 	public Integer getMinimo() {
-		return minimo;
+		return minimo != null ? minimo : 0;
 	}
 
 	public String getNombre() {

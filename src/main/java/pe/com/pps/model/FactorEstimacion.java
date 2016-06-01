@@ -19,12 +19,32 @@ public class FactorEstimacion implements Serializable {
 	@Column(name = "valor")
 	protected Integer valor;
 
+	public Double getComplejidad() {
+		return getValor() * getFactor().getPeso();
+	}
+
 	public Estimacion getEstimacion() {
 		return estimacion;
 	}
 
 	public Factor getFactor() {
 		return factor;
+	}
+
+	public Integer getMaximo() {
+		return getFactor() != null ? getFactor().getMaximo() : 0;
+	}
+
+	public Integer getMinimo() {
+		return getFactor() != null ? getFactor().getMinimo() : 0;
+	}
+
+	public String getNombre() {
+		return getFactor() != null ? getFactor().getNombre() : "sin factor";
+	}
+
+	public Double getPeso() {
+		return getFactor() != null ? getFactor().getPeso() : 0.0;
 	}
 
 	public Integer getValor() {
@@ -42,5 +62,4 @@ public class FactorEstimacion implements Serializable {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
-
 }

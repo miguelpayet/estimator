@@ -76,7 +76,7 @@ public class Estimacion implements Serializable {
 	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
 		Double factor = 0.0;
 		for (FactorEstimacion f : unosFactores) {
-			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
+			log.debug(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
 			factor += (f.getValor() * f.getFactor().getPeso());
 		}
 		log.debug("factor de complejidad " + factor);
@@ -97,11 +97,12 @@ public class Estimacion implements Serializable {
 		return factor;
 	}
 
-	private Set<FactorEstimacion> extraerFactores(Integer unTipo) {
+	public Set<FactorEstimacion> extraerFactores(Integer unTipo) {
 		return factoresEstimacion.stream().filter(f -> f.getFactor().getTipoFactor().equals(unTipo)).collect(Collectors.toSet());
 	}
 
 	public void generarCronograma() throws ExcepcionCronograma {
+		totalizar(true);
 		Cronograma c = new Cronograma(this);
 		c.calcular();
 	}
@@ -254,7 +255,11 @@ public class Estimacion implements Serializable {
 	}
 
 	public void totalizar() {
-		if (!actualizado) {
+		totalizar(false);
+	}
+
+	public void totalizar(Boolean unForzar) {
+		if (!actualizado || unForzar) {
 			Double factorAjuste = calcularFactorTecnico() * calcularFactorAmbiental();
 			sumarPuntos(factorAjuste);
 			sumarEsfuerzo(factorAjuste);

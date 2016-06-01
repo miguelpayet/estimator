@@ -50,8 +50,8 @@ public class PaginaEstimacion extends PaginaBase {
 		agregarCampos();
 		agregarLinks();
 		agregarFeedback();
-		agregarGridCasosDeUso();
 		agregarGridActores();
+		agregarGridCasosDeUso();
 		crearFormCronograma();
 		agregarFactoresAmbiente();
 		agregarFactoresTecnicos();
@@ -111,16 +111,22 @@ public class PaginaEstimacion extends PaginaBase {
 		});
 	}
 
-	private void agregarFactoresAmbiente() {
-		RepeatingView rv = new RepeatingView("fila-factor-ambiente");
+	private void agregarFactores(String unSufijo, Integer unTipo) {
+		RepeatingView rv = new RepeatingView("fila-factor-" + unSufijo);
 		rv.setOutputMarkupId(true);
 		formCronograma.add(rv);
+		for (FactorEstimacion f : modelo.extraerFactores(unTipo)) {
+			rv.add(new PanelFactor(rv.newChildId(), new Model<>(f)));
+		}
+	}
+
+	private void agregarFactoresAmbiente() {
+		agregarFactores("ambiente", TipoFactor.AMBIENTE);
 	}
 
 	private void agregarFactoresTecnicos() {
-		RepeatingView rv = new RepeatingView("fila-factor-tecnico");
-		rv.setOutputMarkupId(true);
-		formCronograma.add(rv);
+		agregarFactores("tecnico", TipoFactor.TECNICO);
+
 	}
 
 	private void agregarFeedback() {
