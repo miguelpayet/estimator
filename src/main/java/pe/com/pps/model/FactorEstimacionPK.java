@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+@Deprecated
 @Embeddable
 public class FactorEstimacionPK implements Serializable {
 

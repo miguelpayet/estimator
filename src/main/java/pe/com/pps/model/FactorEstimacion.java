@@ -4,18 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@IdClass(FactorEstimacionPK.class)
 @Table(name = "factor_estimacion")
 public class FactorEstimacion implements Serializable {
 
-	@Id
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
 	protected Estimacion estimacion;
-	@Id
 	@ManyToOne
 	@JoinColumn(name = "idfactor", nullable = false)
 	protected Factor factor;
+	@Id
+	@Column(name = "idfactorestimacion")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idFactorEstimacion;
 	@Column(name = "valor")
 	protected Integer valor;
 
@@ -29,6 +30,10 @@ public class FactorEstimacion implements Serializable {
 
 	public Factor getFactor() {
 		return factor;
+	}
+
+	public Integer getIdFactorEstimacion() {
+		return idFactorEstimacion;
 	}
 
 	public Integer getMaximo() {
@@ -62,4 +67,5 @@ public class FactorEstimacion implements Serializable {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
+
 }
