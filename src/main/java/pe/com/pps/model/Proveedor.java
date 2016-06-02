@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "proveedor")
-public class Proveedor implements Serializable {
+public class Proveedor implements  Identificable<Integer> ,Serializable {
 
 	@Column(name = "costohora")
 	private float costo;
@@ -26,7 +26,7 @@ public class Proveedor implements Serializable {
 		return costo;
 	}
 
-	public Integer getIdProveedor() {
+	public Integer getId() {
 		return idProveedor;
 	}
 

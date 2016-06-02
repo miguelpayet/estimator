@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "factor_estimacion")
-public class FactorEstimacion implements Serializable {
+public class FactorEstimacion implements Identificable<Integer>, Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
@@ -32,7 +32,8 @@ public class FactorEstimacion implements Serializable {
 		return factor;
 	}
 
-	public Integer getIdFactorEstimacion() {
+	@Override
+	public Integer getId() {
 		return idFactorEstimacion;
 	}
 

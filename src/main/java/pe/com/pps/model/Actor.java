@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "actor")
-public class Actor extends Puntuable {
+public class Actor extends Puntuable  implements Identificable<Integer>  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +12,11 @@ public class Actor extends Puntuable {
 	private Integer idActor;
 
 	public Actor() {
+	}
+
+	@Override
+	public Integer getId() {
+		return null;
 	}
 
 	public Integer getIdActor() {

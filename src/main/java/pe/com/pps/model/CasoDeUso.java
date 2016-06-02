@@ -1,10 +1,11 @@
 package pe.com.pps.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "caso_de_uso")
-public class CasoDeUso extends Puntuable {
+public class CasoDeUso extends Puntuable implements Identificable<Integer> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,8 @@ public class CasoDeUso extends Puntuable {
 		super();
 	}
 
-	public Integer getIdCaso() {
+	@Override
+	public Integer getId() {
 		return idCaso;
 	}
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "plataforma")
-public class Plataforma implements Serializable {
+public class Plataforma implements Identificable<Integer>, Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
 	private List<Actor> actores;
@@ -34,6 +34,11 @@ public class Plataforma implements Serializable {
 
 	public Double getFactorProductividad() {
 		return factorProductividad;
+	}
+
+	@Override
+	public Integer getId() {
+		return idPlataforma;
 	}
 
 	public String getNombre() {

@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "tarea")
 @DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Tarea implements Serializable {
+public class Tarea implements Identificable<Integer>, Serializable {
 
 	@Column(name = "disenotecnico")
 	private Integer diseñoTecnico;
@@ -51,7 +51,8 @@ public class Tarea implements Serializable {
 		return diseñoTecnico;
 	}
 
-	public Integer getIdtarea() {
+	@Override
+	public Integer getId() {
 		return idtarea;
 	}
 
