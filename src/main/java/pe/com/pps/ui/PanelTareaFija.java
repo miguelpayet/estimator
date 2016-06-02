@@ -22,6 +22,7 @@ public class PanelTareaFija extends PanelCronograma {
 	protected void agregarTarea() {
 		super.agregarTarea();
 		getCampoPorcentaje().setEnabled(false);
+		getCheckboxIncluir().setEnabled(false);
 		add(new Label("cantidad-recursos", new Model<Integer>(1)));
 		add(new TextField<Double>("dias", new PropertyModel<Double>(getModelObject(), "dias")));
 		add(new Label("horas", new PropertyModel<Double>(getModelObject(), "horas")));

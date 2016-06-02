@@ -18,6 +18,7 @@ public class PanelTareaDuracion extends PanelCronograma {
 
 	protected void agregarTarea() {
 		super.agregarTarea();
+		getCheckboxIncluir().setEnabled(false);
 		add(new Label("cantidad-recursos", new Model<Integer>(1)));
 		add(new Label("dias", new PropertyModel<Double>(getModelObject(), "dias")));
 		add(new Label("horas", new PropertyModel<Double>(getModelObject(), "horas")));
