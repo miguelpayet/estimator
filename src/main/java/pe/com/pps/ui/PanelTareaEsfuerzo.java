@@ -22,7 +22,7 @@ public class PanelTareaEsfuerzo extends PanelCronograma {
 		super.agregarTarea();
 		add(new TextField<Integer>("cantidad-recursos", new PropertyModel<Integer>(getModelObject(), "recursos")));
 		add(new Label("dias", new PropertyModel<Double>(getModelObject(), "dias")));
-		add(new TextField<Double>("horas", new PropertyModel<Double>(getModelObject(), "horas")));
+		add(new Label("horas", new PropertyModel<Double>(getModelObject(), "horas")));
 	}
 
 }
