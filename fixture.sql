@@ -59,7 +59,7 @@ VALUES (8, 2, 'Facilidad al Cambio', 1, 0, 5);
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
 VALUES (9, 2, 'Concurrencia', 1, 0, 5);
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
-VALUES (10, 2, 'Características Especiales Seguridad', 1, 0, 5);
+VALUES (10, 2, 'Características Especiales Seguridad', 1, 0, 5);estimacion
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
 VALUES (11, 2, 'Proporciona Acceso Directo a Software de Terceros', 1, 0, 5);
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo) 
