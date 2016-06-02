@@ -6,14 +6,28 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+import pe.com.pps.dao.HibernateUtil;
+
+//todo:  manejar excepciones: http://stackoverflow.com/questions/12456302/how-to-handle-exceptions-thrown-in-wicket-custom-model/12476006
 
 public class MiRequestListener implements IRequestCycleListener {
 
 	public static final Logger log = LogManager.getLogger(MiRequestListener.class);
 
+	SessionFactory sf;
+
+	public MiRequestListener() {
+		sf = HibernateUtil.getSessionFactory();
+	}
+
 	@Override
 	public void onBeginRequest(RequestCycle cycle) {
 		log.debug("onBeginRequest");
+		Session sesion = sf.getCurrentSession();
+		sesion.beginTransaction();
 	}
 
 	@Override
@@ -24,6 +38,19 @@ public class MiRequestListener implements IRequestCycleListener {
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
 		log.debug("onEndRequest");
+		Session sesion = sf.getCurrentSession();
+		try {
+			sesion.getTransaction().commit();
+		} catch (Throwable ex) {
+			try {
+				if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
+					sesion.getTransaction().rollback();
+				}
+			} catch (Throwable rbEx) {
+				log.error("Could not rollback after exception!", rbEx);
+				rbEx.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -55,6 +82,6 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		log.debug("onUrlMapped");
+		log.debug("onUrlMapped {}", url.toString());
 	}
 }
