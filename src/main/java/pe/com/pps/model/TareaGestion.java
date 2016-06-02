@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value = "3")
-public class TareaGestion extends Tarea {
+public class TareaGestion extends Tarea  {
 
 	public Double convertirDiasAHoras(TareaCronograma unaTarea) {
 		Double horas = null;

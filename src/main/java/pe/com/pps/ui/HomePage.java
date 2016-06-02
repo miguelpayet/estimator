@@ -9,7 +9,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class HomePage extends PaginaBase {
 
-	private final Logger logger = LogManager.getLogger(HomePage.class);
+	private static final Logger logger = LogManager.getLogger(HomePage.class);
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);

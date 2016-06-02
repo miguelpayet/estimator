@@ -12,8 +12,8 @@ public abstract class Factor implements Serializable {
 
 	@Column(name = "descripcion")
 	private String descripcion;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="factor")
-	Set<FactorEstimacion> factoresEstimacion;
+	//@OneToMany(cascade = CascadeType.ALL, mappedBy="factor")
+	//Set<FactorEstimacion> factoresEstimacion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idfactor")
@@ -36,9 +36,11 @@ public abstract class Factor implements Serializable {
 		return descripcion;
 	}
 
+/*
 	public Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
 	}
+*/
 
 	public Integer getIdFactor() {
 		return idFactor;
@@ -68,9 +70,9 @@ public abstract class Factor implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
+	/*public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
 		this.factoresEstimacion = factoresEstimacion;
-	}
+	}*/
 
 	public void setIdFactor(Integer idFactor) {
 		this.idFactor = idFactor;

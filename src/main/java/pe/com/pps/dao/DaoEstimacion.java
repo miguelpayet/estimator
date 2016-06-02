@@ -12,4 +12,12 @@ public class DaoEstimacion extends Dao<Estimacion> {
 		getSesion().delete(unaEstimacion);
 	}
 
+	public void grabar(Estimacion unaEstimacion) {
+		if (unaEstimacion.getVersion() == null) {
+			getSesion().persist(unaEstimacion);
+		} else {
+			getSesion().saveOrUpdate(unaEstimacion);
+		}
+	}
+
 }

@@ -61,11 +61,11 @@ public class PaginaEstimacion extends PaginaBase {
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		TextField<Integer> numero = new TextField("numero", new PropertyModel<Integer>(modelo, "idEstimacion"));
+		TextField<Integer> numero = new TextField<>("numero", new PropertyModel<>(modelo, "idEstimacion"));
 		campos.add(numero);
-		TextField<String> eds = new TextField("eds", new PropertyModel<String>(modelo, "eds"));
+		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(modelo, "eds"));
 		campos.add(eds);
-		TextField<String> descripcion = new TextField("nombre", new PropertyModel<String>(modelo, "nombre"));
+		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(modelo, "nombre"));
 		campos.add(descripcion);
 	}
 
@@ -82,17 +82,17 @@ public class PaginaEstimacion extends PaginaBase {
 		}
 		try {
 			String id = rv.newChildId();
-			rv.add(new PanelTareaDuracion(id, new Model<TareaCronograma>(c.getTareaDuracion())));
+			rv.add(new PanelTareaDuracion(id, new Model<>(c.getTareaDuracion())));
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
 		for (TareaCronograma t : c.getTareasEsfuerzo()) {
 			String id = rv.newChildId();
-			rv.add(new PanelTareaEsfuerzo(id, new Model<TareaCronograma>(t)));
+			rv.add(new PanelTareaEsfuerzo(id, new Model<>(t)));
 		}
 		try {
 			String id = rv.newChildId();
-			rv.add(new PanelTareaGestion(id, new Model<TareaCronograma>(c.getTareaGestion())));
+			rv.add(new PanelTareaGestion(id, new Model<>(c.getTareaGestion())));
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
@@ -196,7 +196,7 @@ public class PaginaEstimacion extends PaginaBase {
 				log.info("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
-					de.persistir(modelo);
+					de.grabar(modelo);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());
@@ -221,25 +221,25 @@ public class PaginaEstimacion extends PaginaBase {
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
-		columns.add(new RequiredEditableTextFieldColumn<T, String>(new Model<String>("Descripción"), "descripcion"));
-		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<String>("Complejidad"), "complejidad") {
+		columns.add(new RequiredEditableTextFieldColumn<>(new Model<>("Descripción"), "descripcion"));
+		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidad") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<T, String>(componentId, this, Arrays.asList("1", "2", "3"));
+				return new EditableRequiredDropDownCellPanel<>(componentId, this, Arrays.asList("1", "2", "3"));
 			}
 		});
 		DaoPlataforma dp = new DaoPlataforma();
 		List<Plataforma> plataformas = dp.listar();
 		// todo: esta columna que sea obligatoria
-		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<String>("Plataforma"), "plataforma") {
+		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
 			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<T, String>(componentId, this, plataformas);
+				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
 			}
 		});
 		return columns;
 	}
 
 	private void crearFormCronograma() {
-		formCronograma = new Form<Estimacion>("form-cronograma", new Model<Estimacion>(modelo));
+		formCronograma = new Form<>("form-cronograma", new Model<>(modelo));
 		add(formCronograma);
 	}
 

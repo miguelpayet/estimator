@@ -38,13 +38,17 @@ public class Estimacion implements Serializable {
 	private Double puntos;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private List<TareaCronograma> tareasCronograma;
+	@Version
+	@Column(name = "version")
+	private Integer version;
 
 	public Estimacion() {
+		actores = new HashSet<>();
 		actualizado = false;
 		casosDeUso = new HashSet<>();
-		actores = new HashSet<>();
 		factoresEstimacion = new HashSet<>();
 		tareasCronograma = new ArrayList<>();
+		version = null;
 	}
 
 	public void addActor(Actor unActor) {
@@ -76,7 +80,7 @@ public class Estimacion implements Serializable {
 	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
 		Double factor = 0.0;
 		for (FactorEstimacion f : unosFactores) {
-			log.debug(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
+			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
 			factor += (f.getValor() * f.getFactor().getPeso());
 		}
 		log.debug("factor de complejidad " + factor);
@@ -159,6 +163,10 @@ public class Estimacion implements Serializable {
 
 	public List<TareaCronograma> getTareasCronograma() {
 		return tareasCronograma;
+	}
+
+	public Integer getVersion() {
+		return version;
 	}
 
 	public List<TareaCronograma> leerTareas() {
