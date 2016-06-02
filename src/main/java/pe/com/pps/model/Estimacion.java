@@ -7,7 +7,6 @@ import pe.com.pps.dao.DaoCronograma;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "estimacion")
@@ -77,32 +76,8 @@ public class Estimacion implements Serializable {
 		tareasCronograma.add(tc);
 	}
 
-	private Double calcularFactor(Set<FactorEstimacion> unosFactores) {
-		Double factor = 0.0;
-		for (FactorEstimacion f : unosFactores) {
-			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
-			factor += (f.getValor() * f.getFactor().getPeso());
-		}
-		log.debug("factor de complejidad " + factor);
-		return factor;
-	}
-
-	private Double calcularFactorAmbiental() {
-		Double factor = calcularFactor(getFactoresAmbientales());
-		factor = 1.4 + (factor * -0.03);
-		log.debug(String.format("estimación %s - factor ambiental %s", getIdEstimacion(), factor));
-		return factor;
-	}
-
-	private Double calcularFactorTecnico() {
-		Double factor = calcularFactor(getFactoresTecnicos());
-		factor = 0.6 + (factor * 0.01);
-		log.debug(String.format("estimación %s - factor técnico %s", getIdEstimacion(), factor));
-		return factor;
-	}
-
-	public Set<FactorEstimacion> extraerFactores(Integer unTipo) {
-		return factoresEstimacion.stream().filter(f -> f.getFactor().getTipoFactor().equals(unTipo)).collect(Collectors.toSet());
+	public List<FactorEstimacion> extraerFactores(Integer unTipo) {
+		return new Factorama(this).extraerFactores(unTipo);
 	}
 
 	public void generarCronograma() throws ExcepcionCronograma {
@@ -132,16 +107,16 @@ public class Estimacion implements Serializable {
 		return esfuerzo;
 	}
 
-	private Set<FactorEstimacion> getFactoresAmbientales() {
-		return extraerFactores(TipoFactor.AMBIENTE);
+	private List<FactorEstimacion> getFactoresAmbientales() {
+		return new Factorama(this).getFactoresAmbientales();
 	}
 
 	public Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
 	}
 
-	private Set<FactorEstimacion> getFactoresTecnicos() {
-		return extraerFactores(TipoFactor.TECNICO);
+	private List<FactorEstimacion> getFactoresTecnicos() {
+		return new Factorama(this).getFactoresAmbientales();
 	}
 
 	public Date getFechaCierre() {
@@ -268,7 +243,8 @@ public class Estimacion implements Serializable {
 
 	public void totalizar(Boolean unForzar) {
 		if (!actualizado || unForzar) {
-			Double factorAjuste = calcularFactorTecnico() * calcularFactorAmbiental();
+			Factorama f = new Factorama(this);
+			Double factorAjuste = f.getFactorTecnico() * f.getFactorAmbiental();
 			sumarPuntos(factorAjuste);
 			sumarEsfuerzo(factorAjuste);
 			actualizado = true;
