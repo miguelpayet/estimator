@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "factor_estimacion")
-public class FactorEstimacion implements Identificable<Integer>, Serializable {
+public class FactorEstimacion implements Identificable<Integer>, Serializable, Comparable<FactorEstimacion> {
 
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
@@ -20,8 +20,16 @@ public class FactorEstimacion implements Identificable<Integer>, Serializable {
 	@Column(name = "valor")
 	protected Integer valor;
 
+	public int compareTo(FactorEstimacion unFactor) {
+		return getNombre().compareTo(unFactor.getNombre());
+	}
+
 	public Double getComplejidad() {
 		return getValor() * getFactor().getPeso();
+	}
+
+	public String getDescripcion() {
+		return getFactor() != null ? getFactor().getDescripcion() : "sin descripción";
 	}
 
 	public Estimacion getEstimacion() {
@@ -53,6 +61,10 @@ public class FactorEstimacion implements Identificable<Integer>, Serializable {
 		return getFactor() != null ? getFactor().getPeso() : 0.0;
 	}
 
+	public Integer getTipo() {
+		return getFactor() != null ? getFactor().getTipoFactor() : 0;
+	}
+
 	public Integer getValor() {
 		return valor;
 	}
@@ -68,5 +80,5 @@ public class FactorEstimacion implements Identificable<Integer>, Serializable {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
-
+	
 }

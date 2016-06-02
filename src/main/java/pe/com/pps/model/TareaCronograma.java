@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "cronograma")
 @IdClass(TareaCronogramaPK.class)
-public class TareaCronograma implements Serializable {
+public class TareaCronograma implements Serializable, Comparable<TareaCronograma> {
 
 	@Column(name = "dias")
 	protected Double dias;
@@ -28,6 +28,11 @@ public class TareaCronograma implements Serializable {
 	private Tarea tarea;
 
 	public TareaCronograma() {
+	}
+
+	@Override
+	public int compareTo(TareaCronograma unaTarea) {
+		return this.getTarea().getOrden().compareTo(unaTarea.getTarea().getOrden());
 	}
 
 	public Double getDias() {
