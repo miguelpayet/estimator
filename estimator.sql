@@ -33,7 +33,7 @@ CREATE TABLE `actor` (
   KEY `fk_actor_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_actor_estimacion1` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_actor_plataforma1` FOREIGN KEY (`idplataforma`) REFERENCES `plataforma` (`idplataforma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `caso_de_uso` (
   KEY `fk_caso_de_uso_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_caso_de_uso_estimacion` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_caso_de_uso_plataforma1` FOREIGN KEY (`idplataforma`) REFERENCES `plataforma` (`idplataforma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,6 +112,7 @@ CREATE TABLE `estimacion` (
   `fechacierre` varchar(45) DEFAULT NULL,
   `puntos` float DEFAULT NULL,
   `esfuerzo` float DEFAULT NULL,
+  `version` int(11) DEFAULT NULL,
   PRIMARY KEY (`idestimacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -143,15 +144,16 @@ DROP TABLE IF EXISTS `factor_estimacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `factor_estimacion` (
+  `idfactorestimacion` int(11) NOT NULL AUTO_INCREMENT,
   `idestimacion` int(6) NOT NULL,
   `idfactor` int(11) NOT NULL,
   `valor` int(1) DEFAULT NULL,
-  PRIMARY KEY (`idestimacion`,`idfactor`),
+  PRIMARY KEY (`idfactorestimacion`),
   KEY `fk_factor_has_estimacion_estimacion1_idx` (`idestimacion`),
   KEY `fk_factor_has_estimacion_factor1_idx` (`idfactor`),
   CONSTRAINT `fk_factor_has_estimacion_estimacion1` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_factor_has_estimacion_factor1` FOREIGN KEY (`idfactor`) REFERENCES `factor` (`idfactor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,4 +247,4 @@ CREATE TABLE `tarea` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-27  9:58:45
+-- Dump completed on 2016-06-02 13:47:39
