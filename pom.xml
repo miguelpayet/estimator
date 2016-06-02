@@ -42,12 +42,18 @@
             <artifactId>wicket-extensions</artifactId>
             <version>${wicket.version}</version>
         </dependency>
-        <!-- wicket-stuff editable grid -->
+        <!-- wicket-bootstrap -->
         <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-core</artifactId>
+            <version>0.10.6</version>
+        </dependency>
+        <!-- wicket-stuff editable grid -->
+        <!--dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>wicketstuff-editable-grid</artifactId>
             <version>${wicket.version}</version>
-        </dependency>
+        </dependency-->
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
