@@ -1,7 +1,6 @@
 package pe.com.pps.ui;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.model.IModel;
@@ -20,15 +19,14 @@ public class PanelFactor extends FormComponentPanel<FactorEstimacion> {
 	}
 
 	private void agregarCampos() {
-		add(new Label("nombre", new Model(getModelObject().getNombre())));
+		add(new Label("nombre", new Model<String>(getModelObject().getNombre())));
 		add(new RadioChoice<Integer>("complejidad", new PropertyModel<Integer>(getModelObject(), "valor"), listar(getModelObject())));
-		add(new Label("peso", new Model(getModelObject().getPeso())));
-		add(new Label("factor-complejidad", new Model(getModelObject().getComplejidad())));
+		add(new Label("descripcion", new Model<String>(getModelObject().getDescripcion())));
 	}
 
 	private List<Integer> listar(FactorEstimacion unFactor) {
 		ArrayList<Integer> lista = new ArrayList();
-		for (int i = unFactor.getMinimo(); i <= unFactor.getMaximo(); i++ ) {
+		for (int i = unFactor.getMinimo(); i <= unFactor.getMaximo(); i++) {
 			lista.add(i);
 		}
 		return lista;
