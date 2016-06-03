@@ -2,10 +2,13 @@ package pe.com.pps.ui;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -69,30 +72,31 @@ public class PaginaEstimacion extends PaginaBase {
 		campos.add(descripcion);
 	}
 
+	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelCronograma unPanel, String unaClase ) {
+			unPanel.add(new AttributeAppender("class", unaClase));
+			unRepetidor.add(unPanel);
+	}
+
 	private void agregarCronograma() { // todo: refactorizar este metodo
 		RepeatingView rv = new RepeatingView("fila-cronograma");
 		rv.setOutputMarkupId(true);
 		formCronograma.add(rv);
 		Cronograma c = new Cronograma(modelo);
 		try {
-			String id = rv.newChildId();
-			rv.add(new PanelTareaFija(id, new Model<>(c.getTareaFija())));
+			agregarTareaCronograma(rv, new PanelTareaFija(rv.newChildId(), new Model<>(c.getTareaFija())), "fija");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea fija");
 		}
 		try {
-			String id = rv.newChildId();
-			rv.add(new PanelTareaDuracion(id, new Model<>(c.getTareaDuracion())));
+			agregarTareaCronograma(rv, new PanelTareaDuracion(rv.newChildId(), new Model<>(c.getTareaDuracion())), "duracion");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
 		for (TareaCronograma t : c.getTareasEsfuerzo()) {
-			String id = rv.newChildId();
-			rv.add(new PanelTareaEsfuerzo(id, new Model<>(t)));
+			rv.add(new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
 		}
 		try {
-			String id = rv.newChildId();
-			rv.add(new PanelTareaGestion(id, new Model<>(c.getTareaGestion())));
+			agregarTareaCronograma(rv, new PanelTareaGestion(rv.newChildId(), new Model<>(c.getTareaGestion())), "gestion");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
@@ -221,12 +225,26 @@ public class PaginaEstimacion extends PaginaBase {
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
-		columns.add(new RequiredEditableTextFieldColumn<>(new Model<>("Descripción"), "descripcion"));
-		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidad") {
+		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion") {
+			@Override
+			protected void addBehaviors(final FormComponent<T> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
+			}
+		};
+		columns.add(descripcion);
+		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidad") {
+			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, Arrays.asList("1", "2", "3"));
 			}
-		});
+			@Override
+			protected void addBehaviors(final FormComponent<T> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("complejidad")));
+			}
+		};
+		columns.add(complejidad);
 		DaoPlataforma dp = new DaoPlataforma();
 		List<Plataforma> plataformas = dp.listar();
 		// todo: esta columna que sea obligatoria

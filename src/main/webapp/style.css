@@ -1,8 +1,0 @@
-div.estimacion {
-margin: 10px 0;
-}
-
-div.estimacion .numero .label, div.estimacion .eds .label, div.estimacion .descripcion .label  {
-width: 100px;
-float:left;
-}

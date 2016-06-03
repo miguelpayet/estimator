@@ -1,91 +1,117 @@
 <wicket:extend xmlns:wicket="http://www.w3.org/1999/xhtml">
-    <div>
-        <h1><span wicket:id="titulo"/></h1>
-    </div>
-    <div class="estimacion">
-        <form wicket:id="campos">
-            <div class="numero">
-                <div class="label numero ">número</div>
-                <input wicket:id="numero" type="text"/>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 titulo">
+                <h1><span wicket:id="titulo"/></h1>
             </div>
-            <div class="descripcion">
-                <div class="label nombre ">nombre</div>
-                <input wicket:id="nombre" type="text"/>
-            </div>
-            <div class="eds">
-                <div class="label eds">eds</div>
-                <input wicket:id="eds" type="text"/>
-            </div>
-        </form>
-
-        <div>
-            <h2>actores</h2>
         </div>
-        <div wicket:id="grid-actores"></div>
-
-        <div>
-            <h2>casos de uso</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="estimacion" wicket:id="campos">
+                    <ul>
+                        <li class="numero">
+                            <label class="numero" for="numero">número</label>
+                            <input id="numero" wicket:id="numero" type="text"/>
+                        </li>
+                        <li class="descripcion">
+                            <label class=" nombre" for="nombre">nombre</label>
+                            <input id="nombre" wicket:id="nombre" type="text"/>
+                        </li>
+                        <li class="eds">
+                            <label class="eds" for="eds">eds</label>
+                            <input id="eds" wicket:id="eds" type="text"/>
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
-        <div wicket:id="grid-casos-de-uso"></div>
-
+        <div class="puntuable">
+            <div class="row">
+                <div class="actores col-md-6">
+                    <h2>actores</h2>
+                    <div wicket:id="grid-actores">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>casos de uso</h2>
+                    <div wicket:id="grid-casos-de-uso">
+                    </div>
+                </div>
+            </div>
+        </div>
         <form wicket:id="form-cronograma">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>factores de ajuste</h2>
+                </div>
+            </div>
             <div class="factores">
-                <h2>factores de ajuste</h2>
-                <div class="tecnicos">
-                    <h3>técnicos</h3>
-                    <table> <!-- wicket:id="tabla-factores-tecnicos"-->
-                        <thead>
-                        <tr>
-                            <th>nombre</th>
-                            <th>complejidad</th>
-                            <th>peso</th>
-                            <th>factor de complejidad</th>
-                        </tr>
-                        </thead>
-                        <tr wicket:id="fila-factor-tecnico"></tr>
-                    </table>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="tecnicos">
+                            <h3>técnicos</h3>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>nombre</th>
+                                    <th>complejidad</th>
+                                    <th>descripción</th>
+                                </tr>
+                                </thead>
+                                <tr wicket:id="fila-factor-tecnico"></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ambiente">
+                        <h3>ambiente</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>nombre</th>
+                                <th>complejidad</th>
+                                <th>descripción</th>
+                            </tr>
+                            </thead>
+                            <tr wicket:id="fila-factor-ambiente"></tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="ambiente">
-                    <h3>ambiente</h3>
-                    <table> <!-- wicket:id="tabla-factores-ambiente"-->
+            </div>
+            <div class="row">
+                <div class="col-md-12 cronograma">
+                    <h2>cronograma</h2>
+                    <table>
                         <thead>
                         <tr>
-                            <th>nombre</th>
-                            <th>complejidad</th>
-                            <th>peso</th>
-                            <th>factor de complejidad</th>
+                            <th class="incluir">incluir</th>
+                            <th class="tarea">tarea</th>
+                            <th class="proveedor">proveedor</th>
+                            <th class="porcentaje">porcentaje</th>
+                            <th class="recursos">recursos</th>
+                            <th class="dias">dias</th>
+                            <th class="horas">horas</th>
                         </tr>
                         </thead>
-                        <tr wicket:id="fila-factor-ambiente"></tr>
+                        <tr wicket:id="fila-cronograma"></tr>
                     </table>
                 </div>
             </div>
-            <div class="cronograma">
-                <h2>cronograma</h2>
-                <table> <!-- wicket:id="tabla-cronograma"-->
-                    <thead>
-                    <tr>
-                        <th>incluir</th>
-                        <th>tarea</th>
-                        <th>proveedor</th>
-                        <th>porcentaje</th>
-                        <th>recursos</th>
-                        <th>dias</th>
-                        <th>horas</th>
-                    </tr>
-                    </thead>
-                    <tr wicket:id="fila-cronograma"></tr>
-                </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <a wicket:id="actualizar-cronograma">actualizar</a>
+                </div>
             </div>
-            <a wicket:id="actualizar-cronograma">actualizar</a>
         </form>
     </div>
-    <div>
-        <p>
-            <a wicket:id="grabar">grabar</a>
-        </p>
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                <a wicket:id="grabar">grabar</a>
+            </p></div>
     </div>
-    <div>
-        <div wicket:id="feedback"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div wicket:id="feedback"></div>
+        </div>
     </div>
 </wicket:extend>

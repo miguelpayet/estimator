@@ -3,7 +3,9 @@ package pe.com.pps.model;
 import com.google.common.collect.HashMultimap;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Cronograma implements Serializable {
 
@@ -17,18 +19,20 @@ public class Cronograma implements Serializable {
 
 	// todo: agregar lógica para excluir tareas
 	public void calcular() throws ExcepcionCronograma {
-		double a;
+		double tareaFija;
 		if (getTareaFija().getHoras() != null) {
-			a = getTareaFija().getHoras();
+			tareaFija = getTareaFija().getHoras();
 		} else {
 			throw new ExcepcionCronograma("tarea fija no tiene horas");
 		}
 		double pctDuracion = getTareaDuracion().getPorcentaje();
 		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
-		double b = (pctDuracion * (pctDiseñoTecnico * (estimacion.getEsfuerzo() - a))) / (1 + (pctDuracion * pctDiseñoTecnico));
-		getTareaDuracion().setHoras(b);
+		double tareaDuracion = (pctDuracion * (pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija))) / (1 + (pctDuracion * pctDiseñoTecnico));
+		getTareaDuracion().setHoras(tareaDuracion);
+		// estas tareas pueden estar o no incluidas
+		// validar que sume 100% entre que estén activas
 		for (TareaCronograma t : getTareasEsfuerzo()) {
-			t.setHoras((estimacion.getEsfuerzo() - a - b) * t.getPorcentaje());
+			t.setHoras((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * t.getPorcentaje());
 		}
 		getTareaGestion().setDias(getTotalDias());
 	}
@@ -63,8 +67,10 @@ public class Cronograma implements Serializable {
 		return lista.iterator().next();
 	}
 
-	public Set<TareaCronograma> getTareasEsfuerzo() {
-		return mapaTareas.get(TipoCosto.ESFUERZO);
+	public List<TareaCronograma> getTareasEsfuerzo() {
+		List<TareaCronograma> lista = mapaTareas.get(TipoCosto.ESFUERZO).stream().collect(Collectors.toList());
+		java.util.Collections.sort(lista); // todo: sería ideal que esto viniera sorteado por hibernate
+		return lista;
 	}
 
 	private Double getTotalDias() {
