@@ -27,6 +27,10 @@ public abstract class Puntuable implements Serializable {
 	@Transient
 	Punto punto;
 
+	public String getComplejidadString() {
+		return null;
+	}
+
 	public Integer getComplejidad() {
 		return complejidad;
 	}

@@ -1,110 +1,112 @@
-form.estimacion {
-margin: 10px 0;
-border-bottom: 1px solid #ddd;
-}
-
-.factores, .cronograma {
-  border-bottom: 1px solid #ddd;
-  margin: 10px 0;
-  padding-bottom: 10px;
-}
-
 .cronograma h2 {
-  margin-top: 0;
+margin-top:0;
 }
 
-div.titulo {
-  border-bottom: 1px solid #ddd;
-  margin: 0 0 10px 0;
+.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas {
+text-align:right;
 }
 
-.estimacion label {
-  width: 100px;
+.cronograma th,.cronograma td {
+padding:5px 5px 0 0;
 }
 
-.estimacion ul {
-  list-style-type: none;
-}
-
-.estimacion input#nombre {
-  width: 500px;
-}
-
-.estimacion input#eds {
-  width: 250px;
-}
-
-.puntuable {
-  border-bottom: 1px solid #ddd;
-  padding: 0 0 10px 0;
-}
-
-.tecnicos h3, .ambiente h3 {
-  margin: 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.tecnicos td, .ambiente td {
-  border-bottom: dotted 1px #dedede
-}
-
-.tecnicos td.nombre, .ambiente td.nombre {
-      width: 40%;
-}
-
-.tecnicos td.complejidad, .ambiente td.complejidad {
-      width: 30%;
-}
-
-.tecnicos .complejidad input, .tecnicos .complejidad label, .ambiente .complejidad input, .ambiente .complejidad label {
-  margin: 0 0 0 5px;
-  vertical-align: middle;
-}
-
-.tecnicos td.descripcion, .ambiente td.descripcion  {
-  font-size: 80%;
-    width: 30%;
-}
-
-.cronograma th.incluir  {
-  width: 10%;
-}
-
-.cronograma th.tarea {
-  width: 20%;
-}
-
-.cronograma th.proveedor {
-  width: 10%;
+.cronograma th.incluir {
+width:60px;
 }
 
 .cronograma th.porcentaje {
-  width: 10%;
+width:10%;
 }
 
-.cronograma tr.fija {
-  background-color: cyan;
+.cronograma th.porcentaje,.porcentaje input,.cronograma th.recursos,.recursos input,.cronograma th.dias,.dias input,.cronograma th.horas {
+text-align:center;
+width:100px;
+}
+
+.cronograma th.proveedor {
+width:150px;
+}
+
+.cronograma th.tarea {
+width:200px;
 }
 
 .cronograma tr.duracion {
-  background-color: greenyellow;
+background-color:#DFD;
+}
+
+.cronograma tr.esfuerzo {
+background-color:#DDF;
+}
+
+.cronograma tr.fija {
+background-color:#FDD;
 }
 
 .cronograma tr.gestion {
-  background-color: lavender;
+background-color:#FDF;
 }
 
-.cronograma th, .cronograma td {
-  padding: 5px 5px 0 0;
+.estimacion input#eds {
+width:250px;
 }
 
-.cronograma th.incluir { width: 60px}
-.cronograma th.tarea {width: 200px}
-.cronograma th.proveedor {width: 150px}
-.cronograma th.porcentaje, .porcentaje input {text-align:center; width: 100px}
-.cronograma th.recursos, .recursos input {text-align:center; width: 100px}
-.cronograma th.dias, .dias input {text-align:center; width: 100px}
-.cronograma th.horas {text-align:center; width: 100px}
-.cronograma td.recursos, .recursos input {text-align:right}
-.cronograma td.dias, .dias input  {text-align:right}
-.cronograma td.horas  {text-align:right}
+.estimacion input#nombre {
+width:500px;
+}
+
+.estimacion label {
+width:100px;
+}
+
+.estimacion ul {
+list-style-type:none;
+}
+
+.factores,.cronograma {
+border-bottom:1px solid #ddd;
+padding-bottom:10px;
+margin:10px 0;
+}
+
+.puntuable {
+border-bottom:1px solid #ddd;
+padding:0 0 10px;
+}
+
+.tecnicos .complejidad input,.tecnicos .complejidad label,.ambiente .complejidad input,.ambiente .complejidad label {
+vertical-align:middle;
+margin:0 0 0 5px;
+}
+
+.tecnicos h3,.ambiente h3 {
+border-bottom:1px solid #ddd;
+margin:0;
+}
+
+.tecnicos td,.ambiente td {
+border-bottom:dotted 1px #dedede;
+}
+
+.tecnicos td.complejidad,.ambiente td.complejidad {
+width:30%;
+}
+
+.tecnicos td.descripcion,.ambiente td.descripcion {
+font-size:80%;
+width:30%;
+}
+
+.tecnicos td.nombre,.ambiente td.nombre {
+width:40%;
+}
+
+div.titulo {
+border-bottom:1px solid #ddd;
+margin:0 0 10px;
+}
+
+form.estimacion {
+border-bottom:1px solid #ddd;
+margin:10px 0;
+}

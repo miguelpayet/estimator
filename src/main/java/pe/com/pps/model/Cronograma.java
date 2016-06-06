@@ -1,6 +1,8 @@
 package pe.com.pps.model;
 
 import com.google.common.collect.HashMultimap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cronograma implements Serializable {
+
+	private final static Logger log = LogManager.getLogger(Cronograma.class);
 
 	private Estimacion estimacion;
 	private HashMultimap<Integer, TareaCronograma> mapaTareas;
@@ -31,8 +35,22 @@ public class Cronograma implements Serializable {
 		getTareaDuracion().setHoras(tareaDuracion);
 		// estas tareas pueden estar o no incluidas
 		// validar que sume 100% entre que estén activas
+		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
-			t.setHoras((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * t.getPorcentaje());
+			log.info("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
+			if (t.getIncluir()) {
+				pctIncluidas += Util.round(t.getPorcentaje(), 2);
+			}
+		}
+		if (Util.round(pctIncluidas, 2) != 1) {
+			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + pctIncluidas * 100 + "%");
+		}
+		for (TareaCronograma t : getTareasEsfuerzo()) {
+			if (t.getIncluir()) {
+				t.setHoras((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * Util.round(t.getPorcentaje(), 2));
+			} else {
+				t.setHoras(0.0);
+			}
 		}
 		getTareaGestion().setDias(getTotalDias());
 	}

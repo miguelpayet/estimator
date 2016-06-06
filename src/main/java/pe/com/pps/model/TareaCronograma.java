@@ -127,4 +127,8 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		recursos = 1;
 	}
 
+	public String toString() {
+		return getNombre();
+	}
+
 }

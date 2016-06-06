@@ -55,7 +55,7 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
-		log.debug("onException");
+		log.error("onException");
 		return null;
 	}
 

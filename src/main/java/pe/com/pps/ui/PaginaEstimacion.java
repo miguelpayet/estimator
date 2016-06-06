@@ -93,7 +93,8 @@ public class PaginaEstimacion extends PaginaBase {
 			log.error("no hay tarea de acompañamiento");
 		}
 		for (TareaCronograma t : c.getTareasEsfuerzo()) {
-			rv.add(new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
+			agregarTareaCronograma(rv, new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)), "esfuerzo");
+			//rv.add(new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
 		}
 		try {
 			agregarTareaCronograma(rv, new PanelTareaGestion(rv.newChildId(), new Model<>(c.getTareaGestion())), "gestion");
@@ -105,11 +106,13 @@ public class PaginaEstimacion extends PaginaBase {
 				log.info("actualizar cronograma");
 				try {
 					modelo.generarCronograma();
-					target.add(formCronograma);
 				} catch (ExcepcionCronograma e) {
 					error("error al generar cronograma: " + e.getMessage());
 					log.error(e.getMessage());
 					e.printStackTrace();
+				} finally {
+					target.add(formCronograma);
+					target.add(feedback);
 				}
 			}
 		});
