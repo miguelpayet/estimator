@@ -27,12 +27,12 @@ public abstract class Puntuable implements Serializable {
 	@Transient
 	Punto punto;
 
-	public String getComplejidadString() {
-		return null;
-	}
-
 	public Integer getComplejidad() {
 		return complejidad;
+	}
+
+	public String getComplejidadStr() {
+		return Complejidad.getNombre(complejidad);
 	}
 
 	public String getDescripcion() {
@@ -62,6 +62,10 @@ public abstract class Puntuable implements Serializable {
 		this.complejidad = complejidad;
 	}
 
+	public void setComplejidadStr(String unaComplejidad) {
+		complejidad = Complejidad.getValor(unaComplejidad);
+	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
@@ -73,4 +77,6 @@ public abstract class Puntuable implements Serializable {
 	public void setPlataforma(Plataforma plataforma) {
 		this.plataforma = plataforma;
 	}
+
 }
+

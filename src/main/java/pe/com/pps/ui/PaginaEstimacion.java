@@ -72,11 +72,6 @@ public class PaginaEstimacion extends PaginaBase {
 		campos.add(descripcion);
 	}
 
-	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelCronograma unPanel, String unaClase ) {
-			unPanel.add(new AttributeAppender("class", unaClase));
-			unRepetidor.add(unPanel);
-	}
-
 	private void agregarCronograma() { // todo: refactorizar este metodo
 		RepeatingView rv = new RepeatingView("fila-cronograma");
 		rv.setOutputMarkupId(true);
@@ -215,6 +210,11 @@ public class PaginaEstimacion extends PaginaBase {
 		add(linkGrabar);
 	}
 
+	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelCronograma unPanel, String unaClase) {
+		unPanel.add(new AttributeAppender("class", unaClase));
+		unRepetidor.add(unPanel);
+	}
+
 	private void agregarTitulo(Estimacion unaEstimacion) {
 		String titulo;
 		if (unaEstimacion == null) {
@@ -236,15 +236,17 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		};
 		columns.add(descripcion);
-		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidad") {
-			@Override
-			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<>(componentId, this, Arrays.asList("1", "2", "3"));
-			}
+		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidadStr") {
 			@Override
 			protected void addBehaviors(final FormComponent<T> editorComponent) {
 				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("complejidad")));
+				editorComponent.setRequired(true);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("complejidadStr")));
+			}
+
+			@Override
+			public EditableCellPanel getEditableCellPanel(String componentId) {
+				return new EditableRequiredDropDownCellPanel<>(componentId, this, Complejidad.getLista());
 			}
 		};
 		columns.add(complejidad);
@@ -252,6 +254,14 @@ public class PaginaEstimacion extends PaginaBase {
 		List<Plataforma> plataformas = dp.listar();
 		// todo: esta columna que sea obligatoria
 		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
+			@Override
+			protected void addBehaviors(final FormComponent<T> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.setRequired(true);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("plataforma")));
+			}
+
+			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
 			}
