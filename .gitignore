@@ -60,3 +60,8 @@ rebel.xml
 sqljdbc4.jar
 target-ide/
 target/
+log4j2.xml
+dbunit.log
+e.bat
+src/main/java/org/
+src/main/resources/org/
