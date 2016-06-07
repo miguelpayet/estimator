@@ -110,3 +110,38 @@ form.estimacion {
 border-bottom:1px solid #ddd;
 margin:10px 0;
 }
+
+.tabla th {
+  line-height: 1em;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla {
+  margin: 10px 0;
+}
+
+.tabla th {
+  text-align: center;
+}
+
+.tabla th.idEstimacion  {
+  width: 100px;
+}
+
+.tabla th.nombre {
+  width: 400px;
+}
+
+ .tabla td.eds  {
+   width: 200px;
+ }
+
+.tabla td.nombre, .tabla td.eds   {
+  padding: 0 10px;
+}
+
+.tabla td.idEstimacion  {
+  text-align:right;
+  padding: 0 10px 0 0;
+}
+

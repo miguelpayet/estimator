@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+<wicket:extend>
+    <wicket:child/>
+    <div>
+        <form wicket:id="filterForm">
+            <input wicket:id="nombre" type="text" size="40"/>
+            <input type="submit" value="buscar"/>
+            <table class="tabla" wicket:id="datatable">[table]</table>
+            <button wicket:id="botonCrear">
+                Crear
+            </button>
+        </form>
+    </div>
+    <div wicket:id="feedback"></div>
+</wicket:extend>
+</body>
+</html>

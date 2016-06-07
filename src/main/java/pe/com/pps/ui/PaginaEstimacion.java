@@ -26,7 +26,6 @@ import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -43,11 +42,12 @@ public class PaginaEstimacion extends PaginaBase {
 		this(null);
 	}
 
-	public PaginaEstimacion(final PageParameters parameters) {
-		super(parameters);
-		// todo: código para crear una estimación a partir del parametro
+	public PaginaEstimacion(final PageParameters unosParametros) {
+		super(unosParametros);
+		// crear una estimación a partir del parametro
+		leerEstimacion(unosParametros);
 		if (modelo == null) {
-			init();
+			nuevaEstimacion();
 		}
 		agregarTitulo(null);
 		agregarCampos();
@@ -278,7 +278,18 @@ public class PaginaEstimacion extends PaginaBase {
 		return modelo.getCasosDeUso();
 	}
 
-	private void init() {
+	private void leerEstimacion(PageParameters unosParametros) {
+		if (unosParametros != null) {
+			Integer idEntidad = unosParametros.get("id").toInteger();
+			DaoEstimacion de = new DaoEstimacion();
+			modelo = de.get(idEntidad);
+			if (modelo == null) {
+				log.error("oops"); // todo: retroalimentar al usuario de alguna forma
+			}
+		}
+	}
+
+	private void nuevaEstimacion() {
 		modelo = EstimacionFactory.crear();
 	}
 

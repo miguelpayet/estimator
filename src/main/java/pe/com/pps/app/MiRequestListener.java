@@ -82,6 +82,6 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		log.debug("onUrlMapped {}", url.toString());
+		//log.debug("onUrlMapped {}", url.toString());
 	}
 }
