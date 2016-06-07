@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.componentes;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import pe.com.pps.ui.providers.FiltroTablaNombre;
 
 import java.io.Serializable;
 import java.util.ArrayList;

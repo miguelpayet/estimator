@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.providers;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -14,15 +14,15 @@ import pe.com.pps.dao.HibernateUtil;
 
 import java.util.List;
 
-class QueryCriteria<T> {
+public class QueryCriteria<T> {
 
 	private Criteria criteria;
 
-	QueryCriteria(Class queryClass) {
+	public QueryCriteria(Class queryClass) {
 		createCriteria(queryClass);
 	}
 
-	long contarFilas() {
+	public long contarFilas() {
 		long filas;
 		criteria.setProjection(Projections.rowCount());
 		Object resultadoQuery = criteria.uniqueResult();
@@ -55,14 +55,17 @@ class QueryCriteria<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	List<T> leer() {
+	public List<T> leer() {
 		return criteria.list();
 	}
 
-	void setFiltro(String campo, String valor) {
+	public void setFiltro(String campo, String valor) {
 		if (campo != null && !campo.equals("") && valor != null && !valor.equals("")) {
 			criteria.add(Restrictions.like(campo, "%" + valor.trim() + "%"));
 		}
+	}
+
+	public void setOrden() {
 	}
 
 	private void setRango(int inicio, int count) {
@@ -70,7 +73,7 @@ class QueryCriteria<T> {
 		criteria.setMaxResults(count);
 	}
 
-	void setRango(long inicio, long count) {
+	public void setRango(long inicio, long count) {
 		setRango((int) inicio, (int) count);
 	}
 

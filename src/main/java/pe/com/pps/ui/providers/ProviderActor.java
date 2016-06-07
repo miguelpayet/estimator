@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.providers;
 
 import pe.com.pps.model.Actor;
 import pe.com.pps.model.Estimacion;

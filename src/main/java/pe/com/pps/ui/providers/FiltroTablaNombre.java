@@ -1,4 +1,6 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.providers;
+
+import pe.com.pps.ui.componentes.FiltroTabla;
 
 public class FiltroTablaNombre extends FiltroTabla {
 

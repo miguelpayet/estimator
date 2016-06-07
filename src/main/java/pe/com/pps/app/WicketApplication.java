@@ -1,11 +1,10 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
-import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
-import pe.com.pps.ui.HomePage;
+import pe.com.pps.ui.homepage.HomePage;
 
 public class WicketApplication extends WebApplication {
 	@Override

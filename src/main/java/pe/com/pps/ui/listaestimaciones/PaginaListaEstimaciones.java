@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.listaestimaciones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +12,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.model.Estimacion;
+import pe.com.pps.ui.estimacion.PaginaEstimacion;
+import pe.com.pps.ui.componentes.ClickablePropertyColumn;
+import pe.com.pps.ui.componentes.PaginaTabla;
+import pe.com.pps.ui.providers.ProviderEstimacion;
 
 import java.util.ArrayList;
 

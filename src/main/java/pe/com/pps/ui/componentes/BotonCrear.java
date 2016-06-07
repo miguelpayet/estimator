@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.componentes;
 
 import org.apache.wicket.markup.html.form.Button;
 

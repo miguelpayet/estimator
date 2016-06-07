@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.estimacion;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;

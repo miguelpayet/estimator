@@ -1,8 +1,10 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.providers;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import pe.com.pps.model.Estimacion;
+import pe.com.pps.ui.providers.QueryCriteria;
+import pe.com.pps.ui.componentes.ProviderTabla;
 
 public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNombre> {
 

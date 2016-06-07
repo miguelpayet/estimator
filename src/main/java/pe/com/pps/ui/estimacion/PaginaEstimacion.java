@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.estimacion;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +24,9 @@ import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
+import pe.com.pps.ui.componentes.PaginaBase;
+import pe.com.pps.ui.providers.ProviderActor;
+import pe.com.pps.ui.providers.ProviderCasoDeUso;
 
 import java.util.ArrayList;
 import java.util.List;

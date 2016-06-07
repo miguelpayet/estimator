@@ -1,8 +1,8 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.componentes;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
-import org.apache.wicket.model.Model;
+import pe.com.pps.ui.providers.QueryCriteria;
 
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDa
 	public ProviderTabla() {
 	}
 
-	ProviderTabla(V unFilterState) {
+	public ProviderTabla(V unFilterState) {
 		filterState = unFilterState;
 	}
 
@@ -46,7 +46,7 @@ public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDa
 		return new QueryCriteria<>(claseDominio);
 	}
 
-	void setClaseDominio(Class<T> unaClase) {
+	public void setClaseDominio(Class<T> unaClase) {
 		claseDominio = unaClase;
 	}
 

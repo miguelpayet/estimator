@@ -1,4 +1,4 @@
-package pe.com.pps.ui;
+package pe.com.pps.ui.providers;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
