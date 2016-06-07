@@ -145,3 +145,26 @@ margin:10px 0;
   padding: 0 10px 0 0;
 }
 
+a.actualizar {
+  padding: 10px 10px;
+  text-align: center;
+  background: #4479BA;
+  color: #FFF;
+  height: 50px;
+  display:block;
+  width: 100px;
+  line-height: 2em;
+  margin: 10px;
+}
+
+a.grabar {
+  padding: 10px 10px;
+  text-align: center;
+  background: #4479BA;
+  color: #FFF;
+  height: 50px;
+  display:block;
+  width: 100px;
+  line-height: 2em;
+  margin: 10px;
+}
