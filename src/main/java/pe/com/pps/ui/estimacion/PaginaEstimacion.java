@@ -275,6 +275,12 @@ public class PaginaEstimacion extends PaginaBase {
 	private void crearFormCronograma() {
 		formCronograma = new Form<>("form-cronograma", new Model<>(modelo));
 		add(formCronograma);
+		Label puntosEstimacion = new Label("puntos-ajustados", new PropertyModel<Double>(modelo, "puntos"));
+		puntosEstimacion.setOutputMarkupId(true);
+		formCronograma.add(puntosEstimacion);
+		Label horasEstimacion = new Label("horas-esfuerzo", new PropertyModel<Double>(modelo, "esfuerzo"));
+		horasEstimacion.setOutputMarkupId(true);
+		formCronograma.add(horasEstimacion);
 	}
 
 	private Set<CasoDeUso> getCasosDeUso() {

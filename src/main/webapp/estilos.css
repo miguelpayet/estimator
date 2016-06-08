@@ -154,7 +154,7 @@ a.actualizar {
   display:block;
   width: 100px;
   line-height: 2em;
-  margin: 10px;
+  margin: 10px 0;
 }
 
 a.grabar {
@@ -166,5 +166,5 @@ a.grabar {
   display:block;
   width: 100px;
   line-height: 2em;
-  margin: 10px;
+  margin: 10px 10px 10px 15px;
 }
