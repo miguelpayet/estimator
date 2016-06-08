@@ -20,17 +20,17 @@ public class TestCasoDeUso extends TestBase<Factor> {
 	private static IDatabaseTester databaseTester;
 	private static final Logger logger = LogManager.getLogger(TestBase.class);
 
-	@BeforeClass
+	//@BeforeClass
 	public static void cargarDataActor() throws Exception {
 		databaseTester = TestBase.cargarData(new XlsDataSet(new FileInputStream("datasetCasoDeUso.xlsx")));
 	}
 
-	@AfterClass
+	//@AfterClass
 	public static void descargarDataActor() throws Exception {
 		TestBase.descargarData(databaseTester);
 	}
 
-	@Test
+	//@Test
 	public void grabarCasoDeUso() {
 		logger.info("grabarCasoDeUso()");
 		DaoEstimacion de = new DaoEstimacion();
@@ -50,7 +50,7 @@ public class TestCasoDeUso extends TestBase<Factor> {
 		dc.persistir(c);
 	}
 
-	@Test
+	//@Test
 	public void leerCasoDeUso() {
 		logger.info("leerCasoDeUso()");
 		DaoEstimacion de = new DaoEstimacion();

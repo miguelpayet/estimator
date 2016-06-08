@@ -18,6 +18,7 @@ import java.io.FileInputStream;
 
 public class TestActor extends TestBase<Actor> {
 
+	private static final int ACTOR = 10012;
 	private static IDatabaseTester databaseTester;
 	private static final Logger logger = LogManager.getLogger(TestActor.class);
 
@@ -34,7 +35,7 @@ public class TestActor extends TestBase<Actor> {
 	//@Test
 	public void crearActor() {
 		DaoEstimacion de = new DaoEstimacion();
-		Estimacion est = de.get(1);
+		Estimacion est = de.get(ACTOR);
 		Assert.assertNotNull(est);
 		DaoActor da = new DaoActor();
 		Actor a = new Actor();
@@ -46,11 +47,11 @@ public class TestActor extends TestBase<Actor> {
 		de.persistir(est);
 	}
 
-	@Test
+	//@Test
 	public void leerActor() {
 		logger.info("leerActor()");
 		DaoEstimacion de = new DaoEstimacion();
-		Estimacion est = de.get(1);
+		Estimacion est = de.get(ACTOR);
 		Assert.assertNotNull(est);
 		DaoActor da = new DaoActor();
 		// actores

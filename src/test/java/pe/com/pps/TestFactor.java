@@ -14,7 +14,7 @@ public class TestFactor extends TestBase<Factor> {
 
 	private static final Logger logger = LogManager.getLogger(TestBase.class);
 
-	@Test
+	//@Test
 	public void probarExisteFactorAmbiental() {
 		logger.info("probarExisteFactorAmbiental()");
 		DaoFactorAmbiental df = new DaoFactorAmbiental();
@@ -24,7 +24,7 @@ public class TestFactor extends TestBase<Factor> {
 		Assert.assertEquals(f.getNombre(), "Familiaridad con el modelo del proyecto utilizado");
 	}
 
-	@Test
+	//@Test
 	public void probarExisteFactorTecnico() {
 		logger.info("probarExisteFactorTecnico()");
 		DaoFactorTecnico df = new DaoFactorTecnico();

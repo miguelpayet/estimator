@@ -18,7 +18,7 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestEstimacion extends TestBase<Estimacion> {
 
-	private static final Integer ESTIMACION = 11312;
+	private static final Integer ESTIMACION = 11313;
 	private static IDatabaseTester databaseTester;
 	private static final Logger logger = LogManager.getLogger(TestBase.class);
 
@@ -51,7 +51,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		Estimacion est = EstimacionFactory.crear();
 		est.setIdEstimacion(ESTIMACION);
 		est.setEds("Kenji Dettleff");
-		est.setNombre("Reporte de Impresión para Cascos");
+		est.setNombre("11312 - Reporte de Impresión para Cascos");
 		DaoEstimacion de = new DaoEstimacion();
 		de.persistir(est);
 		// casos de uso
@@ -89,20 +89,8 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		// factores
 		DaoFactorTecnico dft = new DaoFactorTecnico();
 		List<FactorTecnico> factoresTecnicos = dft.getPorTipo(2);
-		for (FactorTecnico f : factoresTecnicos) {
-			FactorEstimacion fet = new FactorEstimacion();
-			fet.setFactor(f);
-			fet.setValor(1);
-			est.addFactorEstimacion(fet);
-		}
 		DaoFactorAmbiental dfa = new DaoFactorAmbiental();
 		List<FactorAmbiental> factoresAmbientales = dfa.getPorTipo(1);
-		for (FactorAmbiental f : factoresAmbientales) {
-			FactorEstimacion fea = new FactorEstimacion();
-			fea.setFactor(f);
-			fea.setValor(1);
-			est.addFactorEstimacion(fea);
-		}
 		// resultado
 		logger.info("puntos: " + est.getPuntos());
 		logger.info("esfuerzo: " + est.getEsfuerzo());
@@ -126,7 +114,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 	@Test
 	public void leerEstimacion() {
 		logger.info("leerEstimacion()");
-		Integer numEst = 1;
+		Integer numEst = 11312;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
 		Assert.assertNotNull(est);
