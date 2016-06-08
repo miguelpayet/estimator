@@ -21,15 +21,12 @@ public class HibernateUtil {
 
 	private static void añadirClasesAnotadas() {
 		configuration.addAnnotatedClass(Actor.class);
-		configuration.addAnnotatedClass(ActorPK.class);
 		configuration.addAnnotatedClass(CasoDeUso.class);
-		configuration.addAnnotatedClass(CasoDeUsoPK.class);
 		configuration.addAnnotatedClass(Complejidad.class);
 		configuration.addAnnotatedClass(Estimacion.class);
 		configuration.addAnnotatedClass(Factor.class);
 		configuration.addAnnotatedClass(FactorAmbiental.class);
 		configuration.addAnnotatedClass(FactorEstimacion.class);
-		configuration.addAnnotatedClass(FactorEstimacionPK.class);
 		configuration.addAnnotatedClass(FactorTecnico.class);
 		configuration.addAnnotatedClass(Plataforma.class);
 		configuration.addAnnotatedClass(Proveedor.class);
