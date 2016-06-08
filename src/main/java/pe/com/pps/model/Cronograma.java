@@ -37,7 +37,7 @@ public class Cronograma implements Serializable {
 		// validar que sume 100% entre que estén activas
 		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
-			log.info("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
+			log.trace("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
 			if (t.getIncluir()) {
 				pctIncluidas += Util.round(t.getPorcentaje(), 2);
 			}
