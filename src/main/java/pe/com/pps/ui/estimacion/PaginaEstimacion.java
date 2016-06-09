@@ -81,21 +81,21 @@ public class PaginaEstimacion extends PaginaBase {
 		formCronograma.add(rv);
 		Cronograma c = new Cronograma(modelo);
 		try {
-			agregarTareaCronograma(rv, new PanelTareaFija(rv.newChildId(), new Model<>(c.getTareaFija())), "fija");
+			agregarTareaCronograma(rv, new PanelFilaTareaFija(rv.newChildId(), new Model<>(c.getTareaFija())), "fija");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea fija");
 		}
 		try {
-			agregarTareaCronograma(rv, new PanelTareaDuracion(rv.newChildId(), new Model<>(c.getTareaDuracion())), "duracion");
+			agregarTareaCronograma(rv, new PanelFilaTareaDuracion(rv.newChildId(), new Model<>(c.getTareaDuracion())), "duracion");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
 		for (TareaCronograma t : c.getTareasEsfuerzo()) {
-			agregarTareaCronograma(rv, new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)), "esfuerzo");
-			//rv.add(new PanelTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
+			agregarTareaCronograma(rv, new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t)), "esfuerzo");
+			//rv.add(new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
 		}
 		try {
-			agregarTareaCronograma(rv, new PanelTareaGestion(rv.newChildId(), new Model<>(c.getTareaGestion())), "gestion");
+			agregarTareaCronograma(rv, new PanelFilaTareaGestion(rv.newChildId(), new Model<>(c.getTareaGestion())), "gestion");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
@@ -213,7 +213,7 @@ public class PaginaEstimacion extends PaginaBase {
 		add(linkGrabar);
 	}
 
-	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelCronograma unPanel, String unaClase) {
+	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {
 		unPanel.add(new AttributeAppender("class", unaClase));
 		unRepetidor.add(unPanel);
 	}
