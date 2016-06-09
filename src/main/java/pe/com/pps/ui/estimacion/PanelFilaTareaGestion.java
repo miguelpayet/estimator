@@ -6,9 +6,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.TareaCronograma;
 
-public class PanelTareaGestion extends PanelCronograma {
+public class PanelFilaTareaGestion extends PanelFilaCronograma {
 
-	public PanelTareaGestion(String id, IModel<TareaCronograma> model) {
+	public PanelFilaTareaGestion(String id, IModel<TareaCronograma> model) {
 		super(id, model);
 		agregarTarea();
 	}
