@@ -27,7 +27,7 @@ public class Punto implements Serializable {
 	}
 
 	public Integer getPuntos() {
-		return puntos;
+		return puntos != null ? puntos : 0;
 	}
 
 	public Integer getTipo() {

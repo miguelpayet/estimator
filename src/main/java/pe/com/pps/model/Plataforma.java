@@ -33,7 +33,7 @@ public class Plataforma implements Identificable<Integer>, Serializable {
 	}
 
 	public Double getFactorProductividad() {
-		return factorProductividad;
+		return factorProductividad != null ? factorProductividad : 0;
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class Plataforma implements Identificable<Integer>, Serializable {
 	}
 
 	public String toString() {
-		return nombre != null ? nombre : "Sin nombre";
+		return nombre; // != null ? nombre : "Sin nombre";
 	}
 
 }

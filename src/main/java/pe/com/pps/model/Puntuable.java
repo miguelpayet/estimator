@@ -1,5 +1,6 @@
 package pe.com.pps.model;
 
+import com.sun.istack.internal.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoPunto;
@@ -12,7 +13,7 @@ public abstract class Puntuable implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Actor.class);
 
-	@Column(name = "complejidad")
+	@Column(name = "complejidad", nullable = false)
 	private Integer complejidad;
 	@Transient
 	Integer complejidadAnterior;
@@ -28,11 +29,12 @@ public abstract class Puntuable implements Serializable {
 	Punto punto;
 
 	public Integer getComplejidad() {
-		return complejidad;
+		return complejidad != null ? complejidad : 0;
 	}
 
 	public String getComplejidadStr() {
-		return Complejidad.getNombre(complejidad);
+		String complejidadStr = Complejidad.getNombre(complejidad);
+		return  complejidadStr != null ? complejidadStr : "Sin complejidad";
 	}
 
 	public String getDescripcion() {
@@ -44,7 +46,7 @@ public abstract class Puntuable implements Serializable {
 	}
 
 	public Plataforma getPlataforma() {
-		return plataforma;
+		return plataforma != null ? plataforma : new Plataforma();
 	}
 
 	public abstract Punto getPunto();
@@ -55,7 +57,7 @@ public abstract class Puntuable implements Serializable {
 			DaoPunto dp = new DaoPunto();
 			punto = dp.get(unTipo, complejidad);
 		}
-		return punto;
+		return punto != null ? punto : new Punto(); // todo: que barato (por lo menos pasarle el tipo) (esto debe ser complementado con una validación en la interfaz)
 	}
 
 	public void setComplejidad(Integer complejidad) {
