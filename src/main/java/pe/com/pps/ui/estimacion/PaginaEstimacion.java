@@ -5,13 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -21,6 +20,8 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
+import org.wicketstuff.egrid.component.EditableDataTable;
+import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
@@ -37,9 +38,9 @@ public class PaginaEstimacion extends PaginaBase {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
+	private Estimacion estimacion;
 	private FeedbackPanel feedback;
-	private Form formCronograma;
-	private Estimacion modelo;
+	private PanelCronograma panelCronograma;
 
 	public PaginaEstimacion() {
 		this(null);
@@ -49,7 +50,7 @@ public class PaginaEstimacion extends PaginaBase {
 		super(unosParametros);
 		// crear una estimación a partir del parametro
 		leerEstimacion(unosParametros);
-		if (modelo == null) {
+		if (estimacion == null) {
 			nuevaEstimacion();
 		}
 		agregarTitulo(null);
@@ -58,80 +59,24 @@ public class PaginaEstimacion extends PaginaBase {
 		agregarFeedback();
 		agregarGridActores();
 		agregarGridCasosDeUso();
-		crearFormCronograma();
-		agregarFactoresAmbiente();
-		agregarFactoresTecnicos();
 		agregarCronograma();
 	}
 
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		TextField<Integer> numero = new TextField<>("numero", new PropertyModel<>(modelo, "idEstimacion"));
+		TextField<Integer> numero = new TextField<>("numero", new PropertyModel<>(estimacion, "idEstimacion"));
 		campos.add(numero);
-		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(modelo, "eds"));
+		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
 		campos.add(eds);
-		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(modelo, "nombre"));
+		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(estimacion, "nombre"));
 		campos.add(descripcion);
 	}
 
-	private void agregarCronograma() { // todo: refactorizar este metodo
-		RepeatingView rv = new RepeatingView("fila-cronograma");
-		rv.setOutputMarkupId(true);
-		formCronograma.add(rv);
-		Cronograma c = new Cronograma(modelo);
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaFija(rv.newChildId(), new Model<>(c.getTareaFija())), "fija");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea fija");
-		}
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaDuracion(rv.newChildId(), new Model<>(c.getTareaDuracion())), "duracion");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea de acompañamiento");
-		}
-		for (TareaCronograma t : c.getTareasEsfuerzo()) {
-			agregarTareaCronograma(rv, new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t)), "esfuerzo");
-			//rv.add(new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t)));
-		}
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaGestion(rv.newChildId(), new Model<>(c.getTareaGestion())), "gestion");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea de acompañamiento");
-		}
-		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
-			protected void onSubmit(AjaxRequestTarget target, Form unForm) {
-				log.info("actualizar cronograma");
-				try {
-					modelo.generarCronograma();
-				} catch (ExcepcionCronograma e) {
-					error("error al generar cronograma: " + e.getMessage());
-					log.error(e.getMessage());
-					e.printStackTrace();
-				} finally {
-					target.add(formCronograma);
-					target.add(feedback);
-				}
-			}
-		});
-	}
-
-	private void agregarFactores(String unSufijo, Integer unTipo) {
-		RepeatingView rv = new RepeatingView("fila-factor-" + unSufijo);
-		rv.setOutputMarkupId(true);
-		formCronograma.add(rv);
-		for (FactorEstimacion f : modelo.extraerFactores(unTipo)) {
-			rv.add(new PanelFactor(rv.newChildId(), new Model<>(f)));
-		}
-	}
-
-	private void agregarFactoresAmbiente() {
-		agregarFactores("ambiente", TipoFactor.AMBIENTE);
-	}
-
-	private void agregarFactoresTecnicos() {
-		agregarFactores("tecnico", TipoFactor.TECNICO);
-
+	private void agregarCronograma() {
+		panelCronograma = new PanelCronograma("cronograma", new Model(estimacion));
+		panelCronograma.setOutputMarkupId(true);
+		add(panelCronograma);
 	}
 
 	private void agregarFeedback() {
@@ -141,7 +86,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridActores() {
-		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(modelo), 5, Actor.class) {
+		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(estimacion), 5, Actor.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -168,7 +113,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(modelo), 5, CasoDeUso.class) {
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(estimacion), 5, CasoDeUso.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -201,7 +146,7 @@ public class PaginaEstimacion extends PaginaBase {
 				log.info("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
-					de.grabar(modelo);
+					de.grabar(estimacion);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());
@@ -211,11 +156,6 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		};
 		add(linkGrabar);
-	}
-
-	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {
-		unPanel.add(new AttributeAppender("class", unaClase));
-		unRepetidor.add(unPanel);
 	}
 
 	private void agregarTitulo(Estimacion unaEstimacion) {
@@ -231,22 +171,10 @@ public class PaginaEstimacion extends PaginaBase {
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
-		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion") {
-			@Override
-			protected void addBehaviors(final FormComponent<T> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
-			}
-		};
+		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion");
 		columns.add(descripcion);
+		// todo: esta columna que sea obligatoria
 		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidadStr") {
-			@Override
-			protected void addBehaviors(final FormComponent<T> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.setRequired(true);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("complejidadStr")));
-			}
-
 			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, Complejidad.getLista());
@@ -258,13 +186,6 @@ public class PaginaEstimacion extends PaginaBase {
 		// todo: esta columna que sea obligatoria
 		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
 			@Override
-			protected void addBehaviors(final FormComponent<T> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.setRequired(true);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("plataforma")));
-			}
-
-			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
 			}
@@ -272,34 +193,23 @@ public class PaginaEstimacion extends PaginaBase {
 		return columns;
 	}
 
-	private void crearFormCronograma() {
-		formCronograma = new Form<>("form-cronograma", new Model<>(modelo));
-		add(formCronograma);
-		Label puntosEstimacion = new Label("puntos-ajustados", new PropertyModel<Double>(modelo, "puntos"));
-		puntosEstimacion.setOutputMarkupId(true);
-		formCronograma.add(puntosEstimacion);
-		Label horasEstimacion = new Label("horas-esfuerzo", new PropertyModel<Double>(modelo, "esfuerzo"));
-		horasEstimacion.setOutputMarkupId(true);
-		formCronograma.add(horasEstimacion);
-	}
-
 	private Set<CasoDeUso> getCasosDeUso() {
-		return modelo.getCasosDeUso();
+		return estimacion.getCasosDeUso();
 	}
 
 	private void leerEstimacion(PageParameters unosParametros) {
 		if (unosParametros != null) {
 			Integer idEntidad = unosParametros.get("id").toInteger();
 			DaoEstimacion de = new DaoEstimacion();
-			modelo = de.get(idEntidad);
-			if (modelo == null) {
+			estimacion = de.get(idEntidad);
+			if (estimacion == null) {
 				log.error("oops"); // todo: retroalimentar al usuario de alguna forma
 			}
 		}
 	}
 
 	private void nuevaEstimacion() {
-		modelo = EstimacionFactory.crear();
+		estimacion = EstimacionFactory.crear();
 	}
 
 }

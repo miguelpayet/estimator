@@ -1,9 +1,80 @@
-<html lang="en" xmlns:wicket="">
+<html xmlns:wicket="http://www.w3.org/1999/xhtml">
 <wicket:panel>
-    <td class="incluir"><input type="checkbox" wicket:id="incluir"/></td>
-    <td class="tarea"><span wicket:id="nombre">nombre</span></td>
-    <td class="proveedor"><span wicket:id="proveedor">proveedor</span></td>
-    <td class="porcentaje"><input type="text" wicket:id="porcentaje"/></td>
-    <wicket:child></wicket:child>
+     <form wicket:id="form-cronograma">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>factores de ajuste</h2>
+            </div>
+        </div>
+        <div class="factores">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tecnicos">
+                        <h3>técnicos</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>nombre</th>
+                                <th>complejidad</th>
+                                <th>descripción</th>
+                            </tr>
+                            </thead>
+                            <tr wicket:id="fila-factor-tecnico"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 ambiente">
+                    <h3>ambiente</h3>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>nombre</th>
+                            <th>complejidad</th>
+                            <th>descripción</th>
+                        </tr>
+                        </thead>
+                        <tr wicket:id="fila-factor-ambiente"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 cronograma">
+                <h2>cronograma</h2>
+                <ul>
+                    <li>
+                        puntos de caso de uso ajustados: <span wicket:id="puntos-ajustados">1</span>
+                    </li>
+                    <li>
+                        total de horas de esfuerzo (sin gestión): <span wicket:id="horas-esfuerzo">1</span>
+                    </li>
+                </ul>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="incluir">incluir</th>
+                        <th class="tarea">tarea</th>
+                        <th class="proveedor">proveedor</th>
+                        <th class="porcentaje">porcentaje</th>
+                        <th class="recursos">recursos</th>
+                        <th class="dias">dias</th>
+                        <th class="horas">horas</th>
+                    </tr>
+                    </thead>
+                    <tr wicket:id="fila-cronograma"></tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="feedback" wicket:id="feedback"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a class="actualizar" wicket:id="actualizar-cronograma">actualizar</a>
+            </div>
+        </div>
+    </form>
 </wicket:panel>
 </html>
