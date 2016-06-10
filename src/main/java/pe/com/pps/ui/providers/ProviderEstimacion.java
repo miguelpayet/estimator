@@ -1,12 +1,15 @@
 package pe.com.pps.ui.providers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.hibernate.criterion.Restrictions;
 import pe.com.pps.model.Estimacion;
-import pe.com.pps.ui.providers.QueryCriteria;
-import pe.com.pps.ui.componentes.ProviderTabla;
 
 public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNombre> {
+
+	private static final Logger log = LogManager.getLogger(ProviderEstimacion.class);
 
 	public ProviderEstimacion() {
 		super(new FiltroTablaNombre());
@@ -20,7 +23,20 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 
 	@Override
 	protected void setearFiltros(QueryCriteria query) {
-		query.setFiltro("nombre", getFilterState().getNombre());
+		String valor = getFilterState().getNombre().trim();
+		Integer valorEntero = null;
+		log.debug("valor {}", valor);
+		try {
+			valorEntero = Integer.valueOf(valor);
+			log.debug("valor entero {}", valorEntero);
+		} catch (NumberFormatException e) {
+			log.debug("no es número");
+		}
+		if (valorEntero != null) {
+			query.getCriteria().add(Restrictions.eq("idEstimacion", valorEntero));
+		} else {
+			query.getCriteria().add(Restrictions.or(Restrictions.like("nombre", "%" + valor + "%"), Restrictions.like("eds", "%" + valor + "%")));
+		}
 	}
 
 }

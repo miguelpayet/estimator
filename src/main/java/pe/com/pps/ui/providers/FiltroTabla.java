@@ -1,4 +1,4 @@
-package pe.com.pps.ui.componentes;
+package pe.com.pps.ui.providers;
 
 import java.io.Serializable;
 
