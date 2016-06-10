@@ -50,7 +50,7 @@ public class PaginaEstimacion extends PaginaBase {
 		if (estimacion == null) {
 			nuevaEstimacion();
 		}
-		agregarTitulo(null);
+		agregarTitulo();
 		agregarCampos();
 		agregarLinks();
 		agregarFeedback();
@@ -63,6 +63,9 @@ public class PaginaEstimacion extends PaginaBase {
 		campos = new Form("campos");
 		add(campos);
 		TextField<Integer> numero = new TextField<>("numero", new PropertyModel<>(estimacion, "idEstimacion"));
+		if (estimacion.getIdEstimacion() != null) {
+			numero.setEnabled(false);
+		}
 		campos.add(numero);
 		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
 		campos.add(eds);
@@ -157,12 +160,12 @@ public class PaginaEstimacion extends PaginaBase {
 		add(linkGrabar);
 	}
 
-	private void agregarTitulo(Estimacion unaEstimacion) {
+	private void agregarTitulo() {
 		String titulo;
-		if (unaEstimacion == null) {
+		if (estimacion.getIdEstimacion() == null) {
 			titulo = "nueva estimación";
 		} else {
-			titulo = unaEstimacion.getNombre();
+			titulo = estimacion.getNombre();
 		}
 		add(new Label("titulo", titulo));
 	}

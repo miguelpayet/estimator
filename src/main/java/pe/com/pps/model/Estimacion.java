@@ -2,6 +2,7 @@ package pe.com.pps.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.annotations.SortComparator;
 import pe.com.pps.dao.DaoCronograma;
 
 import javax.persistence.*;
@@ -26,8 +27,8 @@ public class Estimacion implements Serializable {
 	private Double esfuerzo;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	Set<FactorEstimacion> factoresEstimacion;
-	@Column(name = "fechacierre")
-	private Date fechaCierre;
+	@Column(name = "fechacalculo")
+	private Date fechaCalculo;
 	@Id
 	@Column(name = "idestimacion", nullable = false)
 	private Integer idEstimacion;
@@ -84,6 +85,7 @@ public class Estimacion implements Serializable {
 		totalizar(true);
 		Cronograma c = new Cronograma(this);
 		c.calcular();
+		fechaCalculo = new Date();
 	}
 
 	public Set<Actor> getActores() {
@@ -119,8 +121,8 @@ public class Estimacion implements Serializable {
 		return new Factorama(this).getFactoresAmbientales();
 	}
 
-	public Date getFechaCierre() {
-		return fechaCierre;
+	public Date getFechaCalculo() {
+		return fechaCalculo;
 	}
 
 	public Integer getIdEstimacion() {
@@ -190,8 +192,8 @@ public class Estimacion implements Serializable {
 		actualizado = false;
 	}
 
-	public void setFechaCierre(Date fechaCierre) {
-		this.fechaCierre = fechaCierre;
+	public void setFechaCalculo(Date fechaCalculo) {
+		this.fechaCalculo = fechaCalculo;
 	}
 
 	public void setIdEstimacion(Integer idEstimacion) {
@@ -220,7 +222,7 @@ public class Estimacion implements Serializable {
 		for (Puntuable p : unosPuntuables) {
 			Integer puntos = p.getPunto().getPuntos();
 			Double productividad = p.getPlataforma().getFactorProductividad();
-			esfuerzo += puntos * unFactor * productividad;
+			esfuerzo += Util.round(puntos * unFactor * productividad, 2);
 		}
 	}
 
@@ -233,7 +235,7 @@ public class Estimacion implements Serializable {
 			puntos += cas.getPunto().getPuntos();
 		}
 		log.debug(String.format("estimación %s - puntos antes de ajuste %s", getIdEstimacion(), puntos));
-		puntos = puntos * unFactor;
+		puntos = Util.round(puntos * unFactor, 2);
 		log.debug(String.format("estimación %s - puntos ajustados %s", getIdEstimacion(), puntos));
 	}
 

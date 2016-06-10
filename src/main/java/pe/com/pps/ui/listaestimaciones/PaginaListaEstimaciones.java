@@ -37,15 +37,10 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 		columnas.add(id);
 		ClickablePropertyColumn<Estimacion, String> nombre = new ClickablePropertyColumn<>(Model.of("nombre"), "nombre", "nombre");
 		columnas.add(nombre);
-		PropertyColumn<Estimacion, String> eds = new PropertyColumn<Estimacion, String>(Model.of("eds"), "eds") {
-			@Override
-			public void populateItem(final Item<ICellPopulator<Estimacion>> item, final String componentId, final IModel<Estimacion> rowModel) {
-				Label label = new Label(componentId, getDataModel(rowModel));
-				item.add(label);
-				item.add(new AttributeAppender("class", "eds"));
-			}
-		};
-		columnas.add(eds);
+		columnas.add(new PropertyColumnEstilo<>(Model.of("eds"), null, "eds", "eds"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("puntos sin ajustar"), null, "puntos", "puntos"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("horas sin gestión"), null, "esfuerzo", "esfuerzo"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("fecha actualización"), null, "fechaCalculo", "fecha"));
 	}
 
 	@Override

@@ -110,10 +110,23 @@ padding:0 10px 0 0;
 padding:0 10px;
 }
 
+.tabla td.puntos, .tabla td.esfuerzo  {
+  text-align:right;
+}
+
+.tabla td.fecha {
+text-align: center;
+}
+
 .tabla th {
 line-height:1em;
 border-bottom:1px solid #ddd;
 text-align:center;
+padding: 0 10px;
+}
+
+.tabla td {
+  padding: 0 10px;
 }
 
 .tecnicos .complejidad input,.tecnicos .complejidad label,.ambiente .complejidad input,.ambiente .complejidad label {
@@ -178,7 +191,7 @@ margin:10px 0;
 }
 
 input.descripcion,.tabla th.nombre {
-width:400px;
+width:300px;
 }
 
 table.actores,table.casos-de-uso {
