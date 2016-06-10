@@ -27,6 +27,7 @@ public class ClickablePropertyColumn<T, V> extends AbstractColumn<T, V> {
 			link.add(new Label("label", labelModel));
 		}
 	}
+
 	private String cssClass = null;
 	private String property; // la propiedad que se pasará a la celda para que la obtenga del objeto de cada fila
 
@@ -41,10 +42,12 @@ public class ClickablePropertyColumn<T, V> extends AbstractColumn<T, V> {
 		cssClass = unaClaseCss;
 	}
 
+	@Override
 	public String getCssClass() {
 		return cssClass;
 	}
 
+	@Override
 	public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
 		cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<>(rowModel, property)));
 	}
