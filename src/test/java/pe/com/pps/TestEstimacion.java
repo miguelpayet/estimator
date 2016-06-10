@@ -27,7 +27,7 @@ public class TestEstimacion extends TestBase<Estimacion> {
 		databaseTester = TestBase.cargarData(new XlsDataSet(new FileInputStream("datasetEstimacion.xlsx")));
 	}
 
-	@AfterClass
+	//@AfterClass
 	public static void descargarDataActor() throws Exception {
 		TestBase.descargarData(databaseTester);
 	}

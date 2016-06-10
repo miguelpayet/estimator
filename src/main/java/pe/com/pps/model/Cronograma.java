@@ -17,11 +17,15 @@ public class Cronograma implements Serializable {
 	private HashMultimap<Integer, TareaCronograma> mapaTareas;
 
 	public Cronograma(Estimacion unaEstimacion) {
+		setEstimacion(unaEstimacion);
+	}
+
+	public void setEstimacion(Estimacion unaEstimacion) {
 		estimacion = unaEstimacion;
 		init();
 	}
 
-	// todo: agregar lógica para excluir tareas
+	// calcular el cronograma
 	public void calcular() throws ExcepcionCronograma {
 		double tareaFija;
 		if (getTareaFija().getHoras() != null) {
@@ -91,7 +95,7 @@ public class Cronograma implements Serializable {
 		return lista;
 	}
 
-	private Double getTotalDias() {
+	public Double getTotalDias() {
 		Double totalDias = 0.0;
 		for (TareaCronograma tc : mapaTareas.values()) {
 			if (!tc.getTarea().getTipoCosto().equals(TipoCosto.DURACION) && !tc.getTarea().getTipoCosto().equals(TipoCosto.GESTION)) {
@@ -101,7 +105,7 @@ public class Cronograma implements Serializable {
 		return totalDias;
 	}
 
-	private Double getTotalHoras() {
+	public Double getTotalHoras() {
 		Double totalHoras = 0.0;
 		for (TareaCronograma tc : mapaTareas.values()) {
 			totalHoras += tc.getHoras();
@@ -109,6 +113,7 @@ public class Cronograma implements Serializable {
 		return totalHoras;
 	}
 
+	// separar las tareas de la estimación según su tipo, en un mapa
 	private void init() {
 		mapaTareas = HashMultimap.create(4, 4);
 		for (TareaCronograma c : estimacion.getTareasCronograma()) {
@@ -116,4 +121,7 @@ public class Cronograma implements Serializable {
 		}
 	}
 
+	public Double getTotalMeses() {
+		return getTotalDias() / 30;
+	}
 }

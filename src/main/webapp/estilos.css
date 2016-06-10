@@ -1,9 +1,38 @@
+.actores td,.casos-de-uso td {
+width:20%;
+}
+
+.actores tfoot tr ,.casos-de-uso tfoot tr {
+border:1px dotted #ddd;
+}
+
+.actores tr td, .casos-de-uso tr td {
+  padding:10px 2px;
+}
+
+.actores tr td:first-child, .casos-de-uso tr td:first-child {
+width:50%;
+}
+
+.cronograma .totales {
+border-top:3px double #000;
+background-color:rgba(255,207,0,0.5);
+}
+
 .cronograma h2 {
 margin-top:0;
 }
 
-.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas {
+.cronograma td {
+padding:5px 0;
+}
+
+.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas,.cronograma .porcentaje input,.cronograma .recursos input,.cronograma .dias input {
 text-align:right;
+}
+
+.cronograma th,.cronograma .incluir {
+text-align:center;
 }
 
 .cronograma th,.cronograma td {
@@ -18,8 +47,7 @@ width:60px;
 width:10%;
 }
 
-.cronograma th.porcentaje,.porcentaje input,.cronograma th.recursos,.recursos input,.cronograma th.dias,.dias input,.cronograma th.horas {
-text-align:center;
+.cronograma th.porcentaje,.cronograma th.recursos,.cronograma th.dias,.cronograma th.horas,.estimacion label,.tabla th.idEstimacion {
 width:100px;
 }
 
@@ -27,7 +55,7 @@ width:100px;
 width:150px;
 }
 
-.cronograma th.tarea {
+.cronograma th.tarea,.tabla td.eds {
 width:200px;
 }
 
@@ -44,7 +72,7 @@ background-color:#FDD;
 }
 
 .cronograma tr.gestion {
-background-color:#FDF;
+background-color:#FEFFDD;
 }
 
 .estimacion input#eds {
@@ -53,10 +81,6 @@ width:250px;
 
 .estimacion input#nombre {
 width:500px;
-}
-
-.estimacion label {
-width:100px;
 }
 
 .estimacion ul {
@@ -69,9 +93,27 @@ padding-bottom:10px;
 margin:10px 0;
 }
 
-.puntuable {
-border-bottom:1px solid #ddd;
+.puntuable tbody {
 padding:0 0 10px;
+}
+
+.tabla {
+margin:10px 0;
+}
+
+.tabla td.idEstimacion {
+text-align:right;
+padding:0 10px 0 0;
+}
+
+.tabla td.nombre,.tabla td.eds {
+padding:0 10px;
+}
+
+.tabla th {
+line-height:1em;
+border-bottom:1px solid #ddd;
+text-align:center;
 }
 
 .tecnicos .complejidad input,.tecnicos .complejidad label,.ambiente .complejidad input,.ambiente .complejidad label {
@@ -101,6 +143,30 @@ width:30%;
 width:40%;
 }
 
+a.actualizar {
+text-align:center;
+background:#4479BA;
+color:#FFF;
+height:50px;
+display:block;
+width:100px;
+line-height:2em;
+margin:10px 0;
+padding:10px;
+}
+
+a.grabar {
+text-align:center;
+background:#4479BA;
+color:#FFF;
+height:50px;
+display:block;
+width:100px;
+line-height:2em;
+margin:10px 10px 10px 15px;
+padding:10px;
+}
+
 div.titulo {
 border-bottom:1px solid #ddd;
 margin:0 0 10px;
@@ -111,60 +177,10 @@ border-bottom:1px solid #ddd;
 margin:10px 0;
 }
 
-.tabla th {
-  line-height: 1em;
-  border-bottom: 1px solid #ddd;
+input.descripcion,.tabla th.nombre {
+width:400px;
 }
 
-.tabla {
-  margin: 10px 0;
-}
-
-.tabla th {
-  text-align: center;
-}
-
-.tabla th.idEstimacion  {
-  width: 100px;
-}
-
-.tabla th.nombre {
-  width: 400px;
-}
-
- .tabla td.eds  {
-   width: 200px;
- }
-
-.tabla td.nombre, .tabla td.eds   {
-  padding: 0 10px;
-}
-
-.tabla td.idEstimacion  {
-  text-align:right;
-  padding: 0 10px 0 0;
-}
-
-a.actualizar {
-  padding: 10px 10px;
-  text-align: center;
-  background: #4479BA;
-  color: #FFF;
-  height: 50px;
-  display:block;
-  width: 100px;
-  line-height: 2em;
-  margin: 10px 0;
-}
-
-a.grabar {
-  padding: 10px 10px;
-  text-align: center;
-  background: #4479BA;
-  color: #FFF;
-  height: 50px;
-  display:block;
-  width: 100px;
-  line-height: 2em;
-  margin: 10px 10px 10px 15px;
+table.actores,table.casos-de-uso {
+padding:5px 0;
 }

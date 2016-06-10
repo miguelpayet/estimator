@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -20,8 +19,6 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
-import org.wicketstuff.egrid.component.EditableDataTable;
-import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
@@ -109,6 +106,7 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 
 		};
+		grid.setTableCss("actores");
 		add(grid);
 	}
 
@@ -136,6 +134,7 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 
 		};
+		grid.setTableCss("casos-de-uso");
 		add(grid);
 	}
 
@@ -171,9 +170,14 @@ public class PaginaEstimacion extends PaginaBase {
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
-		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion");
+		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion") {
+			@Override
+			protected void addBehaviors(final FormComponent<T> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
+			}
+		};
 		columns.add(descripcion);
-		// todo: esta columna que sea obligatoria
 		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidadStr") {
 			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
@@ -183,7 +187,6 @@ public class PaginaEstimacion extends PaginaBase {
 		columns.add(complejidad);
 		DaoPlataforma dp = new DaoPlataforma();
 		List<Plataforma> plataformas = dp.listar();
-		// todo: esta columna que sea obligatoria
 		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
 			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
