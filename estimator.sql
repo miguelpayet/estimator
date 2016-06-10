@@ -33,7 +33,7 @@ CREATE TABLE `actor` (
   KEY `fk_actor_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_actor_estimacion1` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_actor_plataforma1` FOREIGN KEY (`idplataforma`) REFERENCES `plataforma` (`idplataforma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `caso_de_uso` (
   KEY `fk_caso_de_uso_plataforma1_idx` (`idplataforma`),
   CONSTRAINT `fk_caso_de_uso_estimacion` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_caso_de_uso_plataforma1` FOREIGN KEY (`idplataforma`) REFERENCES `plataforma` (`idplataforma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +109,7 @@ CREATE TABLE `estimacion` (
   `idestimacion` int(6) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `eds` varchar(50) NOT NULL,
-  `fechacierre` varchar(45) DEFAULT NULL,
+  `fechacalculo` datetime DEFAULT NULL,
   `puntos` float DEFAULT NULL,
   `esfuerzo` float DEFAULT NULL,
   `version` int(11) DEFAULT NULL,
@@ -153,7 +153,7 @@ CREATE TABLE `factor_estimacion` (
   KEY `fk_factor_has_estimacion_factor1_idx` (`idfactor`),
   CONSTRAINT `fk_factor_has_estimacion_estimacion1` FOREIGN KEY (`idestimacion`) REFERENCES `estimacion` (`idestimacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_factor_has_estimacion_factor1` FOREIGN KEY (`idfactor`) REFERENCES `factor` (`idfactor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=113604 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,4 +247,4 @@ CREATE TABLE `tarea` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-02 13:47:39
+-- Dump completed on 2016-06-10 15:46:26
