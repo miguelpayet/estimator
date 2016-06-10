@@ -1,7 +1,8 @@
-package pe.com.pps.ui.componentes;
+package pe.com.pps.ui.providers;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import pe.com.pps.ui.providers.FiltroTabla;
 import pe.com.pps.ui.providers.QueryCriteria;
 
 import java.util.Iterator;
