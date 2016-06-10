@@ -17,7 +17,7 @@ public class DaoEstimacion extends Dao<Estimacion> {
 		if (unaEstimacion.getVersion() == null) {
 			getSesion().persist(unaEstimacion);
 		} else {
-			getSesion().saveOrUpdate(unaEstimacion);
+			getSesion().update(unaEstimacion);
 		}
 	}
 
