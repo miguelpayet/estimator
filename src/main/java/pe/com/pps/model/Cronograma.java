@@ -20,11 +20,6 @@ public class Cronograma implements Serializable {
 		setEstimacion(unaEstimacion);
 	}
 
-	public void setEstimacion(Estimacion unaEstimacion) {
-		estimacion = unaEstimacion;
-		init();
-	}
-
 	// calcular el cronograma
 	public void calcular() throws ExcepcionCronograma {
 		double tareaFija;
@@ -35,7 +30,7 @@ public class Cronograma implements Serializable {
 		}
 		double pctDuracion = getTareaDuracion().getPorcentaje();
 		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
-		double tareaDuracion = (pctDuracion * (pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija))) / (1 + (pctDuracion * pctDiseñoTecnico));
+		double tareaDuracion = Util.round((pctDuracion * pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija)) / (1 + (pctDuracion * pctDiseñoTecnico)), 2);
 		getTareaDuracion().setHoras(tareaDuracion);
 		// estas tareas pueden estar o no incluidas
 		// validar que sume 100% entre que estén activas
@@ -43,15 +38,15 @@ public class Cronograma implements Serializable {
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			log.trace("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
 			if (t.getIncluir()) {
-				pctIncluidas += Util.round(t.getPorcentaje(), 2);
+				pctIncluidas += t.getPorcentaje();
 			}
 		}
 		if (Util.round(pctIncluidas, 2) != 1) {
-			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + pctIncluidas * 100 + "%");
+			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + Util.round(pctIncluidas * 100, 2) + "%");
 		}
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			if (t.getIncluir()) {
-				t.setHoras((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * Util.round(t.getPorcentaje(), 2));
+				t.setHoras(Util.round((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * t.getPorcentaje(), 2));
 			} else {
 				t.setHoras(0.0);
 			}
@@ -113,6 +108,10 @@ public class Cronograma implements Serializable {
 		return totalHoras;
 	}
 
+	public Double getTotalMeses() {
+		return Util.round(getTotalDias() / 30, 2);
+	}
+
 	// separar las tareas de la estimación según su tipo, en un mapa
 	private void init() {
 		mapaTareas = HashMultimap.create(4, 4);
@@ -121,7 +120,9 @@ public class Cronograma implements Serializable {
 		}
 	}
 
-	public Double getTotalMeses() {
-		return getTotalDias() / 30;
+	public void setEstimacion(Estimacion unaEstimacion) {
+		estimacion = unaEstimacion;
+		init();
 	}
+
 }

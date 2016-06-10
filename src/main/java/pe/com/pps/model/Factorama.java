@@ -1,6 +1,6 @@
 package pe.com.pps.model;
 
-// todo: colocar aquí la lógica para separación y cálculo de factores
+// aquí va la lógica para separación y cálculo de factores
 
 import com.google.common.collect.HashMultimap;
 import org.apache.logging.log4j.LogManager;
