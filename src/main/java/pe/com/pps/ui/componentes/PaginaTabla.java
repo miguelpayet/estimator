@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.providers.FiltroTablaNombre;
+import pe.com.pps.ui.providers.ProviderTabla;
 
 import java.io.Serializable;
 import java.util.ArrayList;
