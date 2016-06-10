@@ -39,6 +39,10 @@ public class QueryCriteria<T> {
 		criteria = getSession().createCriteria(queryClass);
 	}
 
+	protected Criteria getCriteria() {
+		return criteria;
+	}
+
 	private Session getSession() {
 		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
