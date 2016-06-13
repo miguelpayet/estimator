@@ -18,6 +18,7 @@ import pe.com.pps.model.*;
 public class PanelCronograma extends Panel {
 
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
+
 	Cronograma cronograma;
 	private FeedbackPanel feedback;
 	private Form formCronograma;
@@ -48,7 +49,9 @@ public class PanelCronograma extends Panel {
 			log.error("no hay tarea de acompañamiento");
 		}
 		for (TareaCronograma t : cronograma.getTareasEsfuerzo()) {
-			agregarTareaCronograma(rv, new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t)), "esfuerzo");
+			PanelFilaTareaEsfuerzo panel = new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t));
+			panel.setOutputMarkupId(true);
+			agregarTareaCronograma(rv, panel, "esfuerzo");
 		}
 		try {
 			agregarTareaCronograma(rv, new PanelFilaTareaGestion(rv.newChildId(), new Model<>(cronograma.getTareaGestion())), "gestion");

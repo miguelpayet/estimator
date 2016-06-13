@@ -38,6 +38,7 @@ public class PaginaEstimacion extends PaginaBase {
 	private Estimacion estimacion;
 	private FeedbackPanel feedback;
 	private PanelCronograma panelCronograma;
+	TextField<Integer> proyecto;
 
 	public PaginaEstimacion() {
 		this(null);
@@ -62,11 +63,12 @@ public class PaginaEstimacion extends PaginaBase {
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		TextField<Integer> numero = new TextField<>("numero", new PropertyModel<>(estimacion, "idEstimacion"));
+		proyecto = new TextField<>("numero", new PropertyModel<>(estimacion, "idEstimacion"));
+		proyecto.setOutputMarkupId(true);
 		if (estimacion.getIdEstimacion() != null) {
-			numero.setEnabled(false);
+			proyecto.setEnabled(false);
 		}
-		campos.add(numero);
+		campos.add(proyecto);
 		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(estimacion, "nombre"));
@@ -149,6 +151,8 @@ public class PaginaEstimacion extends PaginaBase {
 				try {
 					DaoEstimacion de = new DaoEstimacion();
 					de.grabar(estimacion);
+					proyecto.setEnabled(false);
+					target.add(proyecto);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());

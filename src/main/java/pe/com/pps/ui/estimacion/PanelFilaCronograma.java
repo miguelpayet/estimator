@@ -1,5 +1,7 @@
 package pe.com.pps.ui.estimacion;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
@@ -14,10 +16,6 @@ public class PanelFilaCronograma extends FormComponentPanel<TareaCronograma> {
 	private TextField campoPorcentaje;
 	private CheckBox checkboxIncluir;
 
-	public TextField getCampoPorcentaje() {
-		return campoPorcentaje;
-	}
-
 	public PanelFilaCronograma(String id) {
 		super(id);
 	}
@@ -26,13 +24,27 @@ public class PanelFilaCronograma extends FormComponentPanel<TareaCronograma> {
 		super(id, model);
 	}
 
+	protected void actualizarFila(AjaxCheckBox unCheckbox, AjaxRequestTarget unTarget) {
+
+	}
+
 	protected void agregarTarea() {
-		checkboxIncluir = new CheckBox("incluir", new PropertyModel<Boolean>(getModelObject(), "incluir"));
+		checkboxIncluir = new AjaxCheckBox("incluir", new PropertyModel<>(getModelObject(), "incluir")) {
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				actualizarFila(this, target);
+			}
+
+		};
 		add(checkboxIncluir);
-		add(new Label("nombre", new Model<String>(getModelObject().getNombre())));
-		add(new Label("proveedor", new Model<String>(getModelObject().getNombreProveedor())));
-		campoPorcentaje = new TextField("porcentaje", new PropertyModel<Double>(getModelObject(), "porcentaje"));
+		add(new Label("nombre", new Model<>(getModelObject().getNombre())));
+		add(new Label("proveedor", new Model<>(getModelObject().getNombreProveedor())));
+		campoPorcentaje = new TextField<>("porcentaje", new PropertyModel<Double>(getModelObject(), "porcentaje"));
 		add(campoPorcentaje);
+	}
+
+	public TextField getCampoPorcentaje() {
+		return campoPorcentaje;
 	}
 
 	public CheckBox getCheckboxIncluir() {
