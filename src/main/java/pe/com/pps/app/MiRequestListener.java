@@ -25,19 +25,19 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onBeginRequest(RequestCycle cycle) {
-		log.debug("onBeginRequest");
+		log.trace("onBeginRequest");
 		Session sesion = sf.getCurrentSession();
 		sesion.beginTransaction();
 	}
 
 	@Override
 	public void onDetach(RequestCycle cycle) {
-		log.debug("onDetach");
+		log.trace("onDetach");
 	}
 
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
-		log.debug("onEndRequest");
+		log.trace("onEndRequest");
 		Session sesion = sf.getCurrentSession();
 		try {
 			sesion.getTransaction().commit();
@@ -61,27 +61,27 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception exception) {
-		log.debug("onExceptionRequestHandlerResolved");
+		log.trace("onExceptionRequestHandlerResolved");
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler) {
-		log.debug("onRequestHandlerExecuted");
+		log.trace("onRequestHandlerExecuted");
 	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler) {
-		log.debug("onRequestHandlerResolved");
+		log.trace("onRequestHandlerResolved");
 
 	}
 
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler) {
-		log.debug("onRequestHandlerScheduled");
+		log.trace("onRequestHandlerScheduled");
 	}
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		//log.debug("onUrlMapped {}", url.toString());
+		//log.trace("onUrlMapped {}", url.toString());
 	}
 }

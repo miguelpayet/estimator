@@ -3,6 +3,7 @@ package pe.com.pps.ui.estimacion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -23,6 +24,7 @@ import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.componentes.PaginaBase;
+import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
 
@@ -147,7 +149,7 @@ public class PaginaEstimacion extends PaginaBase {
 		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				log.info("persistir");
+				log.debug("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
 					de.grabar(estimacion);
@@ -162,6 +164,36 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		};
 		add(linkGrabar);
+		AjaxSubmitLink linkVolver = new AjaxSubmitLink("volver", campos) {
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				boolean volver = true;
+				log.info("volver");
+				// validar si el objeto ha cambiado respecto a lo que está grabado
+				if (estimacion.getIdEstimacion() != null && estimacion.getVersion() != null) {
+					DaoEstimacion de = new DaoEstimacion();
+					Estimacion grabado = de.get(estimacion.getIdEstimacion());
+					if (grabado != null) {
+						if (!grabado.compararCon(estimacion)) {
+							log.info("son distintos");
+							error("tienes cambios no grabados. puedes salir, pero no con este botón.");
+							volver = false;
+							target.add(feedback);
+						} else {
+							log.info("son iguales");
+						}
+					} else {
+						log.info("no existe");
+					}
+				} else {
+					log.info("es nuevo");
+				}
+				if (volver) {
+					throw new RestartResponseException(PaginaListaEstimaciones.class);
+				}
+			}
+		};
+		add(linkVolver);
 	}
 
 	private void agregarTitulo() {
@@ -172,6 +204,7 @@ public class PaginaEstimacion extends PaginaBase {
 			titulo = estimacion.getNombre();
 		}
 		add(new Label("titulo", titulo));
+		add(new Label("page-title", estimacion.getIdEstimacion() + " - " + titulo));
 	}
 
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class

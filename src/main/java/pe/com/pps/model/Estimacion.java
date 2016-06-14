@@ -2,7 +2,6 @@ package pe.com.pps.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.annotations.SortComparator;
 import pe.com.pps.dao.DaoCronograma;
 
 import javax.persistence.*;
@@ -75,6 +74,14 @@ public class Estimacion implements Serializable {
 		tc.setTarea(unaTarea);
 		tc.setIncluir(unaTarea.isIncluir());
 		tareasCronograma.add(tc);
+	}
+
+	public boolean compararCon(Estimacion unaEstimacion) {
+		boolean iguales;
+		String[] campos = {"eds", "esfuerzo", "fechaCalculo", "idEstimacion", "nombre", "puntos", "version"};
+		iguales = Comparador.comparar(Estimacion.class, this, unaEstimacion, campos);
+		// todo: posiblemente comparar las listas de actores
+		return iguales;
 	}
 
 	public List<FactorEstimacion> extraerFactores(Integer unTipo) {
