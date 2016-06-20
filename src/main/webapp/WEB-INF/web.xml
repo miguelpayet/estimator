@@ -6,17 +6,6 @@
 
     <display-name>estimator</display-name>
 
-    <!-- filtro hibernate -->
-    <!--filter>
-        <filter-name>wicket.hibernate</filter-name>
-        <filter-class>pe.com.pps.app.HibernateFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>wicket.hibernate</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping-->
-    <!-- filtro hibernate -->
-
     <!-- filtro wicket -->
     <filter>
         <filter-name>wicket.estimator</filter-name>
