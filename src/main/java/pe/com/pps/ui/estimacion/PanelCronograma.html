@@ -1,6 +1,6 @@
 <html xmlns:wicket="http://www.w3.org/1999/xhtml">
 <wicket:panel>
-     <form wicket:id="form-cronograma">
+    <form wicket:id="form-cronograma">
         <div class="row">
             <div class="col-md-12">
                 <h2>factores de ajuste</h2>
@@ -41,17 +41,6 @@
         <div class="row">
             <div class="col-md-12 cronograma">
                 <h2>cronograma</h2>
-                <ul>
-                    <li>
-                        puntos de caso de uso ajustados: <span wicket:id="puntos-ajustados">1</span>
-                    </li>
-                    <li>
-                        total de horas de esfuerzo (sin gestión): <span wicket:id="horas-esfuerzo">1</span>
-                    </li>
-                    <li>
-                        número de meses: <span wicket:id="meses-cronograma">1</span>
-                    </li>
-                </ul>
                 <table>
                     <thead>
                     <tr>
@@ -66,6 +55,21 @@
                     </thead>
                     <tr wicket:id="fila-cronograma"></tr>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li>rango de desviación: de <span wicket:id="desviacion-minimo"></span> a <span
+                            wicket:id="desviacion-maximo"></span></li>
+                    <li> puntos de caso de uso ajustados: <span wicket:id="puntos-ajustados">1</span></li>
+                    <li> total de horas de esfuerzo (sin gestión): <span wicket:id="horas-esfuerzo">1</span></li>
+                    <li> número de meses: <span wicket:id="meses-cronograma">1</span></li>
+                </ul>
+                <p>costo por proveedor (considerar desviación):</p>
+                <ul>
+                    <li wicket:id="costo-proveedor"></li>
+                </ul>
             </div>
         </div>
         <div class="row">

@@ -27,6 +27,8 @@ insert into lval (tipolval, codlval, valor) values ('TipoFactor', 2,'Técnico');
 -- tipo de punto
 insert into lval (tipolval, codlval, valor) values ('TipoPunto', 1,'Actor');
 insert into lval (tipolval, codlval, valor) values ('TipoPunto', 2,'Caso de Uso');
+-- parametro de desviación
+insert into lval (tipolval, codlval, valor) values ('Desviación', 1, '0.3');
 
 -- plataformas
 insert into plataforma (idplataforma, nombre, factorproductividad) values (1, 'Acsel/X', 28); -- Oracle Forms, Reports, PLSQL...

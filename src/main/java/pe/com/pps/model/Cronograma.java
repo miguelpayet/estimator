@@ -3,9 +3,12 @@ package pe.com.pps.model;
 import com.google.common.collect.HashMultimap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pe.com.pps.dao.DaoParametro;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,6 +55,42 @@ public class Cronograma implements Serializable {
 			}
 		}
 		getTareaGestion().setDias(getTotalDias());
+	}
+
+	/**
+	 * revisa las tareas del cronograma, multiplica las horas * el costo
+	 * y arma un mapa con el costo por proveedor
+	 *
+	 * @return costo del cronograma por proveedor en un mapa indexado por proveedor
+	 */
+	public Map<Proveedor, Double> getCostoProveedores() {
+		Map<Proveedor, Double> costos = new HashMap<>();
+		for (TareaCronograma t : mapaTareas.values()) {
+			if (t.getProveedor() != null) {
+				if (costos.containsKey(t.getProveedor())) {
+					costos.put(t.getProveedor(), costos.get(t.getProveedor()) + t.getHoras() * t.getProveedor().getCosto());
+				} else {
+					costos.put(t.getProveedor(), t.getHoras() * t.getProveedor().getCosto());
+				}
+			}
+		}
+		return costos;
+	}
+
+	public Double getRangoDesviacion() {
+		DaoParametro dp = new DaoParametro();
+		Parametro p = dp.getDesviacion();
+		return p.getValorDouble();
+	}
+
+	public Double getRangoMaximo() {
+		Double horas = getTotalHoras();
+		return horas + (horas * getRangoDesviacion());
+	}
+
+	public Double getRangoMinimo() {
+		Double horas = getTotalHoras();
+		return horas - (horas * getRangoDesviacion());
 	}
 
 	public TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {

@@ -15,6 +15,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Map;
+
 public class PanelCronograma extends Panel {
 
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
@@ -30,7 +34,19 @@ public class PanelCronograma extends Panel {
 		agregarFactoresAmbiente();
 		agregarFactoresTecnicos();
 		agregarCronograma();
+		agregarRangoDesviacion();
+		agregarCostoProveedores();
 		agregarFeedback();
+	}
+
+	private void agregarCostoProveedores() {
+		RepeatingView rv = new RepeatingView("costo-proveedor");
+		formCronograma.add(rv);
+		for (Map.Entry<Proveedor, Double> entry : cronograma.getCostoProveedores().entrySet()) {
+			DecimalFormat df = new DecimalFormat("#,###.00");
+			String costo =  df.format(Util.round(entry.getValue(), 2));
+			rv.add(new Label(rv.newChildId(), entry.getKey() + ": S/ " + costo));
+		}
 	}
 
 	private void agregarCronograma() { // todo: refactorizar este metodo
@@ -93,13 +109,17 @@ public class PanelCronograma extends Panel {
 
 	private void agregarFactoresTecnicos() {
 		agregarFactores("tecnico", TipoFactor.TECNICO);
-
 	}
 
 	private void agregarFeedback() {
 		feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		formCronograma.add(feedback);
+	}
+
+	private void agregarRangoDesviacion() {
+		formCronograma.add(new Label("desviacion-minimo", new PropertyModel<Double>(cronograma, "rangoMinimo")));
+		formCronograma.add(new Label("desviacion-maximo", new PropertyModel<Double>(cronograma, "rangoMaximo")));
 	}
 
 	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {
@@ -111,13 +131,10 @@ public class PanelCronograma extends Panel {
 		formCronograma = new Form<>("form-cronograma", new Model<>(getEstimacion()));
 		add(formCronograma);
 		Label puntosEstimacion = new Label("puntos-ajustados", new PropertyModel<Double>(getEstimacion(), "puntos"));
-		//puntosEstimacion.setOutputMarkupId(true);
 		formCronograma.add(puntosEstimacion);
 		Label horasEstimacion = new Label("horas-esfuerzo", new PropertyModel<Double>(getEstimacion(), "esfuerzo"));
-		//horasEstimacion.setOutputMarkupId(true);
 		formCronograma.add(horasEstimacion);
 		Label meses = new Label("meses-cronograma", new PropertyModel<Double>(cronograma, "totalMeses"));
-		//meses.setOutputMarkupId(true);
 		formCronograma.add(meses);
 	}
 

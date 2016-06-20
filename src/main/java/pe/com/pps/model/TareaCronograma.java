@@ -1,5 +1,7 @@
 package pe.com.pps.model;
 
+import com.sun.istack.internal.Nullable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -59,6 +61,21 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return getTarea() != null ? getTarea().getNombre() : "sin nombre";
 	}
 
+	/**
+	 * devuelve el proveedor asociado a la tarea
+	 * @return el proveedor o nulo si no hay tarea asociada o si la tarea no tiene proveedor
+	 */
+	public Proveedor getProveedor() {
+		if (getTarea() != null) {
+			return getTarea().getProveedor() != null ? getTarea().getProveedor() : null;
+		}
+		return null;
+	}
+
+	/**
+	 * evalua la tarea asociada a la tareacronograma y devuelve el nombre del proveedor
+	 * @return el nombre del proveedor o un indicador si no tiene tarea o si la tarea no tiene proveedor
+	 */
 	public String getNombreProveedor() {
 		if (getTarea() != null) {
 			return getTarea().getProveedor() != null ? getTarea().getProveedor().getNombre() : "sin proveedor";

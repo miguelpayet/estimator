@@ -90,7 +90,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridActores() {
-		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(estimacion), 5, Actor.class) {
+		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(estimacion), 10, Actor.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -118,7 +118,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(estimacion), 5, CasoDeUso.class) {
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(estimacion), 10, CasoDeUso.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {

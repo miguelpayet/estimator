@@ -2,19 +2,14 @@ package pe.com.pps.ui.listaestimaciones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.model.Estimacion;
-import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.componentes.ClickablePropertyColumn;
 import pe.com.pps.ui.componentes.PaginaTabla;
+import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.providers.ProviderEstimacion;
 
 import java.util.ArrayList;

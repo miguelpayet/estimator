@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "proveedor")
-public class Proveedor implements  Identificable<Integer> ,Serializable {
+public class Proveedor implements Identificable<Integer>, Serializable {
 
 	@Column(name = "costohora")
 	private float costo;
@@ -40,6 +40,14 @@ public class Proveedor implements  Identificable<Integer> ,Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String toString() {
+		if (nombre != null) {
+			return nombre;
+		} else {
+			return "proveedor " + (getId() != null ? getId() : "sin id");
+		}
 	}
 
 }
