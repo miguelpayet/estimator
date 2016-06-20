@@ -28,6 +28,7 @@ public class HibernateUtil {
 		configuration.addAnnotatedClass(FactorAmbiental.class);
 		configuration.addAnnotatedClass(FactorEstimacion.class);
 		configuration.addAnnotatedClass(FactorTecnico.class);
+		configuration.addAnnotatedClass(Parametro.class);
 		configuration.addAnnotatedClass(Plataforma.class);
 		configuration.addAnnotatedClass(Proveedor.class);
 		configuration.addAnnotatedClass(Punto.class);
