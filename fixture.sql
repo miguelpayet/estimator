@@ -29,6 +29,14 @@ insert into lval (tipolval, codlval, valor) values ('TipoPunto', 1,'Actor');
 insert into lval (tipolval, codlval, valor) values ('TipoPunto', 2,'Caso de Uso');
 -- parametro de desviación
 insert into lval (tipolval, codlval, valor) values ('Desviación', 1, '0.3');
+-- eds
+insert into lval (tipolval, codlval, valor) values ('EDS', 1,'Angela Valencia');
+insert into lval (tipolval, codlval, valor) values ('EDS', 2,'Diego Ccallo');
+insert into lval (tipolval, codlval, valor) values ('EDS', 3,'Edson Jimenez');
+insert into lval (tipolval, codlval, valor) values ('EDS', 4,'Hernán George');
+insert into lval (tipolval, codlval, valor) values ('EDS', 5,'Kenji Dettleff');
+insert into lval (tipolval, codlval, valor) values ('EDS', 6,'Miguel Payet');
+insert into lval (tipolval, codlval, valor) values ('EDS', 7,'Patricia Quiñónez');
 
 -- plataformas
 insert into plataforma (idplataforma, nombre, factorproductividad) values (1, 'Acsel/X', 28); -- Oracle Forms, Reports, PLSQL...
