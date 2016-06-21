@@ -1,6 +1,9 @@
 package pe.com.pps.model;
 
-// aquí va la lógica para separación y cálculo de factores
+/**
+ * clase que contiene la lógica para separación y cálculo de factores
+ */
+
 
 import com.google.common.collect.HashMultimap;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +30,7 @@ public class Factorama {
 	private Double calcularFactor(List<FactorEstimacion> unosFactores) {
 		Double factor = 0.0;
 		for (FactorEstimacion f : unosFactores) {
-			log.trace(String.format("%s - valor %s - peso %s - factor %s", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso()));
+			log.debug("{} - valor {} - peso {} - factor {}", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso());
 			factor += (f.getValor() * f.getFactor().getPeso());
 		}
 		log.debug("factor de complejidad " + factor);
@@ -38,14 +41,14 @@ public class Factorama {
 		Double factor = calcularFactor(getFactoresAmbientales());
 		factor = 1.4 + (factor * -0.03);
 		factores.put(TipoFactor.AMBIENTE, factor);
-		log.debug(String.format("estimación %s - factor ambiental %s", estimacion.getIdEstimacion(), factor));
+		log.debug("estimación {} - factor ambiental {}", estimacion.getIdEstimacion(), factor);
 		return factor;
 	}
 
 	private Double calcularFactorTecnico() {
 		Double factor = calcularFactor(getFactoresTecnicos());
 		factor = 0.6 + (factor * 0.01);
-		log.debug(String.format("estimación %s - factor técnico %s", estimacion.getIdEstimacion(), factor));
+		log.debug("estimación {} - factor técnico {}", estimacion.getIdEstimacion(), factor);
 		factores.put(TipoFactor.TECNICO, factor);
 		return factor;
 	}

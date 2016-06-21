@@ -27,20 +27,31 @@ public class Cronograma implements Serializable {
 		setEstimacion(unaEstimacion);
 	}
 
-	// calcular el cronograma
+	/**
+	 * calcular el cronograma - tiene cuatro tipos de tarea:
+	 * tarea fija: se asigna manualmente un esfuerzo en horas. se resta del total de horas del cronograma
+	 * tarea x duración: tarea que equivale a un porcentaje del esfuerzo de diseño técnico
+	 * tareas x esfuerzo: se asigna un porcentaje del total de horas del cronograma
+	 * tarea de gestión: % de la duración completa del cronograma - sumado al total de horas.
+	 * modifica directamente las tareas de la estimación.
+ 	 */
 	public void calcular() throws ExcepcionCronograma {
+		// tarea fija (ids)
 		double tareaFija;
 		if (getTareaFija().getHoras() != null) {
 			tareaFija = getTareaFija().getHoras();
 		} else {
 			throw new ExcepcionCronograma("tarea fija no tiene horas");
 		}
+		log.trace("tarea fija - esfuerzo {}", tareaFija);
 		double pctDuracion = getTareaDuracion().getPorcentaje();
 		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
+		// tarea duración (acompañamiento al diseño
 		double tareaDuracion = Util.round((pctDuracion * pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija)) / (1 + (pctDuracion * pctDiseñoTecnico)), 2);
+		log.trace("tarea duración - esfuerzo {}", tareaDuracion);
 		getTareaDuracion().setHoras(tareaDuracion);
-		// estas tareas pueden estar o no incluidas
-		// validar que sume 100% entre que estén activas
+		// tareas por esfuerzo: pueden estar o no incluidas
+		// validar que sume 100% entre que las estén activas
 		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			log.trace("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
@@ -51,6 +62,7 @@ public class Cronograma implements Serializable {
 		if (Util.round(pctIncluidas, 2) != 1) {
 			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + Util.round(pctIncluidas * 100, 2) + "%");
 		}
+		// calcular las tareas x esfuerzo
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			if (t.getIncluir()) {
 				t.setHoras(Util.round((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * t.getPorcentaje(), 2));
@@ -58,7 +70,9 @@ public class Cronograma implements Serializable {
 				t.setHoras(0.0);
 			}
 		}
+		// tarea de gestión
 		getTareaGestion().setDias(getTotalDias());
+		log.trace("tarea gestión - esfuerzo {}", getTareaGestion().getHoras());
 	}
 
 	/**
