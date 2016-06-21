@@ -14,7 +14,7 @@ public class DaoFactor<T extends Factor> extends Dao<T> {
 	}
 
 	public List<T> getPorTipo(Integer unTipo) {
-		Criteria crit = getSesion().createCriteria(getClaseModelo());
+		Criteria crit = crearCriteria();
 		crit.add(Restrictions.eq("tipoFactor", unTipo));
 		crit.addOrder(Order.asc("nombre"));
 		return crit.list();
