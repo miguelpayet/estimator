@@ -12,6 +12,9 @@
         <logger name="pe.com.pps" level="INFO" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
+        <logger name="pe.com.pps.model" level="INFO" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
         <Root level="WARN">
             <AppenderRef ref="CONSOLE"/>
         </Root>
