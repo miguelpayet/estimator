@@ -6,7 +6,9 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
@@ -21,6 +23,7 @@ import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import pe.com.pps.dao.DaoEstimacion;
+import pe.com.pps.dao.DaoParametro;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.componentes.PaginaBase;
@@ -71,7 +74,9 @@ public class PaginaEstimacion extends PaginaBase {
 			proyecto.setEnabled(false);
 		}
 		campos.add(proyecto);
-		TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
+		//TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
+		DaoParametro dp = new DaoParametro();
+		DropDownChoice<String> eds = new DropDownChoice<String>("eds", new PropertyModel<>(estimacion, "eds"), dp.getNombreEds());
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(estimacion, "nombre"));
 		campos.add(descripcion);

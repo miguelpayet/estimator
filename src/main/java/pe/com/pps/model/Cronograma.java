@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * clase ligera para calcular el cronograma de una estimación
+ * lo único que hace es modificar las tareas de la estimación de acuerdo a las reglas definidas
+ */
 public class Cronograma implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Cronograma.class);
@@ -63,34 +67,57 @@ public class Cronograma implements Serializable {
 	 *
 	 * @return costo del cronograma por proveedor en un mapa indexado por proveedor
 	 */
-	public Map<Proveedor, Double> getCostoProveedores() {
-		Map<Proveedor, Double> costos = new HashMap<>();
+	public List<CostoProveedor> getCostoProveedores() {
+		// primero hago un mapa de proveedor / costoproveedor en blanco
+		Map<Proveedor, CostoProveedor> costos = new HashMap<>();
+		// despues paso por la lista de tareas
 		for (TareaCronograma t : mapaTareas.values()) {
+			// si ya tengo este proveedor en el mapa cojo su costoproveedor si no, creo uno nuevo y lo coloco en el mapa
+			CostoProveedor cp;
 			if (t.getProveedor() != null) {
 				if (costos.containsKey(t.getProveedor())) {
-					costos.put(t.getProveedor(), costos.get(t.getProveedor()) + t.getHoras() * t.getProveedor().getCosto());
+					cp = costos.get(t.getProveedor());
 				} else {
-					costos.put(t.getProveedor(), t.getHoras() * t.getProveedor().getCosto());
+					cp = new CostoProveedor(t.getProveedor());
+					costos.put(t.getProveedor(), cp);
 				}
+				// sumo el costo de la tarea dentro del costoproveedor
+				cp.sumarCosto(t.getHoras() * t.getProveedor().getCosto());
 			}
 		}
-		return costos;
+		// devuelvo el valueset del mapa como lista
+		return costos.values().stream().collect(Collectors.toList());
 	}
 
-	public Double getRangoDesviacion() {
+	/**
+	 * método interno para obtener el porcentaje de desviación
+	 *
+	 * @return valor del parámetro de desviación
+	 */
+	private Double getRangoDesviacion() {
 		DaoParametro dp = new DaoParametro();
 		Parametro p = dp.getDesviacion();
 		return p.getValorDouble();
 	}
 
+	/**
+	 * método para wicket.
+	 *
+	 * @return el máximo de horas de la estimación según el parámetro de desviación
+	 */
 	public Double getRangoMaximo() {
 		Double horas = getTotalHoras();
-		return horas + (horas * getRangoDesviacion());
+		return Util.round(horas + (horas * getRangoDesviacion()), 2);
 	}
 
+	/**
+	 * método para wicket.
+	 *
+	 * @return el mínimo de horas de la estimación según el parámetro de desviación
+	 */
 	public Double getRangoMinimo() {
 		Double horas = getTotalHoras();
-		return horas - (horas * getRangoDesviacion());
+		return Util.round(horas - (horas * getRangoDesviacion()), 2);
 	}
 
 	public TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
@@ -151,7 +178,10 @@ public class Cronograma implements Serializable {
 		return Util.round(getTotalDias() / 30, 2);
 	}
 
-	// separar las tareas de la estimación según su tipo, en un mapa
+	/**
+	 * separa las tareas de la estimación según su tipo, en un multimapa
+	 * las tareas siguen estando referenciadas directamente desde la estimación
+	 */
 	private void init() {
 		mapaTareas = HashMultimap.create(4, 4);
 		for (TareaCronograma c : estimacion.getTareasCronograma()) {
@@ -159,6 +189,9 @@ public class Cronograma implements Serializable {
 		}
 	}
 
+	/**
+	 * copia la referencia a la estimación recibida en @param unaEstimacion e inicializa el cronograma
+	 */
 	public void setEstimacion(Estimacion unaEstimacion) {
 		estimacion = unaEstimacion;
 		init();

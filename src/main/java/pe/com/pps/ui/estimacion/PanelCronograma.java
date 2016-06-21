@@ -9,15 +9,14 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Map;
+import pe.com.pps.ui.providers.ProviderCostoProveedor;
 
 public class PanelCronograma extends Panel {
 
@@ -40,13 +39,28 @@ public class PanelCronograma extends Panel {
 	}
 
 	private void agregarCostoProveedores() {
+		log.debug("agregarCostoProveedores");
+		/*
 		RepeatingView rv = new RepeatingView("costo-proveedor");
 		formCronograma.add(rv);
 		for (Map.Entry<Proveedor, Double> entry : cronograma.getCostoProveedores().entrySet()) {
-			DecimalFormat df = new DecimalFormat("#,###.00");
-			String costo =  df.format(Util.round(entry.getValue(), 2));
-			rv.add(new Label(rv.newChildId(), entry.getKey() + ": S/ " + costo));
+			rv.add(new Label(rv.newChildId(), new PropertyModel<String>(cronograma, "descripcionCosto")));
 		}
+		*/
+		ProviderCostoProveedor listDataProvider = new ProviderCostoProveedor(cronograma);
+
+		DataView<CostoProveedor> dataView = new DataView<CostoProveedor>("rows", listDataProvider) {
+			@Override
+			protected void populateItem(Item<CostoProveedor> item) {
+				CostoProveedor costo = item.getModelObject();
+				RepeatingView repeatingView = new RepeatingView("dataRow");
+				repeatingView.add(new Label(repeatingView.newChildId(), costo.getProveedor().getNombre()));
+				repeatingView.add(new Label(repeatingView.newChildId(), costo.getMoneda()));
+				repeatingView.add(new Label(repeatingView.newChildId(), costo.getDescripcionCosto()));
+				item.add(repeatingView);
+			}
+		};
+		formCronograma.add(dataView);
 	}
 
 	private void agregarCronograma() { // todo: refactorizar este metodo
