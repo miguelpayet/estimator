@@ -13,6 +13,10 @@ public class Dao<T> {
 		claseModelo = unaClase;
 	}
 
+	protected Criteria crearCriteria() {
+		return getSesion().createCriteria(getClaseModelo());
+	}
+
 	public T get(int unId) {
 		return (T) getSesion().get(claseModelo, unId);
 	}
@@ -30,7 +34,7 @@ public class Dao<T> {
 	}
 
 	public List<T> listar() {
-		Criteria crit = getSesion().createCriteria(getClaseModelo());
+		Criteria crit = crearCriteria();
 		return crit.list();
 	}
 
