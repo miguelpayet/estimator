@@ -63,19 +63,20 @@ VALUES (5, 2, 'Reusabilidad del Código', 1, 0, 5, '¿Se requiere cuidar la reus
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
 VALUES (6, 2, 'Facilidad de Instalación', 0.5, 0, 5, '¿El cliente está buscando facilidad en la instalación?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (7, 2, 'Portabilidad', 2, 0, 5, '¿Se busca una implantación que soporte diversas plataformas tecnológicas?');
+VALUES (7, 2, 'Facilidad de Uso', 0.5, 0, 5, 'Facilidad de uso');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (8, 2, 'Facilidad al Cambio', 1, 0, 5, '¿Se busca una alta capacidad de adecuación en el futuro?');
+VALUES (8, 2, 'Portabilidad', 2, 0, 5, '¿Se busca una implantación que soporte diversas plataformas tecnológicas?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (9, 2, 'Concurrencia', 1, 0, 5, '¿Se busca que una gran cantidad de usuarios trabajen bajo características de bloqueo a secciones críticas de datos?');
+VALUES (9, 2, 'Facilidad al Cambio', 1, 0, 5, '¿Se busca una alta capacidad de adecuación en el futuro?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (10, 2, 'Características Especiales Seguridad', 1, 0, 5, '¿Se busca tener mecanismos de seguridad?');
+VALUES (10, 2, 'Concurrencia / procesamiento paralelo', 1, 0, 5, '¿Se busca que una gran cantidad de usuarios trabajen bajo características de bloqueo a secciones críticas de datos?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (11, 2, 'Proporciona Acceso Directo a Software de Terceros', 1, 0, 5, '¿El proyecto depende del uso de software de terceros?');
+VALUES (11, 2, 'Características Especiales Seguridad', 1, 0, 5, '¿Se busca tener mecanismos de seguridad?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (12, 2, 'Se requieren facilidades de Capacitación al usuario', 1, 0, 5, '¿Qué necesidades y facilidades de capacitación hacia los usuarios se requieren sobre el sistema o la aplicación?');
+VALUES (12, 2, 'Proporciona Acceso Directo a Software de Terceros', 1, 0, 5, '¿El proyecto depende del uso de software de terceros?');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (13, 2, 'Grado de complejidad del proceso de certificación', 1, 0, 5, 'Grado de complejidad del proceso de certificación');
+VALUES (13, 2, 'Se requieren facilidades de Capacitación al usuario', 1, 0, 5, '¿Qué necesidades y facilidades de capacitación hacia los usuarios se requieren sobre el sistema o la aplicación?');
+
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
 VALUES (14, 1, 'Familiaridad con el modelo del proyecto utilizado', 1.5, 0, 5, '');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
@@ -91,7 +92,7 @@ VALUES (19, 1, 'Requerimientos Estables', 2, 0, 5, '');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
 VALUES (20, 1, 'Desarrolladores de Tiempo Parcial', -1, 0, 5, '');
 INSERT INTO factor (idfactor, tipofactor, nombre, peso, minimo, maximo, descripcion) 
-VALUES (21, 1, 'Lenguaje de Programación', -2, 0, 5, '');
+VALUES (21, 1, 'Dificultad del Lenguaje de Programación', -1, 0, 5, '');
 
 -- proveedores
 insert into proveedor (idproveedor, nombre, costohora) values (1,'Pacífico', 40);

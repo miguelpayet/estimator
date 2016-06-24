@@ -20,6 +20,8 @@ public class Estimacion implements Serializable {
 	private boolean actualizado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	Set<CostoAdicional> costosAdicionales;
 	@Column(name = "eds")
 	private String eds;
 	@Column(name = "esfuerzo")
@@ -59,6 +61,12 @@ public class Estimacion implements Serializable {
 	public void addCasoDeUso(CasoDeUso unCaso) {
 		casosDeUso.add(unCaso);
 		unCaso.setEstimacion(this);
+		actualizado = false;
+	}
+
+	public void addCostoAdicional(CostoAdicional unCosto) {
+		costosAdicionales.add(unCosto);
+		unCosto.setEstimacion(this);
 		actualizado = false;
 	}
 
@@ -103,6 +111,10 @@ public class Estimacion implements Serializable {
 		return casosDeUso;
 	}
 
+	public Set<CostoAdicional> getCostosAdicionales() {
+		return costosAdicionales;
+	}
+
 	public Cronograma getCronograma() {
 		return new Cronograma(this);
 	}
@@ -113,7 +125,7 @@ public class Estimacion implements Serializable {
 
 	public Double getEsfuerzo() {
 		totalizar();
-		return esfuerzo;
+		return Util.round(esfuerzo, 2);
 	}
 
 	private List<FactorEstimacion> getFactoresAmbientales() {
@@ -172,6 +184,15 @@ public class Estimacion implements Serializable {
 			if (casosDeUso.contains(unCaso)) {
 				casosDeUso.remove(unCaso);
 				unCaso.setEstimacion(null);
+			}
+		}
+	}
+
+	public void removeCostoAdicional(CostoAdicional unCosto) {
+		if (unCosto != null) {
+			if (costosAdicionales.contains(unCosto)) {
+				costosAdicionales.remove(unCosto);
+				unCosto.setEstimacion(null);
 			}
 		}
 	}

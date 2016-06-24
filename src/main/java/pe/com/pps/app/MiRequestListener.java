@@ -9,7 +9,6 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-import pe.com.pps.dao.HibernateUtil;
 
 //todo:  manejar excepciones: http://stackoverflow.com/questions/12456302/how-to-handle-exceptions-thrown-in-wicket-custom-model/12476006
 
@@ -20,7 +19,7 @@ public class MiRequestListener implements IRequestCycleListener {
 	SessionFactory sf;
 
 	public MiRequestListener() {
-		sf = HibernateUtil.getSessionFactory();
+		sf = pe.trazos.dao.HibernateUtil.getSessionFactory();
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package pe.com.pps.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import pe.trazos.dao.HibernateUtil;
 
 import java.util.List;
 

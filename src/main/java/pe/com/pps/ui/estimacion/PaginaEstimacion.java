@@ -6,7 +6,6 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -30,7 +29,9 @@ import pe.com.pps.ui.componentes.PaginaBase;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
+import pe.com.pps.ui.providers.ProviderCostoAdicional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -63,6 +64,7 @@ public class PaginaEstimacion extends PaginaBase {
 		agregarGridActores();
 		agregarGridCasosDeUso();
 		agregarCronograma();
+		agregarGridCostos();
 	}
 
 	private void agregarCampos() {
@@ -150,6 +152,34 @@ public class PaginaEstimacion extends PaginaBase {
 		add(grid);
 	}
 
+	private void agregarGridCostos() {
+		EditableGrid<CostoAdicional, Serializable> grid = new EditableGrid<CostoAdicional, Serializable>("grid-costos", columnasCostos(), new ProviderCostoAdicional(estimacion), 10, CostoAdicional.class) {
+
+			@Override
+			protected void onCancel(AjaxRequestTarget target) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onDelete(AjaxRequestTarget target, IModel<CostoAdicional> rowModel) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target) {
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onSave(AjaxRequestTarget target, IModel<CostoAdicional> rowModel) {
+				target.add(feedback);
+			}
+
+		};
+		grid.setTableCss("costos");
+		add(grid);
+	}
+
 	private void agregarLinks() {
 		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
 			@Override
@@ -210,6 +240,27 @@ public class PaginaEstimacion extends PaginaBase {
 		}
 		add(new Label("titulo", titulo));
 		add(new Label("page-title", estimacion.getIdEstimacion() + " - " + titulo));
+	}
+
+	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
+		List<AbstractEditablePropertyColumn<CostoAdicional, T>> columns = new ArrayList<>();
+		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
+			@Override
+			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
+			}
+		};
+		columns.add(descripcion);
+		RequiredEditableTextFieldColumn<CostoAdicional, Double> costo = new RequiredEditableTextFieldColumn<CostoAdicional, Double>(new Model<>("Costo"), "costo") {
+			@Override
+			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("costo")));
+			}
+		};
+		columns.add(costo);
+		return columns;
 	}
 
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class

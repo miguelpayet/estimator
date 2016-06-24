@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import pe.com.pps.dao.HibernateUtil;
+import pe.trazos.dao.HibernateUtil;
 
 import java.util.List;
 

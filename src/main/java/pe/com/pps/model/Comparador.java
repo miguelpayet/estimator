@@ -18,7 +18,11 @@ public class Comparador {
 				Method metodo = unaClase.getMethod("get" + StringUtils.capitalize(atri));
 				Object primero = metodo.invoke(unObjeto);
 				Object segundo = metodo.invoke(otroObjeto);
-				iguales = iguales && primero.equals(segundo);
+				if (primero != null) {
+					iguales = iguales && primero.equals(segundo);
+				} else {
+					iguales = iguales && (segundo == null);
+				}
 				if (!iguales) {
 					break;
 				}

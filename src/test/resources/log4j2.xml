@@ -15,16 +15,19 @@
         <logger name="org.hibernate" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps" level="INFO" additivity="false">
+        <logger name="pe.com.pps" level="TRACE" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps.model" level="INFO" additivity="false">
+        <logger name="pe.com.pps.model" level="TRACE" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <logger name="org.dbunit" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <logger name="org.junit" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="org.apache.shiro" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <Root level="WARN">

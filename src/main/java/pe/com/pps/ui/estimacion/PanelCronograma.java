@@ -40,13 +40,6 @@ public class PanelCronograma extends Panel {
 
 	private void agregarCostoProveedores() {
 		log.debug("agregarCostoProveedores");
-		/*
-		RepeatingView rv = new RepeatingView("costo-proveedor");
-		formCronograma.add(rv);
-		for (Map.Entry<Proveedor, Double> entry : cronograma.getCostoProveedores().entrySet()) {
-			rv.add(new Label(rv.newChildId(), new PropertyModel<String>(cronograma, "descripcionCosto")));
-		}
-		*/
 		ProviderCostoProveedor listDataProvider = new ProviderCostoProveedor(cronograma);
 
 		DataView<CostoProveedor> dataView = new DataView<CostoProveedor>("rows", listDataProvider) {

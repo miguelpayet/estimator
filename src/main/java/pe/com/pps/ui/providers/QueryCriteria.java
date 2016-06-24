@@ -10,7 +10,7 @@ import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.loader.criteria.CriteriaJoinWalker;
 import org.hibernate.loader.criteria.CriteriaQueryTranslator;
 import org.hibernate.persister.entity.OuterJoinLoadable;
-import pe.com.pps.dao.HibernateUtil;
+import pe.trazos.dao.HibernateUtil;
 
 import java.util.List;
 

@@ -1,13 +1,15 @@
 -- 1 que abajo aparezca el rango de horas con +- 30%
 -- 2 agregar los costos por hora de cada proveedor
 3 agregar los costos adicionales por hw y sw que se sumen al costo
-4 mejorar las descripciones de los factores
+-- 4 mejorar las descripciones de los factores
 5 método de pruebas que no destruya la bd
 -- 6 los eds deberian ser una lista
 7 autentificación
 8 medidas de seguridad para que no puedas modificar una estimación que no es tuya
 9 método de impresión
 -- 10 ambientes diferenciados
-11 que el factor de lenguaje de programación calcule correctamente y no al revés
+-- 11 que el factor de lenguaje de programación calcule correctamente y no al revés
 12 hacer que los actores ya no dependan de plataformas (un factor genérico por ejemplo)
-13 a veces no te deja salir a pesar de que no has realizado cambios
+-- 13 a veces no te deja salir a pesar de que no has realizado cambios
+-- 14 montar url de páginas
+15 limpiar los datos (borrar estimaciones de prueba)

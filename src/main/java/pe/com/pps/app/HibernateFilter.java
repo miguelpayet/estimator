@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pe.com.pps.dao.HibernateUtil;
+import pe.trazos.dao.HibernateUtil;
 
 import javax.servlet.*;
 import java.io.IOException;
