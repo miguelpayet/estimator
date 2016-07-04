@@ -11,7 +11,7 @@ import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.componentes.PaginaBase;
 
-//@AuthorizeInstantiation("usuario")
+@AuthorizeInstantiation("usuario")
 public class HomePage extends PaginaBase {
 
 	private static final Logger logger = LogManager.getLogger(HomePage.class);

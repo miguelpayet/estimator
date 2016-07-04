@@ -18,8 +18,9 @@ public class CostoAdicional implements Serializable {
 	@JoinColumn(name = "idestimacion", nullable = false)
 	private Estimacion estimacion;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idcosto")
-	private int id;
+	private String id;
 
 	public Double getCosto() {
 		return costo;
@@ -33,6 +34,10 @@ public class CostoAdicional implements Serializable {
 		return estimacion;
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	public void setCosto(Double costo) {
 		this.costo = costo;
 	}
@@ -44,4 +49,5 @@ public class CostoAdicional implements Serializable {
 	public void setEstimacion(Estimacion estimacion) {
 		this.estimacion = estimacion;
 	}
+
 }

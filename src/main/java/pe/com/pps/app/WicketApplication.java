@@ -13,9 +13,10 @@ import pe.com.pps.ui.homepage.HomePage;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.trazos.auth.LoginShiroRealm;
 import pe.trazos.auth.SesionShiro;
-import pe.trazos.cambiopassword.PaginaCambioPassword;
+import pe.trazos.ui.password.cambio.PaginaCambioPassword;
 import pe.trazos.dao.HibernateUtil;
-import pe.trazos.login.LoginPage;
+import pe.trazos.ui.login.PaginaLogin;
+import pe.trazos.ui.password.nuevo.PaginaNuevoPassword;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,7 +65,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
 	 */
 	@Override
 	protected Class<? extends WebPage> getSignInPageClass() {
-		return LoginPage.class;
+		return PaginaLogin.class;
 	}
 
 	/**
@@ -95,10 +96,11 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		securityManager.setRealms(realms);
 		SecurityUtils.setSecurityManager(securityManager);
 		// montar páginas
-		mountPage("cambiopassword", PaginaCambioPassword.class);
-		mountPage("login", LoginPage.class);
-		mountPage("estimacion", PaginaEstimacion.class);
-		mountPage("lista", PaginaListaEstimaciones.class);
+		mountPage("/cambiopassword", PaginaCambioPassword.class);
+		mountPage("/estimacion", PaginaEstimacion.class);
+		mountPage("/lista", PaginaListaEstimaciones.class);
+		mountPage("/login", PaginaLogin.class);
+		mountPage("/nuevopassword", PaginaNuevoPassword.class);
 	}
 
 }

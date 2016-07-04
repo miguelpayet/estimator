@@ -153,7 +153,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridCostos() {
-		EditableGrid<CostoAdicional, Serializable> grid = new EditableGrid<CostoAdicional, Serializable>("grid-costos", columnasCostos(), new ProviderCostoAdicional(estimacion), 10, CostoAdicional.class) {
+		EditableGrid<CostoAdicional, String> grid = new EditableGrid<CostoAdicional, String>("grid-costos", columnasCostos(), new ProviderCostoAdicional(estimacion), 10, CostoAdicional.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -243,7 +243,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
-		List<AbstractEditablePropertyColumn<CostoAdicional, T>> columns = new ArrayList<>();
+		List<AbstractEditablePropertyColumn<CostoAdicional, String>> columns = new ArrayList<>();
 		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
@@ -252,7 +252,7 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		};
 		columns.add(descripcion);
-		RequiredEditableTextFieldColumn<CostoAdicional, Double> costo = new RequiredEditableTextFieldColumn<CostoAdicional, Double>(new Model<>("Costo"), "costo") {
+		RequiredEditableTextFieldColumn<CostoAdicional, String> costo = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Costo"), "costo") {
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
 				super.addBehaviors(editorComponent);

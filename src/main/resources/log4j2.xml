@@ -6,16 +6,16 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="org.apache.wicket" level="TRACE" additivity="false">
+        <logger name="org.apache.wicket" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps" level="TRACE" additivity="false">
+        <logger name="pe.com.pps" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps.model" level="TRACE" additivity="false">
+        <logger name="pe.com.pps.model" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <Root level="TRACE">
+        <Root level="WARN">
             <AppenderRef ref="CONSOLE"/>
         </Root>
     </Loggers>
