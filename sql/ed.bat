@@ -1,0 +1,1 @@
+"c:\Program Files\MariaDB 10.1"\bin\mysqldump -uroot -proot mydb > estimator.sql
