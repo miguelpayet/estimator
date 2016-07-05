@@ -1,32 +1,37 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.homepage.HomePage;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.trazos.auth.LoginShiroRealm;
-import pe.trazos.auth.SesionShiro;
-import pe.trazos.ui.password.cambio.PaginaCambioPassword;
 import pe.trazos.dao.HibernateUtil;
-import pe.trazos.ui.login.PaginaLogin;
-import pe.trazos.ui.password.nuevo.PaginaNuevoPassword;
+import pe.trazos.login.auth.LoginRoleCheckingStrategy;
+import pe.trazos.login.auth.SesionShiro;
+import pe.trazos.login.dominio.Rol;
+import pe.trazos.login.dominio.TokenNuevoPassword;
+import pe.trazos.login.dominio.Usuario;
+import pe.trazos.login.ui.login.PaginaLogin;
+import pe.trazos.login.ui.password.cambio.PaginaCambioPassword;
+import pe.trazos.login.ui.password.nuevo.PaginaNuevoPassword;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class WicketApplication extends AuthenticatedWebApplication {
 
 	static {
 		List<Class> clases = new ArrayList();
+		// clases del login
+		clases.add(Usuario.class);
+		clases.add(Rol.class);
+		clases.add(TokenNuevoPassword.class);
+		// clases del aplicativo
 		clases.add(Actor.class);
 		clases.add(CasoDeUso.class);
 		clases.add(Complejidad.class);
@@ -52,6 +57,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		clases.add(TipoPunto.class);
 		HibernateUtil.inicializar(clases);
 	}
+
 	/**
 	 * @return la página inicial del aplicativo
 	 */
@@ -88,19 +94,15 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		getRequestCycleListeners().add(miListener);
 		// wicket bootstrap
 		Bootstrap.install(this);
-		// inicialización de shiro - todo: esto debería ser automático
-		// INFO  org.apache.shiro.config.IniSecurityManagerFactory - Realms have been explicitly set on the SecurityManager instance - auto-setting of realms will not occur.
-		DefaultSecurityManager securityManager = new DefaultSecurityManager();
-		Set realms = new HashSet();
-		realms.add(new LoginShiroRealm());
-		securityManager.setRealms(realms);
-		SecurityUtils.setSecurityManager(securityManager);
+		// role checking strategy para autorización
+		getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
 		// montar páginas
 		mountPage("/cambiopassword", PaginaCambioPassword.class);
 		mountPage("/estimacion", PaginaEstimacion.class);
 		mountPage("/lista", PaginaListaEstimaciones.class);
 		mountPage("/login", PaginaLogin.class);
 		mountPage("/nuevopassword", PaginaNuevoPassword.class);
+
 	}
 
 }

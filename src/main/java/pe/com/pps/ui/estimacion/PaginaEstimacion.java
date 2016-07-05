@@ -12,6 +12,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -30,8 +33,8 @@ import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
+import pe.com.pps.ui.providers.ProviderCostoProveedor;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,10 +44,11 @@ public class PaginaEstimacion extends PaginaBase {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
+	private Label costoTotal;
 	private Estimacion estimacion;
 	private FeedbackPanel feedback;
 	private PanelCronograma panelCronograma;
-	TextField<Integer> proyecto;
+	private TextField<Integer> proyecto;
 
 	public PaginaEstimacion() {
 		this(null);
@@ -65,6 +69,8 @@ public class PaginaEstimacion extends PaginaBase {
 		agregarGridCasosDeUso();
 		agregarCronograma();
 		agregarGridCostos();
+		agregarCostoProveedores();
+		agregarCostoTotal();
 	}
 
 	private void agregarCampos() {
@@ -82,6 +88,31 @@ public class PaginaEstimacion extends PaginaBase {
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(estimacion, "nombre"));
 		campos.add(descripcion);
+	}
+
+	private void agregarCostoProveedores() {
+		log.debug("agregarCostoProveedores");
+		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(estimacion.getCronograma());
+
+		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("rows", proveedor) {
+			@Override
+			protected void populateItem(Item<CostoProveedor> item) {
+				CostoProveedor costo = item.getModelObject();
+				RepeatingView rv = new RepeatingView("dataRow");
+				rv.add(new Label(rv.newChildId(), costo.getProveedor().getNombre()));
+				rv.add(new Label(rv.newChildId(), costo.getMoneda()));
+				rv.add(new Label(rv.newChildId(), costo.getDescripcionCosto()));
+				item.add(rv);
+				item.add(new AttributeModifier("class", "costo-proveedor"));
+			}
+		};
+		add(dv);
+	}
+
+	private void agregarCostoTotal() {
+		costoTotal = new Label("costo-total", new PropertyModel<Double>(estimacion, "costoTotal"));
+		costoTotal.setOutputMarkupId(true);
+		add(costoTotal);
 	}
 
 	private void agregarCronograma() {
@@ -156,6 +187,11 @@ public class PaginaEstimacion extends PaginaBase {
 		EditableGrid<CostoAdicional, String> grid = new EditableGrid<CostoAdicional, String>("grid-costos", columnasCostos(), new ProviderCostoAdicional(estimacion), 10, CostoAdicional.class) {
 
 			@Override
+			protected void onAdd(AjaxRequestTarget target, CostoAdicional newRow) {
+				target.add(costoTotal);
+			}
+
+			@Override
 			protected void onCancel(AjaxRequestTarget target) {
 				target.add(feedback);
 			}
@@ -163,6 +199,7 @@ public class PaginaEstimacion extends PaginaBase {
 			@Override
 			protected void onDelete(AjaxRequestTarget target, IModel<CostoAdicional> rowModel) {
 				target.add(feedback);
+				target.add(costoTotal);
 			}
 
 			@Override
@@ -173,6 +210,7 @@ public class PaginaEstimacion extends PaginaBase {
 			@Override
 			protected void onSave(AjaxRequestTarget target, IModel<CostoAdicional> rowModel) {
 				target.add(feedback);
+				target.add(costoTotal);
 			}
 
 		};

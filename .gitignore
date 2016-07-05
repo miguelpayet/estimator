@@ -62,6 +62,6 @@ target-ide/
 target/
 log4j2.xml
 dbunit.log
-e.bat
+sql/e.bat
 src/main/java/org/
 src/main/resources/org/

@@ -40,15 +40,33 @@
             </div>
         </div>
         <div class="cronograma" wicket:id="cronograma"></div>
+        <!-- todo: separar en un panel de costos -->
         <div class="row">
-            <div class="grid_12">
+            <div class="col-md-12">
+                <h3>costo por proveedor (considerar desviación):</h3>
+                <table>
+                    <tr wicket:id="rows">
+                        <td wicket:id="dataRow"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="costos">
-                    <h2>costos adicionales de hardware / software</h2>
+                    <h3>costos adicionales de hardware / software</h3>
                     <div wicket:id="grid-costos">
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>costo total</h3>
+                <h4>costo total: <span wicket:id="costo-total">1000</span></h4>
+            </div>
+        </div>
+        <!-- hasta aquí -->
     </div>
     <div class="row">
         <div class="col-md-12">

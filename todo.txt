@@ -1,6 +1,6 @@
 -- 1 que abajo aparezca el rango de horas con +- 30%
 -- 2 agregar los costos por hora de cada proveedor
-3 agregar los costos adicionales por hw y sw que se sumen al costo
+-- 3 agregar los costos adicionales por hw y sw que se sumen al costo
 -- 4 mejorar las descripciones de los factores
 5 método de pruebas que no destruya la bd
 -- 6 los eds deberian ser una lista

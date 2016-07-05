@@ -2,6 +2,7 @@ package pe.com.pps.ui.estimacion;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -34,27 +35,9 @@ public class PanelCronograma extends Panel {
 		agregarFactoresTecnicos();
 		agregarCronograma();
 		agregarRangoDesviacion();
-		agregarCostoProveedores();
 		agregarFeedback();
 	}
 
-	private void agregarCostoProveedores() {
-		log.debug("agregarCostoProveedores");
-		ProviderCostoProveedor listDataProvider = new ProviderCostoProveedor(cronograma);
-
-		DataView<CostoProveedor> dataView = new DataView<CostoProveedor>("rows", listDataProvider) {
-			@Override
-			protected void populateItem(Item<CostoProveedor> item) {
-				CostoProveedor costo = item.getModelObject();
-				RepeatingView repeatingView = new RepeatingView("dataRow");
-				repeatingView.add(new Label(repeatingView.newChildId(), costo.getProveedor().getNombre()));
-				repeatingView.add(new Label(repeatingView.newChildId(), costo.getMoneda()));
-				repeatingView.add(new Label(repeatingView.newChildId(), costo.getDescripcionCosto()));
-				item.add(repeatingView);
-			}
-		};
-		formCronograma.add(dataView);
-	}
 
 	private void agregarCronograma() { // todo: refactorizar este metodo
 		RepeatingView rv = new RepeatingView("fila-cronograma");

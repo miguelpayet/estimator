@@ -12,9 +12,18 @@
         <logger name="pe.com.pps" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
+        <logger name="pe.trazos" level="DEBUG" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
         <logger name="pe.com.pps.model" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
+        <logger name="org.apache.shiro" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+		<logger name="org.apache.shiro.web.env.EnvironmentLoaderListener" level="TRACE" additivity="false">
+			<AppenderRef ref="CONSOLE"/>
+		</logger>
         <Root level="WARN">
             <AppenderRef ref="CONSOLE"/>
         </Root>

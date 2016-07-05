@@ -58,6 +58,17 @@ public class Estimacion implements Serializable {
 		actualizado = false;
 	}
 
+	public Double getCostoTotal() {
+		Double costo = 0.0;
+		for (TareaCronograma t : tareasCronograma) {
+			costo += Util.round(t.getHoras() * t.getProveedor().getCosto(), 2);
+		}
+		for (CostoAdicional c : costosAdicionales) {
+			costo += Util.round(c.getCosto(), 2);
+		}
+		return costo;
+	}
+
 	public void addCasoDeUso(CasoDeUso unCaso) {
 		casosDeUso.add(unCaso);
 		unCaso.setEstimacion(this);

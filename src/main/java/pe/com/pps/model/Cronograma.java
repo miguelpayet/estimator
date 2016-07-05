@@ -86,7 +86,7 @@ public class Cronograma implements Serializable {
 		Map<Proveedor, CostoProveedor> costos = new HashMap<>();
 		// despues paso por la lista de tareas
 		for (TareaCronograma t : mapaTareas.values()) {
-			// si ya tengo este proveedor en el mapa cojo su costoproveedor si no, creo uno nuevo y lo coloco en el mapa
+			// si ya tengo este proveedor en el mapa agarro su costoproveedor si no, creo uno nuevo y lo coloco en el mapa
 			CostoProveedor cp;
 			if (t.getProveedor() != null) {
 				if (costos.containsKey(t.getProveedor())) {
