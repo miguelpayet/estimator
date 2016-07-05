@@ -6,21 +6,6 @@
 
     <display-name>estimator</display-name>
 
-    <!-- filtro wicket -->
-    <filter>
-        <filter-name>wicket.estimator</filter-name>
-        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-        <init-param>
-            <param-name>applicationClassName</param-name>
-            <param-value>pe.com.pps.app.WicketApplication</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>wicket.estimator</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- filtro wicket -->
-
     <!-- filtro shiro -->
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
@@ -40,5 +25,20 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
     <!-- filtro shiro -->
+
+    <!-- filtro wicket -->
+    <filter>
+        <filter-name>wicket.estimator</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+            <param-value>pe.com.pps.app.WicketApplication</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>wicket.estimator</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- filtro wicket -->
 
 </web-app>
