@@ -1,25 +1,16 @@
-tr.costo-proveedor td:first-of-type {
-  font-weight: bold;
-  width: 60%;
-}
-
-tr.costo-proveedor td:last-of-type {
-  font-style: italic;
-}
-
 .actores td,.casos-de-uso td {
 width:20%;
 }
 
-.actores tfoot tr ,.casos-de-uso tfoot tr {
+.actores tfoot tr,.casos-de-uso tfoot tr {
 border:1px dotted #ddd;
 }
 
-.actores tr td, .casos-de-uso tr td {
-  padding:10px 2px;
+.actores tr td,.casos-de-uso tr td {
+padding:10px 2px;
 }
 
-.actores tr td:first-child, .casos-de-uso tr td:first-child {
+.actores tr td:first-child,.casos-de-uso tr td:first-child {
 width:50%;
 }
 
@@ -32,15 +23,15 @@ background-color:rgba(255,207,0,0.5);
 margin-top:0;
 }
 
-.cronograma td {
+.cronograma td,table.actores,table.casos-de-uso {
 padding:5px 0;
 }
 
-.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas,.cronograma .porcentaje input,.cronograma .recursos input,.cronograma .dias input {
+.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas,.cronograma .porcentaje input,.cronograma .recursos input,.cronograma .dias input,.tabla td.puntos,.tabla td.esfuerzo {
 text-align:right;
 }
 
-.cronograma th,.cronograma .incluir {
+.cronograma th,.cronograma .incluir,.tabla td.fecha {
 text-align:center;
 }
 
@@ -54,10 +45,6 @@ width:60px;
 
 .cronograma th.porcentaje {
 width:10%;
-}
-
-.cronograma th.porcentaje,.cronograma th.recursos,.cronograma th.dias,.cronograma th.horas,.estimacion label,.tabla th.idEstimacion {
-width:100px;
 }
 
 .cronograma th.proveedor {
@@ -115,27 +102,15 @@ text-align:right;
 padding:0 10px 0 0;
 }
 
-.tabla td.nombre,.tabla td.eds {
+.tabla td.nombre,.tabla td.eds,.tabla td {
 padding:0 10px;
-}
-
-.tabla td.puntos, .tabla td.esfuerzo  {
-  text-align:right;
-}
-
-.tabla td.fecha {
-text-align: center;
 }
 
 .tabla th {
 line-height:1em;
 border-bottom:1px solid #ddd;
 text-align:center;
-padding: 0 10px;
-}
-
-.tabla td {
-  padding: 0 10px;
+padding:0 10px;
 }
 
 .tecnicos .complejidad input,.tecnicos .complejidad label,.ambiente .complejidad input,.ambiente .complejidad label {
@@ -145,7 +120,7 @@ margin:0 0 0 5px;
 
 .tecnicos h3,.ambiente h3 {
 border-bottom:1px solid #ddd;
-margin:10px 0 0 0;
+margin:10px 0 0;
 }
 
 .tecnicos td,.ambiente td {
@@ -189,6 +164,19 @@ margin:10px 10px 10px 15px;
 padding:10px;
 }
 
+div.consulta {
+margin:10px;
+}
+
+div.consulta h1 {
+line-height:1.6em;
+border-bottom:1px solid #000;
+}
+
+div.consulta table.estimacion {
+border-bottom:1px solid #99;
+}
+
 div.titulo {
 border-bottom:1px solid #ddd;
 margin:0 0 10px;
@@ -203,6 +191,25 @@ input.descripcion,.tabla th.nombre {
 width:300px;
 }
 
-table.actores,table.casos-de-uso {
-padding:5px 0;
+table.estimacion {
+width:100%;
+border-bottom:1px solid #ccc;
+margin:10px 0;
+}
+
+table.estimacion .dato {
+font-weight:700;
+}
+
+table.estimacion .titulo,.cronograma th.porcentaje,.cronograma th.recursos,.cronograma th.dias,.cronograma th.horas,.estimacion label,.tabla th.idEstimacion {
+width:100px;
+}
+
+tr.costo-proveedor td:first-of-type {
+font-weight:700;
+width:60%;
+}
+
+tr.costo-proveedor td:last-of-type {
+font-style:italic;
 }
