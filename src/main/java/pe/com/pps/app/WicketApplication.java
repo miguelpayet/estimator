@@ -96,6 +96,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		Bootstrap.install(this);
 		// role checking strategy para autorización
 		getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
+		getSecuritySettings().setAuthorizationStrategy(new PaginaEstimacionAuthorizationStrategy());
 		// montar páginas
 		mountPage("/cambiopassword", PaginaCambioPassword.class);
 		mountPage("/estimacion", PaginaEstimacion.class);
