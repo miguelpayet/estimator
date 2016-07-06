@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<wicket:extend>
+    <div class="consulta">
+        <h1 colspan="10" wicket:id="titulo"></h1>
+        <table class="estimacion">
+            <tr>
+                <td class="titulo">Número</td>
+                <td class="dato" wicket:id="id-estimacion"></td>
+            </tr>
+            <tr>
+                <td class="titulo">Nombre</td>
+                <td class="dato" wicket:id="nombre-estimacion"></td>
+            </tr>
+            <tr>
+                <td class="titulo">EDS</td>
+                <td class="dato" wicket:id="eds-estimacion"/>
+            </tr>
+        </table>
+        <table class="casos-de-uso">
+            <thead>
+            <th>Número</th>
+            <th>Descripción</th>
+            <th>Peso</th>
+            </thead>
+            <tbody>
+            <tr wicket:id="repetidor-casos-de-uso"></tr>
+            </tbody>
+        </table>
+    </div>
+</wicket:extend>
+</html>

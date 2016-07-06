@@ -6,6 +6,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -28,7 +29,7 @@ import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoParametro;
 import pe.com.pps.dao.DaoPlataforma;
 import pe.com.pps.model.*;
-import pe.com.pps.ui.componentes.PaginaBase;
+import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
@@ -37,28 +38,32 @@ import pe.com.pps.ui.providers.ProviderCostoProveedor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class PaginaEstimacion extends PaginaBase {
+@AuthorizeInstantiation("usuario")
+public class PaginaEstimacion extends PaginaBaseEstimacion {
 
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
 	private Label costoTotal;
-	private Estimacion estimacion;
 	private FeedbackPanel feedback;
-	private PanelCronograma panelCronograma;
 	private TextField<Integer> proyecto;
 
 	public PaginaEstimacion() {
-		this(null);
+		this(new PageParameters());
 	}
 
+	/**
+	 * constructor que recibe el id de estimación
+	 *
+	 * @param unosParametros contiene un parámetro tipo id -> número
+	 */
 	public PaginaEstimacion(final PageParameters unosParametros) {
 		super(unosParametros);
-		// crear una estimación a partir del parametro
+		// leer la estimación del parametro
 		leerEstimacion(unosParametros);
-		if (estimacion == null) {
+		// si la estimación del parámetro no existe (o no había estimación en el parámetro) crear una nueva estimación
+		if (getEstimacion() == null) {
 			nuevaEstimacion();
 		}
 		agregarTitulo();
@@ -76,23 +81,22 @@ public class PaginaEstimacion extends PaginaBase {
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		proyecto = new TextField<>("numero", new PropertyModel<>(estimacion, "idEstimacion"));
+		proyecto = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "idEstimacion"));
 		proyecto.setOutputMarkupId(true);
-		if (estimacion.getIdEstimacion() != null) {
+		if (getEstimacion().getIdEstimacion() != null) {
 			proyecto.setEnabled(false);
 		}
 		campos.add(proyecto);
-		//TextField<String> eds = new TextField<>("eds", new PropertyModel<>(estimacion, "eds"));
 		DaoParametro dp = new DaoParametro();
-		DropDownChoice<String> eds = new DropDownChoice<String>("eds", new PropertyModel<>(estimacion, "eds"), dp.getNombreEds());
+		DropDownChoice<String> eds = new DropDownChoice<>("eds", new PropertyModel<>(getEstimacion(), "eds"), dp.getNombreEds());
 		campos.add(eds);
-		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(estimacion, "nombre"));
+		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(getEstimacion(), "nombre"));
 		campos.add(descripcion);
 	}
 
 	private void agregarCostoProveedores() {
 		log.debug("agregarCostoProveedores");
-		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(estimacion.getCronograma());
+		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(getEstimacion().getCronograma());
 
 		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("rows", proveedor) {
 			@Override
@@ -110,13 +114,13 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarCostoTotal() {
-		costoTotal = new Label("costo-total", new PropertyModel<Double>(estimacion, "costoTotal"));
+		costoTotal = new Label("costo-total", new PropertyModel<Double>(getEstimacion(), "costoTotal"));
 		costoTotal.setOutputMarkupId(true);
 		add(costoTotal);
 	}
 
 	private void agregarCronograma() {
-		panelCronograma = new PanelCronograma("cronograma", new Model(estimacion));
+		PanelCronograma panelCronograma = new PanelCronograma("cronograma", new Model(getEstimacion()));
 		panelCronograma.setOutputMarkupId(true);
 		add(panelCronograma);
 	}
@@ -128,7 +132,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridActores() {
-		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(estimacion), 10, Actor.class) {
+		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(getEstimacion()), 10, Actor.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -156,7 +160,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(estimacion), 10, CasoDeUso.class) {
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(getEstimacion()), 10, CasoDeUso.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -184,7 +188,7 @@ public class PaginaEstimacion extends PaginaBase {
 	}
 
 	private void agregarGridCostos() {
-		EditableGrid<CostoAdicional, String> grid = new EditableGrid<CostoAdicional, String>("grid-costos", columnasCostos(), new ProviderCostoAdicional(estimacion), 10, CostoAdicional.class) {
+		EditableGrid<CostoAdicional, String> grid = new EditableGrid<CostoAdicional, String>("grid-costos", columnasCostos(), new ProviderCostoAdicional(getEstimacion()), 10, CostoAdicional.class) {
 
 			@Override
 			protected void onAdd(AjaxRequestTarget target, CostoAdicional newRow) {
@@ -225,7 +229,7 @@ public class PaginaEstimacion extends PaginaBase {
 				log.debug("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
-					de.grabar(estimacion);
+					de.grabar(getEstimacion());
 					proyecto.setEnabled(false);
 					target.add(proyecto);
 					success("éxito");
@@ -243,11 +247,11 @@ public class PaginaEstimacion extends PaginaBase {
 				boolean volver = true;
 				log.info("volver");
 				// validar si el objeto ha cambiado respecto a lo que está grabado
-				if (estimacion.getIdEstimacion() != null && estimacion.getVersion() != null) {
+				if (getEstimacion().getIdEstimacion() != null && getEstimacion().getVersion() != null) {
 					DaoEstimacion de = new DaoEstimacion();
-					Estimacion grabado = de.get(estimacion.getIdEstimacion());
+					Estimacion grabado = de.get(getEstimacion().getIdEstimacion());
 					if (grabado != null) {
-						if (!grabado.compararCon(estimacion)) {
+						if (!grabado.compararCon(getEstimacion())) {
 							log.info("son distintos");
 							error("tienes cambios no grabados. puedes salir, pero no con este botón.");
 							volver = false;
@@ -267,17 +271,6 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		};
 		add(linkVolver);
-	}
-
-	private void agregarTitulo() {
-		String titulo;
-		if (estimacion.getIdEstimacion() == null) {
-			titulo = "nueva estimación";
-		} else {
-			titulo = estimacion.getNombre();
-		}
-		add(new Label("titulo", titulo));
-		add(new Label("page-title", estimacion.getIdEstimacion() + " - " + titulo));
 	}
 
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
@@ -328,25 +321,6 @@ public class PaginaEstimacion extends PaginaBase {
 			}
 		});
 		return columns;
-	}
-
-	private Set<CasoDeUso> getCasosDeUso() {
-		return estimacion.getCasosDeUso();
-	}
-
-	private void leerEstimacion(PageParameters unosParametros) {
-		if (unosParametros != null) {
-			Integer idEntidad = unosParametros.get("id").toInteger();
-			DaoEstimacion de = new DaoEstimacion();
-			estimacion = de.get(idEntidad);
-			if (estimacion == null) {
-				log.error("oops"); // todo: retroalimentar al usuario de alguna forma
-			}
-		}
-	}
-
-	private void nuevaEstimacion() {
-		estimacion = EstimacionFactory.crear();
 	}
 
 }

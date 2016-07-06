@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.com.pps.ui.componentes.PaginaBase;
+import pe.com.pps.ui.base.PaginaBase;
 
 @AuthorizeInstantiation("usuario")
 public class HomePage extends PaginaBase {
