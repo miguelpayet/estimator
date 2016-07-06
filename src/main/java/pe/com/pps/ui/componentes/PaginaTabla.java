@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import pe.com.pps.ui.base.PaginaBase;
 import pe.com.pps.ui.providers.FiltroTablaNombre;
 import pe.com.pps.ui.providers.ProviderTabla;
 
@@ -67,7 +68,6 @@ public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializ
 	protected abstract void irPaginaEdicion();
 
 	public abstract void irPaginaEdicion(T unaEntidad);
-
 
 	protected void irPaginaEdicion(Class<? extends PaginaBase> unaPagina) {
 		setResponsePage(unaPagina);
