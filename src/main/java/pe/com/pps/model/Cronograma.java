@@ -96,7 +96,7 @@ public class Cronograma implements Serializable {
 					costos.put(t.getProveedor(), cp);
 				}
 				// sumo el costo de la tarea dentro del costoproveedor
-				cp.sumarCosto(t.getHoras() * t.getProveedor().getCosto());
+				cp.sumarCosto(t.getCosto());
 			}
 		}
 		// devuelvo el valueset del mapa como lista

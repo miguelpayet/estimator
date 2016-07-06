@@ -3,6 +3,7 @@ package pe.com.pps.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoCronograma;
+import pe.trazos.login.dominio.Usuario;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,6 +40,9 @@ public class Estimacion implements Serializable {
 	private Double puntos;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private List<TareaCronograma> tareasCronograma;
+	@ManyToOne
+	@JoinColumn(name = "idusuario", nullable = false)
+	private Usuario usuario;
 	@Version
 	@Column(name = "version")
 	private Integer version;
@@ -56,17 +60,6 @@ public class Estimacion implements Serializable {
 		actores.add(unActor);
 		unActor.setEstimacion(this);
 		actualizado = false;
-	}
-
-	public Double getCostoTotal() {
-		Double costo = 0.0;
-		for (TareaCronograma t : tareasCronograma) {
-			costo += Util.round(t.getHoras() * t.getProveedor().getCosto(), 2);
-		}
-		for (CostoAdicional c : costosAdicionales) {
-			costo += Util.round(c.getCosto(), 2);
-		}
-		return costo;
 	}
 
 	public void addCasoDeUso(CasoDeUso unCaso) {
@@ -122,6 +115,17 @@ public class Estimacion implements Serializable {
 		return casosDeUso;
 	}
 
+	public Double getCostoTotal() {
+		Double costo = 0.0;
+		for (TareaCronograma t : tareasCronograma) {
+			costo += t.getCosto();
+		}
+		for (CostoAdicional c : costosAdicionales) {
+			costo += Util.round(c.getCosto(), 2);
+		}
+		return costo;
+	}
+
 	public Set<CostoAdicional> getCostosAdicionales() {
 		return costosAdicionales;
 	}
@@ -170,6 +174,10 @@ public class Estimacion implements Serializable {
 
 	public List<TareaCronograma> getTareasCronograma() {
 		return tareasCronograma;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
 	public Integer getVersion() {
@@ -249,6 +257,10 @@ public class Estimacion implements Serializable {
 
 	public void setTareasCronograma(List<TareaCronograma> tareasCronograma) {
 		this.tareasCronograma = tareasCronograma;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	private void sumarEsfuerzo(Double unFactor) {
