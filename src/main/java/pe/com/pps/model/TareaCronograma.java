@@ -75,6 +75,15 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return "sin tarea";
 	}
 
+	/**
+	 * devuelve el orden de la tarea dentro del cronograma o 0 si la tarea asociada es nulo
+	 *
+	 * @return -> dicho orden
+	 */
+	public Integer getOrden() {
+		return tarea != null ? tarea.getOrden() : 0;
+	}
+
 	public Double getPorcentaje() {
 		return porcentaje != null ? porcentaje : 0;
 	}

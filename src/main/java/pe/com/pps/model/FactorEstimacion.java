@@ -7,6 +7,9 @@ import java.io.Serializable;
 @Table(name = "factor_estimacion")
 public class FactorEstimacion implements Identificable<Integer>, Serializable, Comparable<FactorEstimacion> {
 
+	public static final String FACTOR_AMBIENTAL = "1";
+	public static final String FACTOR_TECNICO = "2";
+
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
 	protected Estimacion estimacion;
@@ -53,10 +56,20 @@ public class FactorEstimacion implements Identificable<Integer>, Serializable, C
 		return getFactor() != null ? getFactor().getMinimo() : 0;
 	}
 
+	/**
+	 * método para wicket - shortcut al nombre del factor
+	 *
+	 * @return nombre del factor
+	 */
 	public String getNombre() {
 		return getFactor() != null ? getFactor().getNombre() : "sin factor";
 	}
 
+	/**
+	 * acceso al peso seleccionado para el factor
+	 *
+	 * @return -> peso del factor en la estimación
+	 */
 	public Double getPeso() {
 		return getFactor() != null ? getFactor().getPeso() : 0.0;
 	}
@@ -80,5 +93,5 @@ public class FactorEstimacion implements Identificable<Integer>, Serializable, C
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
-	
+
 }

@@ -17,15 +17,88 @@
                 <td class="dato" wicket:id="eds-estimacion"/>
             </tr>
         </table>
+        <h2>Casos de uso</h2>
         <table class="casos-de-uso">
             <thead>
-            <th>Número</th>
             <th>Descripción</th>
-            <th>Peso</th>
+            <th>Complejidad</th>
+            <th>Plataforma</th>
             </thead>
             <tbody>
-            <tr wicket:id="repetidor-casos-de-uso"></tr>
+            <tr wicket:id="repetidor-casos-de-uso">
+                <td wicket:id="cells">
+                    <span wicket:id="cell"> </span>
+                </td>
+            </tr>
             </tbody>
+        </table>
+        <h2>Actores</h2>
+        <table class="actores">
+            <thead>
+            <th>Descripción</th>
+            <th>Complejidad</th>
+            <th>Plataforma</th>
+            </thead>
+            <tbody>
+            <tr wicket:id="repetidor-actores">
+                <td wicket:id="cells">
+                    <span wicket:id="cell"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>Factores</h2>
+        <h3>Técnicos</h3>
+        <table class="factores">
+            <thead>
+            <th>Nombre</th>
+            <th>Valor</th>
+            <th>Peso</th>
+            <th>Complejidad</th>
+            </thead>
+            <tbody>
+            <tr>
+            <tr wicket:id="repetidor-factores-tecnicos">
+                <td wicket:id="cells"><span wicket:id="cell"></span></td>
+            </tr>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Ambientales</h3>
+        <table class="factores">
+            <thead>
+            <th>Nombre</th>
+            <th>Valor</th>
+            <th>Peso</th>
+            <th>Complejidad</th>
+            </thead>
+            <tbody>
+            <tr wicket:id="repetidor-factores-ambientales">
+                <td wicket:id="cells"><span wicket:id="cell"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>Cronograma</h2>
+        <table class="cronograma">
+            <thead>
+            <th>tarea</th>
+            <th>proveedor</th>
+            <th>porcentaje</th>
+            <th>recursos</th>
+            <th>dias</th>
+            <th>horas</th>
+            </thead>
+            <tr wicket:id="repetidor-cronograma">
+                <td wicket:id="cells"><span wicket:id="cell"></span></td>
+            </tr>
+            <tr>
+                <td>tarea</td>
+                <td>proveedor</td>
+                <td>porcentaje</td>
+                <td>recursos</td>
+                <td>dias</td>
+                <td>horas</td>
+            </tr>
         </table>
     </div>
 </wicket:extend>

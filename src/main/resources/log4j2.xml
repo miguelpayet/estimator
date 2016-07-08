@@ -9,13 +9,13 @@
         <logger name="org.apache.wicket" level="WARN" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps" level="WARN" additivity="false">
-            <AppenderRef ref="CONSOLE"/>
-        </logger>
         <logger name="pe.trazos" level="INFO" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <logger name="pe.com.pps.model" level="INFO" additivity="false">
+        <logger name="pe.com.pps" level="DEBUG" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="pe.com.pps.model" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <logger name="org.apache.shiro" level="WARN" additivity="false">

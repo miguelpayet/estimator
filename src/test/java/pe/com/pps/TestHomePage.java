@@ -4,7 +4,7 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 import pe.com.pps.app.WicketApplication;
-import pe.com.pps.ui.homepage.HomePage;
+import pe.com.pps.ui.home.HomePage;
 
 public class TestHomePage {
 	private WicketTester tester;

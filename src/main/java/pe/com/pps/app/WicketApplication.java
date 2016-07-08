@@ -1,15 +1,18 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
+import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
+import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
-import pe.com.pps.ui.homepage.HomePage;
+import pe.com.pps.ui.home.HomePage;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
+import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.SesionShiro;
@@ -95,10 +98,13 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// role checking strategy para autorización
-		getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
-		getSecuritySettings().setAuthorizationStrategy(new PaginaEstimacionAuthorizationStrategy());
+		CompoundAuthorizationStrategy cps = new CompoundAuthorizationStrategy();
+		cps.add(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
+		cps.add(new PaginaEstimacionAuthorizationStrategy());
+		getSecuritySettings().setAuthorizationStrategy(cps);
 		// montar páginas
 		mountPage("/cambiopassword", PaginaCambioPassword.class);
+		mountPage("/consulta", PaginaVistaEstimacion.class);
 		mountPage("/estimacion", PaginaEstimacion.class);
 		mountPage("/lista", PaginaListaEstimaciones.class);
 		mountPage("/login", PaginaLogin.class);

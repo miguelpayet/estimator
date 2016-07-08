@@ -1,7 +1,9 @@
-package pe.com.pps.ui.homepage;
+package pe.com.pps.ui.home;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
@@ -33,6 +35,13 @@ public class HomePage extends PaginaBase {
 			public void onClick() {
 				logger.info("nueva estimación");
 				throw new RestartResponseException(PaginaEstimacion.class);
+			}
+		});
+		add(new Link("link-logout") {
+			public void onClick() {
+				logger.info("logout");
+				Subject subject = SecurityUtils.getSubject();
+				SecurityUtils.getSecurityManager().logout(subject);
 			}
 		});
 	}

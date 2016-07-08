@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import pe.com.pps.app.WicketApplication;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
-import pe.com.pps.ui.homepage.HomePage;
 
 public class TestPaginaEstimacion {
 	private WicketTester tester;
