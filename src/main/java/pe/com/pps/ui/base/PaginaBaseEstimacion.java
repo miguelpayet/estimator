@@ -3,6 +3,7 @@ package pe.com.pps.ui.base;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.model.CasoDeUso;
@@ -14,11 +15,18 @@ import java.util.Set;
 public class PaginaBaseEstimacion extends PaginaBase {
 
 	private static final Logger log = LogManager.getLogger(PaginaBaseEstimacion.class);
+	protected Label costoTotal;
 	private Estimacion estimacion;
 
 	public PaginaBaseEstimacion(final PageParameters unosParametros) {
 		super(unosParametros);
 		leerEstimacion(unosParametros);
+	}
+
+	protected void agregarCostoTotal() {
+		costoTotal = new Label("costo-total", new PropertyModel<Double>(getEstimacion(), "costoTotal"));
+		costoTotal.setOutputMarkupId(true);
+		add(costoTotal);
 	}
 
 	protected void agregarTitulo() {

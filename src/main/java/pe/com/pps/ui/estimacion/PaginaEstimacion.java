@@ -45,7 +45,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
-	private Label costoTotal;
 	private FeedbackPanel feedback;
 	private TextField<Integer> proyecto;
 
@@ -98,11 +97,11 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		log.debug("agregarCostoProveedores");
 		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(getEstimacion().getCronograma());
 
-		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("rows", proveedor) {
+		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("dataview-costos", proveedor) {
 			@Override
 			protected void populateItem(Item<CostoProveedor> item) {
 				CostoProveedor costo = item.getModelObject();
-				RepeatingView rv = new RepeatingView("dataRow");
+				RepeatingView rv = new RepeatingView("fila-costos");
 				rv.add(new Label(rv.newChildId(), costo.getProveedor().getNombre()));
 				rv.add(new Label(rv.newChildId(), costo.getMoneda()));
 				rv.add(new Label(rv.newChildId(), costo.getDescripcionCosto()));
@@ -111,12 +110,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			}
 		};
 		add(dv);
-	}
-
-	private void agregarCostoTotal() {
-		costoTotal = new Label("costo-total", new PropertyModel<Double>(getEstimacion(), "costoTotal"));
-		costoTotal.setOutputMarkupId(true);
-		add(costoTotal);
 	}
 
 	private void agregarCronograma() {

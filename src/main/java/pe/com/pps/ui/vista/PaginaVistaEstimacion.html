@@ -88,18 +88,51 @@
             <th>dias</th>
             <th>horas</th>
             </thead>
+            <tbody>
             <tr wicket:id="repetidor-cronograma">
                 <td wicket:id="cells"><span wicket:id="cell"></span></td>
             </tr>
             <tr>
-                <td>tarea</td>
-                <td>proveedor</td>
-                <td>porcentaje</td>
-                <td>recursos</td>
-                <td>dias</td>
-                <td>horas</td>
+                <td colspan="4">total</td>
+                <td wicket:id="dias-cronograma">dias</td>
+                <td wicket:id="horas-cronograma">horas</td>
             </tr>
+            </tbody>
         </table>
+        <div>
+            <ul>
+                <li>rango de desviación: de <span wicket:id="desviacion-minimo"></span> a <span
+                        wicket:id="desviacion-maximo"></span></li>
+                <li> número de meses: <span wicket:id="meses-cronograma">1</span></li>
+            </ul>
+        </div>
+        <h2>Costo</h2>
+        <h3>Costo por proveedor</h3>
+        <table class="costo-proveedor">
+            <thead>
+            <th>Proveedor</th>
+            <th>Moneda</th>
+            <th>Costo</th>
+            </thead>
+            <tbody>
+            <tr wicket:id="repetidor-costos">
+                <td wicket:id="cells"><span wicket:id="cell"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Costos adicionales HW/SW</h3>
+        <table class="costo-adicional">
+            <thead>
+            <th>Descripción</th>
+            <th>Costo</th>
+            </thead>
+            <tbody>
+            <tr wicket:id="repetidor-costo-adicional">
+                <td wicket:id="cells"><span wicket:id="cell"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Costo Total: <span wicket:id="costo-total">1000</span></h3>
     </div>
 </wicket:extend>
 </html>

@@ -1,3 +1,11 @@
+.consulta table.casos-de-uso {
+  width: 500px;
+}
+
+.consulta table.casos-de-uso td {
+  width: 33%;
+}
+
 .actores td,.casos-de-uso td {
 width:20%;
 }
