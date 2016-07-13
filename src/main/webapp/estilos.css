@@ -1,15 +1,3 @@
-.consulta table.casos-de-uso {
-  width: 500px;
-}
-
-.consulta table.casos-de-uso td {
-  width: 33%;
-}
-
-.actores td,.casos-de-uso td {
-width:20%;
-}
-
 .actores tfoot tr,.casos-de-uso tfoot tr {
 border:1px dotted #ddd;
 }
@@ -18,8 +6,35 @@ border:1px dotted #ddd;
 padding:10px 2px;
 }
 
-.actores tr td:first-child,.casos-de-uso tr td:first-child {
-width:50%;
+.consulta table.casos-de-uso,.consulta table.actores {
+width:700px;
+}
+
+.consulta table.cronograma {
+width:70em;
+}
+
+.consulta table.factores {
+width:600px;
+}
+
+.consulta td.complejidad-factor,.consulta td.peso-factor,.consulta td.valor-factor {
+width:12%;
+text-align:right;
+padding:0 1em;
+}
+
+.consulta td.nombre-factor {
+width:64%;
+}
+
+.consulta th {
+text-align:center;
+padding:0 1em;
+}
+
+.consulta thead {
+border-bottom:1px solid #ddd;
 }
 
 .cronograma .totales {
@@ -135,10 +150,6 @@ margin:10px 0 0;
 border-bottom:dotted 1px #dedede;
 }
 
-.tecnicos td.complejidad,.ambiente td.complejidad {
-width:30%;
-}
-
 .tecnicos td.descripcion,.ambiente td.descripcion {
 font-size:80%;
 width:30%;
@@ -199,6 +210,14 @@ input.descripcion,.tabla th.nombre {
 width:300px;
 }
 
+table.costo-adicional {
+width:40em;
+}
+
+table.costo-proveedor {
+width:30em;
+}
+
 table.estimacion {
 width:100%;
 border-bottom:1px solid #ccc;
@@ -213,6 +232,42 @@ table.estimacion .titulo,.cronograma th.porcentaje,.cronograma th.recursos,.cron
 width:100px;
 }
 
+td.costo-adicional,td.moneda-adicional,td.costo-proveedor {
+text-align:right;
+width:20%;
+}
+
+td.descripcion-adicional,.consulta td.descripcion-puntuable {
+width:60%;
+}
+
+td.moneda-adicional {
+width:20%;
+text-align:center;
+}
+
+td.moneda-proveedor {
+width:10%;
+text-align:center;
+}
+
+td.nombre-cronograma,.tecnicos td.complejidad,.ambiente td.complejidad {
+width:30%;
+}
+
+td.porcentaje-cronograma,td.recursos-cronograma,td.dias-cronograma,td.horas-cronograma {
+width:12%;
+text-align:right;
+}
+
+td.proveedor-cronograma,.consulta td.complejidad-puntuable,td.plataforma-puntuable,.actores td,.casos-de-uso td {
+width:20%;
+}
+
+td.proveedor-proveedor,.actores tr td:first-child,.casos-de-uso tr td:first-child {
+width:50%;
+}
+
 tr.costo-proveedor td:first-of-type {
 font-weight:700;
 width:60%;
@@ -220,4 +275,8 @@ width:60%;
 
 tr.costo-proveedor td:last-of-type {
 font-style:italic;
+}
+
+tr.total-cronograma {
+border-top:3px double #ddd;
 }

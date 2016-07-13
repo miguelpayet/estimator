@@ -92,10 +92,10 @@
             <tr wicket:id="repetidor-cronograma">
                 <td wicket:id="cells"><span wicket:id="cell"></span></td>
             </tr>
-            <tr>
-                <td colspan="4">total</td>
-                <td wicket:id="dias-cronograma">dias</td>
-                <td wicket:id="horas-cronograma">horas</td>
+            <tr class="total-cronograma">
+                <td colspan="4">Total</td>
+                <td class="dias-cronograma" wicket:id="dias-cronograma">dias</td>
+                <td class="horas-cronograma" wicket:id="horas-cronograma">horas</td>
             </tr>
             </tbody>
         </table>
@@ -124,6 +124,7 @@
         <table class="costo-adicional">
             <thead>
             <th>Descripción</th>
+            <th>Moneda</th>
             <th>Costo</th>
             </thead>
             <tbody>
