@@ -35,6 +35,7 @@ import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.providers.ProviderCostoProveedor;
+import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +154,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasPuntuable(), new ProviderCasoDeUso(getEstimacion()), 10, CasoDeUso.class) {
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasCasosDeUso(), new ProviderCasoDeUso(getEstimacion()), 10, CasoDeUso.class) {
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target) {
@@ -264,6 +265,15 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			}
 		};
 		add(linkVolver);
+		AjaxSubmitLink linkImprimir = new AjaxSubmitLink("imprimir", campos) {
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				PageParameters p = new PageParameters();
+				p.add("id", getEstimacion().getIdEstimacion());
+				throw new RestartResponseException(PaginaVistaEstimacion.class, p);
+			}
+		};
+		add(linkImprimir);
 	}
 
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
@@ -295,6 +305,19 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		return columns;
 	}
 
+	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasCasosDeUso() {
+		List<AbstractEditablePropertyColumn<T, String>> columns = columnasPuntuable();
+		DaoPlataforma dp = new DaoPlataforma();
+		List<Plataforma> plataformas = dp.listar();
+		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
+			@Override
+			public EditableCellPanel getEditableCellPanel(String componentId) {
+				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
+			}
+		});
+		return columns;
+	}
+
 	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
@@ -313,14 +336,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			}
 		};
 		columns.add(complejidad);
-		DaoPlataforma dp = new DaoPlataforma();
-		List<Plataforma> plataformas = dp.listar();
-		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
-			@Override
-			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
-			}
-		});
 		return columns;
 	}
 

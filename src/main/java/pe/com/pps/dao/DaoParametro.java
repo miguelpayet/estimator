@@ -13,14 +13,18 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 
 	private static final String PARAMETRO_DESVIACION = "Desviación";
 	private static final String PARAMETRO_EDS = "EDS";
+	private static final String PARAMETRO_PRODUCTIVIDAD_ACTOR = "ProductividadActor";
 
 	public DaoParametro() {
 		super(Parametro.class);
 	}
 
 	public Parametro getDesviacion() {
-		ParametroPK pk = new ParametroPK(PARAMETRO_DESVIACION, 1);
-		return get(pk);
+		return getParametroUnico(PARAMETRO_DESVIACION);
+	}
+
+	public Parametro getFactorProductividadActor() {
+		return getParametroUnico(PARAMETRO_PRODUCTIVIDAD_ACTOR);
 	}
 
 	public List<String> getNombreEds() {
@@ -29,6 +33,11 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 		crit.addOrder(Order.asc("codigo"));
 		List<Parametro> params = crit.list();
 		return params.stream().map(Parametro::getValor).collect(Collectors.toList());
+	}
+
+	public Parametro getParametroUnico(String unParametro) {
+		ParametroPK pk = new ParametroPK(unParametro, 1);
+		return get(pk);
 	}
 
 }

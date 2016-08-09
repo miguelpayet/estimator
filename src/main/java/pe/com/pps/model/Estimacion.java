@@ -3,6 +3,7 @@ package pe.com.pps.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoCronograma;
+import pe.com.pps.dao.DaoEstimacion;
 import pe.trazos.login.dominio.Usuario;
 
 import javax.persistence.*;
@@ -51,6 +52,7 @@ public class Estimacion implements Serializable {
 		actores = new HashSet<>();
 		actualizado = false;
 		casosDeUso = new HashSet<>();
+		costosAdicionales = new HashSet<>();
 		factoresEstimacion = new HashSet<>();
 		tareasCronograma = new ArrayList<>();
 		version = null;
@@ -272,7 +274,7 @@ public class Estimacion implements Serializable {
 	private void sumarEsfuerzoParcial(Set<? extends Puntuable> unosPuntuables, Double unFactor) {
 		for (Puntuable p : unosPuntuables) {
 			Integer puntos = p.getPunto().getPuntos();
-			Double productividad = p.getPlataforma().getFactorProductividad();
+			Double productividad = p.getFactorProductividad();
 			esfuerzo += Util.round(puntos * unFactor * productividad, 2);
 		}
 	}

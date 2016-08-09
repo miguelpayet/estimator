@@ -47,31 +47,35 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 				log.debug("no existe usuario autenticado - autenticado: {} - recordado: {}", subject.isAuthenticated(), subject.isRemembered());
 				throw new RestartResponseException(HomePage.class);
 			}
-			// obtener el código de estimación del request
+			// si no hay queryparameter, es una estimación nueva
 			Request req = RequestCycle.get().getRequest();
 			Url url = req.getUrl();
 			Url.QueryParameter qp = url.getQueryParameter("id");
-			String id = qp.getValue();
-			// buscar la estimacion en la base de datos
-			DaoEstimacion de = new DaoEstimacion();
-			Estimacion est = de.get(Integer.valueOf(id));
-			if (est == null) {
-				log.debug("no existe estimación en base de datos");
-				throw new RestartResponseException(HomePage.class);
-			}
-			// buscar el usuario en la base de datos
-			DaoUsuario du = new DaoUsuario();
-			Usuario u = du.getPorCodigo((String) subject.getPrincipal());
-			if (u == null) {
-				log.debug("no existe usuario [{}] en base de datos", subject.getPrincipal());
-				throw new RestartResponseException(HomePage.class);
-			}
-			// compararlo con el usuario de la estimación
-			if (!u.equals(est.getUsuario())) {
-				log.debug("enviando a página de consulta");
-				PageParameters params = new PageParameters();
-				params.add(qp.getName(), qp.getValue());
-				throw new RestartResponseException(PaginaVistaEstimacion.class, params);
+			// solamente se valida las estimaciones existentes
+			if (qp != null) {
+				// obtener el código de estimación del request
+				String id = qp.getValue();
+				// buscar la estimacion en la base de datos
+				DaoEstimacion de = new DaoEstimacion();
+				Estimacion est = de.get(Integer.valueOf(id));
+				if (est == null) {
+					log.debug("no existe estimación en base de datos");
+					throw new RestartResponseException(HomePage.class);
+				}
+				// buscar el usuario en la base de datos
+				DaoUsuario du = new DaoUsuario();
+				Usuario u = du.getUsuarioActual();
+				if (u == null) {
+					log.debug("no existe usuario [{}] en base de datos", subject.getPrincipal());
+					throw new RestartResponseException(HomePage.class);
+				}
+				// compararlo con el usuario de la estimación
+				if (!u.equals(est.getUsuario())) {
+					log.debug("enviando a página de consulta");
+					PageParameters params = new PageParameters();
+					params.add(qp.getName(), qp.getValue());
+					throw new RestartResponseException(PaginaVistaEstimacion.class, params);
+				}
 			}
 		}
 		log.debug("autorizado");

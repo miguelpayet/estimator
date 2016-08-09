@@ -76,14 +76,12 @@ public class TestEstimacion extends TestBase<Estimacion> {
 			Actor act = new Actor();
 			act.setComplejidad(Complejidad.ALTA);
 			act.setDescripcion("Actor 1");
-			act.setPlataforma(p);
 			est.addActor(act);
 		}
 		{
 			Actor act = new Actor();
 			act.setComplejidad(Complejidad.ALTA);
 			act.setDescripcion("Actor 2");
-			act.setPlataforma(p);
 			est.addActor(act);
 		}
 		// factores

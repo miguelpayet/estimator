@@ -42,7 +42,6 @@ public class TestActor extends TestBase<Actor> {
 		a.setComplejidad(1);
 		a.setDescripcion("hola");
 		DaoPlataforma dp = new DaoPlataforma();
-		a.setPlataforma(dp.get(1));
 		est.addActor(a);
 		de.persistir(est);
 	}

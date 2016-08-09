@@ -9,8 +9,6 @@ import java.util.List;
 public class Plataforma implements Identificable<Integer>, Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
-	private List<Actor> actores;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plataforma")
 	private List<CasoDeUso> casosDeUso;
 	@Column(name = "factorproductividad")
 	private Double factorProductividad;
@@ -22,10 +20,6 @@ public class Plataforma implements Identificable<Integer>, Serializable {
 	private String nombre;
 
 	public Plataforma() {
-	}
-
-	public List<Actor> getActores() {
-		return actores;
 	}
 
 	public List<CasoDeUso> getCasosDeUso() {
@@ -43,10 +37,6 @@ public class Plataforma implements Identificable<Integer>, Serializable {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void setActores(List<Actor> actores) {
-		this.actores = actores;
 	}
 
 	public void setCasosDeUso(List<CasoDeUso> casosDeUso) {

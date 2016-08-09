@@ -1,6 +1,5 @@
 package pe.com.pps.model;
 
-import com.sun.istack.internal.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoPunto;
@@ -22,9 +21,6 @@ public abstract class Puntuable implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)
 	Estimacion estimacion;
-	@ManyToOne
-	@JoinColumn(name = "idplataforma", nullable = false)
-	protected Plataforma plataforma;
 	@Transient
 	Punto punto;
 
@@ -34,7 +30,7 @@ public abstract class Puntuable implements Serializable {
 
 	public String getComplejidadStr() {
 		String complejidadStr = Complejidad.getNombre(complejidad);
-		return  complejidadStr != null ? complejidadStr : "Sin complejidad";
+		return complejidadStr != null ? complejidadStr : "Sin complejidad";
 	}
 
 	public String getDescripcion() {
@@ -45,9 +41,11 @@ public abstract class Puntuable implements Serializable {
 		return estimacion;
 	}
 
-	public Plataforma getPlataforma() {
-		return plataforma != null ? plataforma : new Plataforma();
-	}
+	/**
+	 * método delegado a las subclases para calcular el factor de productividad del objeto puntuable
+	 * @return el factor de productividad
+	 */
+	public abstract Double getFactorProductividad();
 
 	public abstract Punto getPunto();
 
@@ -57,7 +55,7 @@ public abstract class Puntuable implements Serializable {
 			DaoPunto dp = new DaoPunto();
 			punto = dp.get(unTipo, complejidad);
 		}
-		return punto != null ? punto : new Punto(); // todo: que barato (por lo menos pasarle el tipo) (esto debe ser complementado con una validación en la interfaz)
+		return punto != null ? punto : new Punto(); // todo: por lo menos pasarle el tipo (esto debe ser complementado con una validación en la interfaz)
 	}
 
 	public void setComplejidad(Integer complejidad) {
@@ -74,10 +72,6 @@ public abstract class Puntuable implements Serializable {
 
 	public void setEstimacion(Estimacion estimacion) {
 		this.estimacion = estimacion;
-	}
-
-	public void setPlataforma(Plataforma plataforma) {
-		this.plataforma = plataforma;
 	}
 
 }

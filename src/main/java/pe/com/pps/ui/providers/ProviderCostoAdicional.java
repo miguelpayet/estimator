@@ -6,6 +6,7 @@ import pe.com.pps.model.Estimacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ProviderCostoAdicional extends ProviderGenerico<CostoAdicional> {
 
@@ -30,6 +31,7 @@ public class ProviderCostoAdicional extends ProviderGenerico<CostoAdicional> {
 
 	@Override
 	public long size() {
-		return estimacion.getCostosAdicionales().size();
+		Set<CostoAdicional> costos = estimacion.getCostosAdicionales();
+		return costos == null ? 0 : costos.size();
 	}
 }

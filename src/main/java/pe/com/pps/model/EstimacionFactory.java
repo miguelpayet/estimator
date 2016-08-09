@@ -1,11 +1,16 @@
 package pe.com.pps.model;
 
-import pe.com.pps.dao.DaoFactor;
 import pe.com.pps.dao.DaoFactorTecnico;
 import pe.com.pps.dao.DaoTarea;
+import pe.trazos.login.dao.DaoUsuario;
+import pe.trazos.login.dominio.Usuario;
 
+import java.util.HashSet;
 import java.util.List;
 
+/**
+ * forma de crear una estimación e inicializar las estructuras de datos asociadas
+ */
 public class EstimacionFactory {
 
 	public static Estimacion crear() {
@@ -22,6 +27,13 @@ public class EstimacionFactory {
 			fet.setValor(f.getMinimo());
 			est.addFactorEstimacion(fet);
 		}
+		// usuario
+		DaoUsuario du = new DaoUsuario();
+		Usuario u = du.getUsuarioActual();
+		if (u == null) {
+			throw new RuntimeException("no hay usuario autentificado");
+		}
+		est.setUsuario(du.getUsuarioActual());
 		return est;
 	}
 

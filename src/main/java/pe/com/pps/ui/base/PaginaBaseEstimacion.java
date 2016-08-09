@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.model.CasoDeUso;
 import pe.com.pps.model.Estimacion;
@@ -50,11 +51,18 @@ public class PaginaBaseEstimacion extends PaginaBase {
 
 	protected void leerEstimacion(PageParameters unosParametros) {
 		if (unosParametros != null) {
-			Integer idEntidad = unosParametros.get("id").toInteger();
-			DaoEstimacion de = new DaoEstimacion();
-			estimacion = de.get(idEntidad);
-			if (estimacion == null) {
-				log.error("oops"); // todo: retroalimentar al usuario de alguna forma
+			StringValue parametro = unosParametros.get("id");
+			if (parametro.toString() != null) {
+				try {
+					Integer idEntidad = parametro.toInteger();
+					DaoEstimacion de = new DaoEstimacion();
+					estimacion = de.get(idEntidad);
+					if (estimacion == null) {
+						log.error("no existe la estimación {}", idEntidad); // todo: retroalimentar al usuario de alguna forma
+					}
+				} catch (NumberFormatException e) {
+					log.error("parámetro inválido {}", parametro.toString());
+				}
 			}
 		}
 	}
