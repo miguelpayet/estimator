@@ -38,15 +38,18 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 		cronograma = unCronograma;
 	}
 
+	/**
+	 * sirve para añadir un nuevo item a la lista (en este caso no hace nada)
+	 *
+	 * @param item item a añadir
+	 */
 	@Override
 	public void add(CostoProveedor item) {
-		// no hace nada
 		log.trace("add");
-
 	}
 
 	/**
-	 * en teoría descarta la estimación pero copia el id para el próximo ciclo
+	 * este método sirve para liberar memoria descartando objetos asociados pero manteniendo identificadores
 	 */
 	@Override
 	public void detach() {
@@ -75,16 +78,19 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 		return new Model<>(object);
 	}
 
+	/**
+	 * sirve para eliminar un item de la lista -- no implementado
+	 * @param item item a eliminar
+	 */
 	@Override
 	public void remove(CostoProveedor item) {
-		// no implementado
 		log.trace("remove");
 	}
 
 	@Override
 	public long size() {
 		log.trace("size");
-		return cronograma.getCostoProveedores().size(); // todo: sería ideal no estar calculando dos veces en cada ciclo
+		return cronograma.getCostoProveedores().size(); // evitar repetir el calculo en cada ciclo
 	}
 
 }
