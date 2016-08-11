@@ -16,6 +16,7 @@ import java.util.Set;
 public class PaginaBaseEstimacion extends PaginaBase {
 
 	private static final Logger log = LogManager.getLogger(PaginaBaseEstimacion.class);
+
 	protected Label costoTotal;
 	private Estimacion estimacion;
 

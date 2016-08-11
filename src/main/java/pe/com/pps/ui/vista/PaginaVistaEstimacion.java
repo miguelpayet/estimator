@@ -56,7 +56,7 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarActores() {
-		List<PropertyPopulatorClase<Actor>> columns = columnasPuntuable();
+		List<PropertyPopulatorClase<Actor>> columns = columnasActor();
 		ProviderActor pa = new ProviderActor(getEstimacion());
 		DataGridView<Actor> dgv = new DataGridView<>("repetidor-actores", columns, pa);
 		add(dgv);
@@ -131,6 +131,10 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 		return crearColumnas(new String[]{"nombre", "valor", "peso", "complejidad"}, "factor");
 	}
 
+
+	private <T> List<PropertyPopulatorClase<T>> columnasActor() {
+		return crearColumnas(new String[]{"descripcion", "complejidadStr"}, "puntuable");
+	}
 	private <T> List<PropertyPopulatorClase<T>> columnasPuntuable() {
 		return crearColumnas(new String[]{"descripcion", "complejidadStr", "plataforma"}, "puntuable");
 	}

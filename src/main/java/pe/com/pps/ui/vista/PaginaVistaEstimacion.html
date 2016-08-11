@@ -2,7 +2,7 @@
 <html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
 <wicket:extend>
     <div class="consulta">
-        <h1 colspan="10" wicket:id="titulo"></h1>
+        <h1 wicket:id="titulo"></h1>
         <table class="estimacion">
             <tr>
                 <td class="titulo">Número</td>
@@ -14,15 +14,17 @@
             </tr>
             <tr>
                 <td class="titulo">EDS</td>
-                <td class="dato" wicket:id="eds-estimacion"/>
+                <td class="dato" wicket:id="eds-estimacion"></td>
             </tr>
         </table>
         <h2>Casos de uso</h2>
         <table class="casos-de-uso">
             <thead>
-            <th>Descripción</th>
-            <th>Complejidad</th>
-            <th>Plataforma</th>
+            <tr>
+                <th>Descripción</th>
+                <th>Complejidad</th>
+                <th>Plataforma</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-casos-de-uso">
@@ -35,9 +37,10 @@
         <h2>Actores</h2>
         <table class="actores">
             <thead>
-            <th>Descripción</th>
-            <th>Complejidad</th>
-            <th>Plataforma</th>
+            <tr>
+                <th>Descripción</th>
+                <th>Complejidad</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-actores">
@@ -51,26 +54,28 @@
         <h3>Técnicos</h3>
         <table class="factores">
             <thead>
-            <th>Nombre</th>
-            <th>Valor</th>
-            <th>Peso</th>
-            <th>Complejidad</th>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Peso</th>
+                <th>Complejidad</th>
+            </tr>
             </thead>
             <tbody>
-            <tr>
             <tr wicket:id="repetidor-factores-tecnicos">
                 <td wicket:id="cells"><span wicket:id="cell"></span></td>
-            </tr>
             </tr>
             </tbody>
         </table>
         <h3>Ambientales</h3>
         <table class="factores">
             <thead>
-            <th>Nombre</th>
-            <th>Valor</th>
-            <th>Peso</th>
-            <th>Complejidad</th>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Peso</th>
+                <th>Complejidad</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-factores-ambientales">
@@ -81,12 +86,14 @@
         <h2>Cronograma</h2>
         <table class="cronograma">
             <thead>
-            <th>tarea</th>
-            <th>proveedor</th>
-            <th>porcentaje</th>
-            <th>recursos</th>
-            <th>dias</th>
-            <th>horas</th>
+            <tr>
+                <th>tarea</th>
+                <th>proveedor</th>
+                <th>porcentaje</th>
+                <th>recursos</th>
+                <th>dias</th>
+                <th>horas</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-cronograma">
@@ -110,9 +117,11 @@
         <h3>Costo por proveedor</h3>
         <table class="costo-proveedor">
             <thead>
-            <th>Proveedor</th>
-            <th>Moneda</th>
-            <th>Costo</th>
+            <tr>
+                <th>Proveedor</th>
+                <th>Moneda</th>
+                <th>Costo</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-costos">
@@ -123,9 +132,11 @@
         <h3>Costos adicionales HW/SW</h3>
         <table class="costo-adicional">
             <thead>
-            <th>Descripción</th>
-            <th>Moneda</th>
-            <th>Costo</th>
+            <tr>
+                <th>Descripción</th>
+                <th>Moneda</th>
+                <th>Costo</th>
+            </tr>
             </thead>
             <tbody>
             <tr wicket:id="repetidor-costo-adicional">
