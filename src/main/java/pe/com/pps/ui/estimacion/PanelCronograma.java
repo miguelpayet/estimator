@@ -38,7 +38,6 @@ public class PanelCronograma extends Panel {
 		agregarFeedback();
 	}
 
-
 	private void agregarCronograma() { // todo: refactorizar este metodo
 		RepeatingView rv = new RepeatingView("fila-cronograma");
 		rv.setOutputMarkupId(true);
