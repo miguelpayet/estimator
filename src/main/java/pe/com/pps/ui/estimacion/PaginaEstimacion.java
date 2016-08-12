@@ -7,6 +7,7 @@ import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -46,6 +47,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
+	WebMarkupContainer costoProveedor;
 	private FeedbackPanel feedback;
 	private TextField<Integer> proyecto;
 
@@ -97,7 +99,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private void agregarCostoProveedores() {
 		log.debug("agregarCostoProveedores");
 		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(getEstimacion().getCronograma());
-
+		costoProveedor = new WebMarkupContainer("div-costos");
 		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("dataview-costos", proveedor) {
 			@Override
 			protected void populateItem(Item<CostoProveedor> item) {
@@ -110,7 +112,9 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 				item.add(new AttributeModifier("class", "costo-proveedor"));
 			}
 		};
-		add(dv);
+		costoProveedor.add(dv);
+		costoProveedor.setOutputMarkupId(true);
+		add(costoProveedor);
 	}
 
 	private void agregarCronograma() {
@@ -226,6 +230,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 					de.grabar(getEstimacion());
 					proyecto.setEnabled(false);
 					target.add(proyecto);
+					target.add(costoProveedor);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());
@@ -276,35 +281,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		add(linkImprimir);
 	}
 
-	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
-		List<AbstractEditablePropertyColumn<CostoAdicional, String>> columns = new ArrayList<>();
-		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
-			@Override
-			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
-			}
-		};
-		columns.add(descripcion);
-		RequiredEditableTextFieldColumn<CostoAdicional, String> moneda = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Moneda"), "moneda") {
-			@Override
-			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("moneda")));
-			}
-		};
-		columns.add(moneda);
-		RequiredEditableTextFieldColumn<CostoAdicional, String> costo = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Costo"), "costo") {
-			@Override
-			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("costo")));
-			}
-		};
-		columns.add(costo);
-		return columns;
-	}
-
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasCasosDeUso() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = columnasPuntuable();
 		DaoPlataforma dp = new DaoPlataforma();
@@ -315,6 +291,43 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
 			}
 		});
+		return columns;
+	}
+
+	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
+		List<AbstractEditablePropertyColumn<CostoAdicional, String>> columns = new ArrayList<>();
+		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
+			@Override
+			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
+			}
+		};
+		columns.add(descripcion);
+		AbstractEditablePropertyColumn<CostoAdicional, String> moneda = new AbstractEditablePropertyColumn<CostoAdicional, String>(new Model<>("Moneda"), "moneda") {
+			@Override
+			public EditableCellPanel getEditableCellPanel(String componentId) {
+				return new EditableRequiredDropDownCellPanel<>(componentId, this, Moneda.getLista());
+			}
+		};
+		/*
+		RequiredEditableTextFieldColumn<CostoAdicional, String> moneda = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Moneda"), "moneda") {
+			@Override
+			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("moneda")));
+			}
+		};
+		*/
+		columns.add(moneda);
+		RequiredEditableTextFieldColumn<CostoAdicional, String> costo = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Costo"), "costo") {
+			@Override
+			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
+				super.addBehaviors(editorComponent);
+				editorComponent.add(new AttributeModifier("class", new Model<String>("costo")));
+			}
+		};
+		columns.add(costo);
 		return columns;
 	}
 
