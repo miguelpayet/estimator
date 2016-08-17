@@ -18,6 +18,10 @@ public class Dao<T> {
 		return getSesion().createCriteria(getClaseModelo());
 	}
 
+	public void eliminar(T unObjeto) {
+		getSesion().delete(unObjeto);
+	}
+
 	public T get(int unId) {
 		return (T) getSesion().get(claseModelo, unId);
 	}

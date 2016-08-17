@@ -2,8 +2,10 @@ package pe.com.pps.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pe.com.pps.dao.DaoActor;
+import pe.com.pps.dao.DaoCasoDeUso;
+import pe.com.pps.dao.DaoCostoAdicional;
 import pe.com.pps.dao.DaoCronograma;
-import pe.com.pps.dao.DaoEstimacion;
 import pe.trazos.login.dominio.Usuario;
 
 import javax.persistence.*;
@@ -195,7 +197,8 @@ public class Estimacion implements Serializable {
 		if (unActor != null) {
 			if (actores.contains(unActor)) {
 				actores.remove(unActor);
-				unActor.setEstimacion(null);
+				DaoActor da = new DaoActor();
+				da.eliminar(unActor);
 			}
 		}
 	}
@@ -204,7 +207,8 @@ public class Estimacion implements Serializable {
 		if (unCaso != null) {
 			if (casosDeUso.contains(unCaso)) {
 				casosDeUso.remove(unCaso);
-				unCaso.setEstimacion(null);
+				DaoCasoDeUso dc = new DaoCasoDeUso();
+				dc.eliminar(unCaso);
 			}
 		}
 	}
@@ -213,7 +217,8 @@ public class Estimacion implements Serializable {
 		if (unCosto != null) {
 			if (costosAdicionales.contains(unCosto)) {
 				costosAdicionales.remove(unCosto);
-				unCosto.setEstimacion(null);
+				DaoCostoAdicional dca = new DaoCostoAdicional();
+				dca.eliminar(unCosto);
 			}
 		}
 	}

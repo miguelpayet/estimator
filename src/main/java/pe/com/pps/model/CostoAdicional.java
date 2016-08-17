@@ -20,7 +20,7 @@ public class CostoAdicional implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idcosto")
-	private String id;
+	private Integer id;
 	@Column(name = "moneda")
 	private String moneda;
 
@@ -36,7 +36,7 @@ public class CostoAdicional implements Serializable {
 		return estimacion;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
