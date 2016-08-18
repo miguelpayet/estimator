@@ -6,6 +6,10 @@ border:1px dotted #ddd;
 padding:10px 2px;
 }
 
+tr.costo-proveedor td {
+  width: 50px;
+}
+
 .consulta table.casos-de-uso,.consulta table.actores {
 width:700px;
 }
