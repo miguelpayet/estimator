@@ -10,31 +10,22 @@ import org.apache.wicket.request.cycle.IRequestCycleListener;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
-import pe.com.pps.ui.home.HomePage;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
+import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
-import pe.trazos.login.dominio.Rol;
-import pe.trazos.login.dominio.TokenNuevoPassword;
-import pe.trazos.login.dominio.Usuario;
 import pe.trazos.login.ui.login.PaginaLogin;
 import pe.trazos.login.ui.password.cambio.PaginaCambioPassword;
 import pe.trazos.login.ui.password.nuevo.PaginaNuevoPassword;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WicketApplication extends AuthenticatedWebApplication {
 
 	static {
-		List<Class> clases = new ArrayList();
-		// clases del login
-		clases.add(Usuario.class);
-		clases.add(Rol.class);
-		clases.add(TokenNuevoPassword.class);
-		// clases del aplicativo
+		List<Class> clases = LoginSecurityUtil.getClases();
 		clases.add(Actor.class);
 		clases.add(CasoDeUso.class);
 		clases.add(Complejidad.class);
@@ -66,7 +57,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
 	 */
 	@Override
 	public Class<? extends WebPage> getHomePage() {
-		return HomePage.class;
+		return PaginaListaEstimaciones.class;
 	}
 
 	/**
@@ -109,7 +100,6 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		mountPage("/lista", PaginaListaEstimaciones.class);
 		mountPage("/login", PaginaLogin.class);
 		mountPage("/nuevopassword", PaginaNuevoPassword.class);
-
 	}
 
 }

@@ -35,14 +35,14 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 
 	@Override
 	protected void crearColumnas(ArrayList<IColumn<Estimacion, String>> columnas) {
-		ClickablePropertyColumn<Estimacion, String> id = new ClickablePropertyColumn<>(Model.of("numero"), "idEstimacion", "idEstimacion");
+		ClickablePropertyColumn<Estimacion, String> id = new ClickablePropertyColumn<>(Model.of("Número"), "idEstimacion", "idEstimacion");
 		columnas.add(id);
-		ClickablePropertyColumn<Estimacion, String> nombre = new ClickablePropertyColumn<>(Model.of("nombre"), "nombre", "nombre");
+		ClickablePropertyColumn<Estimacion, String> nombre = new ClickablePropertyColumn<>(Model.of("Nombre"), "nombre", "nombre");
 		columnas.add(nombre);
-		columnas.add(new PropertyColumnEstilo<>(Model.of("eds"), null, "eds", "eds"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("puntos sin ajustar"), null, "puntos", "puntos"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("horas sin gestión"), null, "esfuerzo", "esfuerzo"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("fecha actualización"), null, "fechaCalculo", "fecha"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("EDS"), null, "eds", "eds"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Puntos sin ajustar"), null, "puntos", "puntos"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Horas sin gestión"), null, "esfuerzo", "esfuerzo"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Fecha actualización"), null, "fechaCalculo", "fecha"));
 	}
 
 	@Override
