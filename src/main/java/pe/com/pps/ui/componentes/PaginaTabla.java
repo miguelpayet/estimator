@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import pe.com.pps.ui.base.PaginaBase;
+import pe.com.pps.ui.base.PaginaBaseEstimador;
 import pe.com.pps.ui.providers.FiltroTablaNombre;
 import pe.com.pps.ui.providers.ProviderTabla;
 
@@ -22,7 +22,7 @@ T -> clase del modelo
 V -> provider para dicha clase
 Z -> tipo del id de la clase del modelo
  */
-public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializable> extends PaginaBase {
+public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializable> extends PaginaBaseEstimador {
 
 	public PaginaTabla(PageParameters parameters) {
 		super(parameters);
@@ -69,11 +69,11 @@ public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializ
 
 	public abstract void irPaginaEdicion(T unaEntidad);
 
-	protected void irPaginaEdicion(Class<? extends PaginaBase> unaPagina) {
+	protected void irPaginaEdicion(Class<? extends PaginaBaseEstimador> unaPagina) {
 		setResponsePage(unaPagina);
 	}
 
-	protected void irPaginaEdicion(Class<? extends PaginaBase> unaPagina, Z unId) {
+	protected void irPaginaEdicion(Class<? extends PaginaBaseEstimador> unaPagina, Z unId) {
 		PageParameters params = new PageParameters();
 		params.add("id", unId);
 		setResponsePage(unaPagina, params);
