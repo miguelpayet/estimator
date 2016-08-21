@@ -6,6 +6,18 @@ border:1px dotted #ddd;
 padding:10px 2px;
 }
 
+.login form {
+border: 1px solid #ddd;
+padding: 10px;
+}
+
+.login input {
+  text-align: center;
+}
+.login {
+  margin: 40px 0;
+}
+
 tr.costo-proveedor td {
   width: 50px;
 }
