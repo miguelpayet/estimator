@@ -21,7 +21,7 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 	private static final Logger log = LogManager.getLogger(PaginaListaEstimaciones.class);
 
 	public PaginaListaEstimaciones() {
-		this(null);
+		this(new PageParameters());
 	}
 
 	public PaginaListaEstimaciones(final PageParameters parameters) {
@@ -30,7 +30,7 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 	}
 
 	private void agregarTitulo() {
-		add(new Label("page-title", "lista de estimaciones"));
+		agregarTitulo("lista de estimaciones");
 	}
 
 	@Override

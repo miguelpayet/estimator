@@ -55,18 +55,18 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 			if (qp != null) {
 				// obtener el código de estimación del request
 				String id = qp.getValue();
-				// buscar la estimacion en la base de datos
+				// buscar la estimacion en la pe.trazos.login.base de datos
 				DaoEstimacion de = new DaoEstimacion();
 				Estimacion est = de.get(Integer.valueOf(id));
 				if (est == null) {
-					log.debug("no existe estimación en base de datos");
+					log.debug("no existe estimación en pe.trazos.login.base de datos");
 					throw new RestartResponseException(HomePage.class);
 				}
-				// buscar el usuario en la base de datos
+				// buscar el usuario en la pe.trazos.login.base de datos
 				DaoUsuario du = new DaoUsuario();
 				Usuario u = du.getUsuarioActual();
 				if (u == null) {
-					log.debug("no existe usuario [{}] en base de datos", subject.getPrincipal());
+					log.debug("no existe usuario [{}] en pe.trazos.login.base de datos", subject.getPrincipal());
 					throw new RestartResponseException(HomePage.class);
 				}
 				// compararlo con el usuario de la estimación

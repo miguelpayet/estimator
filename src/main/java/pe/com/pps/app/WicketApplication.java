@@ -3,7 +3,6 @@ package pe.com.pps.app;
 import de.agilecoders.wicket.core.Bootstrap;
 import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
@@ -11,18 +10,20 @@ import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
+import pe.com.pps.ui.login.PaginaLoginEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
+import pe.trazos.login.base.AuthenticatedWebApplicationBase;
 import pe.trazos.login.ui.login.PaginaLogin;
 import pe.trazos.login.ui.password.cambio.PaginaCambioPassword;
 import pe.trazos.login.ui.password.nuevo.PaginaNuevoPassword;
 
 import java.util.List;
 
-public class WicketApplication extends AuthenticatedWebApplication {
+public class WicketApplication extends AuthenticatedWebApplicationBase {
 
 	static {
 		List<Class> clases = LoginSecurityUtil.getClases();
@@ -60,12 +61,20 @@ public class WicketApplication extends AuthenticatedWebApplication {
 		return PaginaListaEstimaciones.class;
 	}
 
+	public Class<? extends WebPage> getPaginaCambioPassword() {
+		return PaginaCambioPassword.class;
+	}
+
+	public Class<? extends WebPage> getPaginaLogin() {
+		return PaginaLoginEstimator.class;
+	}
+
 	/**
 	 * @return la página de login de la aplicación
 	 */
 	@Override
 	protected Class<? extends WebPage> getSignInPageClass() {
-		return PaginaLogin.class;
+		return PaginaLoginEstimator.class;
 	}
 
 	/**

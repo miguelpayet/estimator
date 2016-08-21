@@ -11,10 +11,10 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.com.pps.ui.base.PaginaBase;
+import pe.com.pps.ui.base.PaginaBaseEstimador;
 
 @AuthorizeInstantiation("usuario")
-public class HomePage extends PaginaBase {
+public class HomePage extends PaginaBaseEstimador {
 
 	private static final Logger logger = LogManager.getLogger(HomePage.class);
 

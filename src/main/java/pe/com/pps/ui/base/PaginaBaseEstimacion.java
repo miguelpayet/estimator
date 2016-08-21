@@ -13,7 +13,7 @@ import pe.com.pps.model.EstimacionFactory;
 
 import java.util.Set;
 
-public class PaginaBaseEstimacion extends PaginaBase {
+public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 
 	private static final Logger log = LogManager.getLogger(PaginaBaseEstimacion.class);
 
