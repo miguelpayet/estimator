@@ -33,7 +33,7 @@
 		<wtp.version>none</wtp.version>
 	</properties>
 	<modules>
-		<module>../cabecera</module>
+		<module>../login</module>
 	</modules>
 	<dependencies>
 		<!-- WICKET DEPENDENCIES -->
@@ -60,11 +60,11 @@
 			<version>0.10.6</version>
 		</dependency>
 		<!-- wicket-stuff editable grid -->
-		<!--dependency>
+		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-editable-grid</artifactId>
-			<version>${wicket.version}</version>
-		</dependency-->
+			<version>8.0.0-SNAPSHOT</version>
+		</dependency>
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
