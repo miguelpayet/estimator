@@ -16,7 +16,7 @@ public abstract class ProviderFactorEstimacion extends SortableDataProvider {
 
 	public ProviderFactorEstimacion(Estimacion unaEstimacion) {
 		Factorama f = new Factorama(unaEstimacion);
-		factores = f.getFactoresAmbientales();
+		initFactores(f);
 	}
 
 	/**

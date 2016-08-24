@@ -5,27 +5,21 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import pe.com.pps.ui.base.PaginaBaseEstimador;
 import pe.trazos.login.ui.login.PanelLogin;
+import pe.trazos.login.ui.password.cambio.PanelCambioPassword;
 
-public class PaginaLoginEstimator extends PaginaBaseEstimador {
-
-	public PaginaLoginEstimator() {
+public class PaginaCambioPasswordEstimator extends PaginaBaseEstimador {
+	public PaginaCambioPasswordEstimator() {
 		this(new PageParameters());
 	}
 
-	public PaginaLoginEstimator(PageParameters parameters) {
+	public PaginaCambioPasswordEstimator(PageParameters parameters) {
 		super(parameters);
-		agregarTitulo("login estimador");
-		agregarLogo();
+		agregarTitulo("cambio password estimador");
 		agregarPanelLogin();
 	}
 
 	private void agregarPanelLogin() {
-		PanelLogin pl = new PanelLogin("panel-login", PaginaCambioPasswordEstimator.class);
-		add(pl);
-	}
-
-	private void agregarLogo() {
-		add(new Image("imagen-login", new ContextRelativeResource("estimator.png")));
+		add(new PanelCambioPassword("panel-cambio-password"));
 	}
 
 }

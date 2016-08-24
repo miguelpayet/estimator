@@ -31,7 +31,7 @@ public class CostoProveedor implements Serializable {
 	}
 
 	public String getMoneda() {
-		return "S/";
+		return "PEN";
 	}
 
 	public Proveedor getProveedor() {
@@ -41,4 +41,5 @@ public class CostoProveedor implements Serializable {
 	public void sumarCosto(Double unCosto) {
 		costo += unCosto;
 	}
+
 }

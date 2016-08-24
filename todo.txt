@@ -14,8 +14,9 @@
 -- 14 montar url de páginas
 15 limpiar los datos (borrar estimaciones de prueba)
 
+-- Homologar los símbolos de moneda
+-- Agregar leyenda para los radio buttons
+-- Corregir las tablas de factores en la versión de impresión
+-- Mejorar la descripción del factor "Dificultad del Lenguaje de Programación"
+
 Mejorar la pantalla de login e inicial
-Homologar los símbolos de moneda
-Agrerar leyenda para los radio buttons
-Corregir las tablas de factores en la versión de impresión
-Mejorar la descripción del factor "Dificultad del Lenguaje de Programación"
