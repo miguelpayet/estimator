@@ -1,64 +1,17 @@
-SELECT  `idfactor`,  `tipofactor`,  `nombre`,  LEFT(`descripcion`, 256),  `peso`,  `minimo`,  `maximo` FROM `mydb`.`factor` ORDER BY `tipofactor` ASC LIMIT 1000;
-SHOW CREATE TABLE `mydb`.`factor`;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El sistema tiene una arquitectura centralizada o distribuida? [0=Menor, 5=Mayor]' WHERE  `idfactor`=1;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=1;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El sistema tiene una arquitectura centralizada o distribuida? [0=Mayormente centralizada, 5=Mayormente distribuida]' WHERE  `idfactor`=1;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=1;
-UPDATE `mydb`.`factor` SET `descripcion`='¿La aplicación se debe diseñar para incrementar la eficiencia del usuario final? [O=Menor, 5=Mayor]' WHERE  `idfactor`=3;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=3;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Es el tiempo de respuesta un criterio importante? [O=Menor, 5=Mayor]' WHERE  `idfactor`=2;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=2;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Es el tiempo de respuesta un criterio importante? [0=Menor, 5=Mayor]' WHERE  `idfactor`=2;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=2;
-UPDATE `mydb`.`factor` SET `descripcion`='¿La aplicación se debe diseñar para incrementar la eficiencia del usuario final? [0=Menor, 5=Mayor]' WHERE  `idfactor`=3;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=3;
-UPDATE `mydb`.`factor` SET `descripcion`='¿La aplicación tiene lógica elaborada o procesamiento matemático? [O=Menor, 5=Mayor]' WHERE  `idfactor`=4;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=4;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se requiere cuidar la reusabilidad? [O=Menor, 5=Mayor]' WHERE  `idfactor`=5;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=5;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El cliente está buscando facilidad en la instalación? [O=Menor, 5=Mayor]' WHERE  `idfactor`=6;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=6;
-UPDATE `mydb`.`factor` SET `descripcion`='Facilidad de Uso [O=Menor, 5=Mayor]' WHERE  `idfactor`=7;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=7;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca una solución que soporte diversas plataformas tecnológicas? [O=Menor, 5=Mayor]' WHERE  `idfactor`=8;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=8;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca una alta capacidad de adecuación en el futuro? [O=Menor, 5=Mayor]' WHERE  `idfactor`=9;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=9;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca que una gran cantidad de usuarios trabajen bajo características de bloqueo a secciones críticas de datos? [0=Menor, 5=Mayor]' WHERE  `idfactor`=10;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=10;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca una alta capacidad de adecuación en el futuro? [0=Menor, 5=Mayor]' WHERE  `idfactor`=9;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=9;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca una solución que soporte diversas plataformas tecnológicas? [0=Menor, 5=Mayor]' WHERE  `idfactor`=8;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=8;
-UPDATE `mydb`.`factor` SET `descripcion`='Facilidad de Uso [0=Menor, 5=Mayor]' WHERE  `idfactor`=7;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=7;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El cliente está buscando facilidad en la instalación? [0=Menor, 5=Mayor]' WHERE  `idfactor`=6;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=6;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se requiere cuidar la reusabilidad? [0=Menor, 5=Mayor]' WHERE  `idfactor`=5;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=5;
-UPDATE `mydb`.`factor` SET `descripcion`='¿La aplicación tiene lógica elaborada o procesamiento matemático? [0=Menor, 5=Mayor]' WHERE  `idfactor`=4;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=4;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca tener mecanismos de seguridad? [O=Menor, 5=Mayor]' WHERE  `idfactor`=11;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=11;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El proyecto depende del uso de software de terceros? [O=Menor, 5=Mayor]' WHERE  `idfactor`=12;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=12;
-UPDATE `mydb`.`factor` SET `descripcion`='¿Se busca tener mecanismos de seguridad? [0=Menor, 5=Mayor]' WHERE  `idfactor`=11;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=11;
-UPDATE `mydb`.`factor` SET `descripcion`='¿El proyecto depende del uso de software de terceros? [0=Menor, 5=Mayor]' WHERE  `idfactor`=12;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=12;
-UPDATE `mydb`.`factor` SET `descripcion`='Complejidad y dificultad de la capacitación requerida hacia los usuarios sobre el sistema o la aplicación.  [0=Menor, 5=Mayor]' WHERE  `idfactor`=13;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=13;
-UPDATE `mydb`.`factor` SET `descripcion`='Conocimiento de la metodología de proyecto y herramientas asociadas. [0=Menor, 5=Mayor]' WHERE  `idfactor`=14;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=14;
-UPDATE `mydb`.`factor` SET `descripcion`='Conocimiento de las aplicaciones del negocio relacionadas al proyecto. [0=Menor, 5=Mayor]' WHERE  `idfactor`=15;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=15;
-UPDATE `mydb`.`factor` SET `descripcion`='Conocimiento del paradigma y modelo de programación de orientación a objectos. [0=Menor, 5=Mayor]' WHERE  `idfactor`=16;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=16;
-UPDATE `mydb`.`factor` SET `descripcion`='Capacidad de gestión de recursos y experiencia del líder técnico (JP) del proyecto. [0=Menor, 5=Mayor]' WHERE  `idfactor`=17;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=17;
-UPDATE `mydb`.`factor` SET `descripcion`='Motivación, capacidad de auto-gestión y eficiencia del equipo de trabajo.  [0=Menor, 5=Mayor]' WHERE  `idfactor`=18;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=18;
-UPDATE `mydb`.`factor` SET `descripcion`='Probabilidad de variación en el alcance de los requerimientos. [0=Menor, 5=Mayor]' WHERE  `idfactor`=19;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=19;
-UPDATE `mydb`.`factor` SET `descripcion`='Motivación, capacidad de auto-gestión y eficiencia del equipo de trabajo. [0=Menor, 5=Mayor]' WHERE  `idfactor`=18;
-SELECT `idfactor`, `tipofactor`, `nombre`, `descripcion`, `peso`, `minimo`, `maximo` FROM `mydb`.`factor` WHERE  `idfactor`=18;
+-- MySQL Workbench Synchronization
+-- Generated: 2016-08-25 14:16
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: mpayet
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+ALTER TABLE `mydb`.`cronograma` 
+CHANGE COLUMN `recursos` `recursos` FLOAT NULL DEFAULT NULL ;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -2,6 +2,7 @@ package pe.com.pps.ui.base;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
+import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.cabecera.PaginaBaseCabecera;
 import pe.trazos.login.cabecera.PanelCabecera;
 
@@ -16,7 +17,9 @@ public class PaginaBaseEstimador extends PaginaBaseCabecera {
 	}
 
 	protected void agregarOpciones(PanelCabecera unPanel) {
-		unPanel.agregarOpcion("crear estimación", PaginaEstimacion.class);
+		if (LoginSecurityUtil.isAutenticado()) {
+			unPanel.agregarOpcion("crear estimación", PaginaEstimacion.class);
+		}
 	}
 
 	protected void init() {

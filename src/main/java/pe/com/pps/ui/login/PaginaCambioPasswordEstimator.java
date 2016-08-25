@@ -1,10 +1,7 @@
 package pe.com.pps.ui.login;
 
-import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.ContextRelativeResource;
 import pe.com.pps.ui.base.PaginaBaseEstimador;
-import pe.trazos.login.ui.login.PanelLogin;
 import pe.trazos.login.ui.password.cambio.PanelCambioPassword;
 
 public class PaginaCambioPasswordEstimator extends PaginaBaseEstimador {
@@ -19,7 +16,8 @@ public class PaginaCambioPasswordEstimator extends PaginaBaseEstimador {
 	}
 
 	private void agregarPanelLogin() {
-		add(new PanelCambioPassword("panel-cambio-password"));
+		PanelCambioPassword pc = new PanelCambioPassword("panel-cambio-password");
+		add(pc);
 	}
 
 }

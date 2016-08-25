@@ -12,16 +12,13 @@ import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.login.PaginaCambioPasswordEstimator;
 import pe.com.pps.ui.login.PaginaLoginEstimator;
-import pe.com.pps.ui.login.PaginaNuevoPassword;
+import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
 import pe.trazos.login.auth.AuthenticatedWebApplicationBase;
-import pe.trazos.login.ui.login.PaginaLogin;
-import pe.trazos.login.ui.password.cambio.PanelCambioPassword;
-import pe.trazos.login.ui.password.nuevo.PanelNuevoPassword;
 
 import java.util.List;
 
@@ -109,8 +106,8 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		mountPage("/consulta", PaginaVistaEstimacion.class);
 		mountPage("/estimacion", PaginaEstimacion.class);
 		mountPage("/lista", PaginaListaEstimaciones.class);
-		mountPage("/login", PaginaLogin.class);
-		mountPage("/nuevopassword", PaginaNuevoPassword.class);
+		mountPage("/login", PaginaLoginEstimator.class);
+		mountPage("/nuevopassword", PaginaNuevoPasswordEstimator.class);
 	}
 
 }

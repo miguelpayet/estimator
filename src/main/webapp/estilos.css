@@ -6,6 +6,14 @@ border:1px dotted #ddd;
 padding:10px 2px;
 }
 
+.login .recuperar {
+  text-align:right;
+}
+
+.login .row {
+padding: 5px 0;
+}
+
 .login form {
 border: 1px solid #ddd;
 padding: 10px;

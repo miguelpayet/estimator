@@ -4,13 +4,14 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.base.PaginaBaseEstimador;
 import pe.trazos.login.ui.password.nuevo.PanelNuevoPassword;
 
-public class PaginaNuevoPassword extends PaginaBaseEstimador {
+public class PaginaNuevoPasswordEstimator extends PaginaBaseEstimador {
 
-	public PaginaNuevoPassword() {
+	public PaginaNuevoPasswordEstimator() {
 		this(new PageParameters());
 	}
 
-	public PaginaNuevoPassword(PageParameters unosParametros) {
+	public PaginaNuevoPasswordEstimator(PageParameters unosParametros) {
+		agregarTitulo("nuevo password");
 		add(new PanelNuevoPassword("panel-nuevo-password", unosParametros));
 	}
 

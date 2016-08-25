@@ -1,7 +1,7 @@
 package pe.com.pps.ui.providers;
 
 import pe.com.pps.model.TareaCronograma;
-import pe.trazos.login.dominio.Sort;
+import pe.trazos.login.modelo.Sort;
 
 import java.util.Comparator;
 

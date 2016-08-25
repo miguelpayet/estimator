@@ -21,7 +21,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 	@Column(name = "porcentaje")
 	private Double porcentaje;
 	@Column(name = "recursos")
-	private Integer recursos;
+	private Double recursos;
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "idtarea", nullable = false)
@@ -104,7 +104,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return null;
 	}
 
-	public Integer getRecursos() {
+	public Double getRecursos() {
 		return recursos;
 	}
 
@@ -146,7 +146,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		this.porcentaje = porcentaje;
 	}
 
-	public void setRecursos(Integer recursos) {
+	public void setRecursos(Double recursos) {
 		this.recursos = recursos;
 	}
 
@@ -154,7 +154,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		tarea = unaTarea;
 		porcentaje = unaTarea.getPorcentaje();
 		incluir = unaTarea.isIncluir();
-		recursos = 1;
+		recursos = 1.0;
 	}
 
 	public String toString() {

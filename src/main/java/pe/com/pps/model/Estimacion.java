@@ -6,7 +6,7 @@ import pe.com.pps.dao.DaoActor;
 import pe.com.pps.dao.DaoCasoDeUso;
 import pe.com.pps.dao.DaoCostoAdicional;
 import pe.com.pps.dao.DaoCronograma;
-import pe.trazos.login.dominio.Usuario;
+import pe.trazos.login.modelo.Usuario;
 
 import javax.persistence.*;
 import java.io.Serializable;

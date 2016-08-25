@@ -3,7 +3,7 @@ package pe.com.pps.model;
 import pe.com.pps.dao.DaoFactorTecnico;
 import pe.com.pps.dao.DaoTarea;
 import pe.trazos.login.dao.DaoUsuario;
-import pe.trazos.login.dominio.Usuario;
+import pe.trazos.login.modelo.Usuario;
 
 import java.util.HashSet;
 import java.util.List;
