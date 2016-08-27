@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.com.pps</groupId>
 	<artifactId>estimator</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>estimator</name>
 	<description>aplicación para la estimación funcional de proyectos</description>
@@ -29,13 +29,18 @@
 		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shiro.version>1.2.4</shiro.version>
-		<wicket.version>7.4.0</wicket.version>
+		<wicket.version>8.0.0-M1</wicket.version>
 		<wtp.version>none</wtp.version>
 	</properties>
-	<modules>
+	<!--modules>
 		<module>../login</module>
-	</modules>
+	</modules-->
 	<dependencies>
+<dependency>
+<groupId>pe.trazos</groupId>
+<artifactId>login</artifactId>
+<version>1.0-SNAPSHOT</version>
+</dependency>
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -60,11 +65,11 @@
 			<version>0.10.6</version>
 		</dependency>
 		<!-- wicket-stuff editable grid -->
-		<dependency>
+		<!--dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-editable-grid</artifactId>
 			<version>8.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency-->
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -149,22 +154,6 @@
 			<version>${dbunitVersion}</version>
 			<scope>test</scope>
 		</dependency>
-		<!--reportes-->
-		<!--dependency>
-			<groupId>net.sourceforge.dynamicreports</groupId>
-			<artifactId>dynamicreports-core</artifactId>
-			<version>4.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.dynamicreports</groupId>
-			<artifactId>dynamicreports-adhoc</artifactId>
-			<version>4.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.dynamicreports</groupId>
-			<artifactId>dynamicreports-googlecharts</artifactId>
-			<version>4.0.0</version>
-		</dependency-->
 		<!-- javax.servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

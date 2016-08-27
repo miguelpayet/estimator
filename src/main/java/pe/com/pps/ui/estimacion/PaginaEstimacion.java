@@ -223,7 +223,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private void agregarLinks() {
 		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			protected void onSubmit(AjaxRequestTarget target) {
 				log.debug("persistir");
 				try {
 					DaoEstimacion de = new DaoEstimacion();
@@ -242,7 +242,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		add(linkGrabar);
 		AjaxSubmitLink linkVolver = new AjaxSubmitLink("volver", campos) {
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			protected void onSubmit(AjaxRequestTarget target) {
 				boolean volver = true;
 				log.info("volver");
 				// validar si el objeto ha cambiado respecto a lo que está grabado
@@ -272,7 +272,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		add(linkVolver);
 		AjaxSubmitLink linkImprimir = new AjaxSubmitLink("imprimir", campos) {
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			protected void onSubmit(AjaxRequestTarget target) {
 				PageParameters p = new PageParameters();
 				p.add("id", getEstimacion().getIdEstimacion());
 				throw new RestartResponseException(PaginaVistaEstimacion.class, p);
@@ -310,15 +310,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, Moneda.getLista());
 			}
 		};
-		/*
-		RequiredEditableTextFieldColumn<CostoAdicional, String> moneda = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Moneda"), "moneda") {
-			@Override
-			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("moneda")));
-			}
-		};
-		*/
 		columns.add(moneda);
 		RequiredEditableTextFieldColumn<CostoAdicional, String> costo = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Costo"), "costo") {
 			@Override
