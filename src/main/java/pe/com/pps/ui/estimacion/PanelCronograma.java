@@ -67,7 +67,8 @@ public class PanelCronograma extends Panel {
 		pft.add(new AttributeAppender("class", "totales"));
 		rv.add(pft);
 		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
-			protected void onSubmit(AjaxRequestTarget target, Form unForm) {
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
 				log.info("actualizar cronograma");
 				try {
 					getEstimacion().generarCronograma();

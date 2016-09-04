@@ -46,7 +46,7 @@ public class Cronograma implements Serializable {
 		log.trace("tarea fija - esfuerzo {}", tareaFija);
 		double pctDuracion = getTareaDuracion().getPorcentaje();
 		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
-		// tarea duración (acompañamiento al diseño
+		// tarea duración (acompañamiento al diseño)
 		double tareaDuracion = Util.round((pctDuracion * pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija)) / (1 + (pctDuracion * pctDiseñoTecnico)), 2);
 		log.trace("tarea duración - esfuerzo {}", tareaDuracion);
 		getTareaDuracion().setHoras(tareaDuracion);
