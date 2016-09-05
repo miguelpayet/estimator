@@ -9,8 +9,12 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tarea implements Identificable<Integer>, Serializable {
 
-	@Column(name = "disenotecnico")
-	private Integer diseñoTecnico;
+	public static final int ROL_DISEÑO_TECNICO = 1;
+	public static final int ROL_ACOMPAÑAMIENTO = 2;
+	public static final int ROL_GESTION = 3;
+
+	@Column(name = "rol")
+	private Integer rol;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idtarea;
@@ -47,8 +51,8 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return dias;
 	}
 
-	public Integer getDiseñoTecnico() {
-		return diseñoTecnico;
+	public Integer getRol() {
+		return rol;
 	}
 
 	@Override
@@ -80,8 +84,8 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return incluir;
 	}
 
-	public void setDiseñoTecnico(Integer diseñoTecnico) {
-		this.diseñoTecnico = diseñoTecnico;
+	public void setRol(Integer rol) {
+		this.rol = rol;
 	}
 
 	public void setIdtarea(Integer idtarea) {

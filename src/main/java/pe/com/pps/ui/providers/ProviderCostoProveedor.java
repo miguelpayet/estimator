@@ -25,7 +25,7 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 * constructor vacío
 	 */
 	public ProviderCostoProveedor() {
-		throw new RuntimeException("sorpresa");
+		throw new RuntimeException("¡sorpresa!");
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 *
 	 * @param unCronograma
 	 */
-	public ProviderCostoProveedor(Cronograma unCronograma) { // Estimacion unaEstimacion) {
+	public ProviderCostoProveedor(Cronograma unCronograma) {
 		log.trace("ProviderCostoProveedor");
 		cronograma = unCronograma;
 	}

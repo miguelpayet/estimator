@@ -1,5 +1,5 @@
 -- MySQL Workbench Synchronization
--- Generated: 2016-08-25 14:16
+-- Generated: 2016-09-05 15:06
 -- Model: New Model
 -- Version: 1.0
 -- Project: Name of the project
@@ -9,9 +9,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-ALTER TABLE `mydb`.`cronograma` 
-CHANGE COLUMN `recursos` `recursos` FLOAT NULL DEFAULT NULL ;
+ALTER TABLE `mydb`.`tarea`
+CHANGE COLUMN `disenotecnico` `rol` INT(1) NULL DEFAULT NULL ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+UPDATE `mydb`.`tarea` SET `tipocosto`=3 WHERE  `idtarea`=2;
+

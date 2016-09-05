@@ -34,7 +34,7 @@ public class Cronograma implements Serializable {
 	 * tareas x esfuerzo: se asigna un porcentaje del total de horas del cronograma
 	 * tarea de gestión: % de la duración completa del cronograma - sumado al total de horas.
 	 * modifica directamente las tareas de la estimación.
- 	 */
+	 */
 	public void calcular() throws ExcepcionCronograma {
 		// tarea fija (ids)
 		double tareaFija;
@@ -44,14 +44,7 @@ public class Cronograma implements Serializable {
 			throw new ExcepcionCronograma("tarea fija no tiene horas");
 		}
 		log.trace("tarea fija - esfuerzo {}", tareaFija);
-		double pctDuracion = getTareaDuracion().getPorcentaje();
-		double pctDiseñoTecnico = getTareaDiseñoTecnico().getPorcentaje();
-		// tarea duración (acompañamiento al diseño)
-		double tareaDuracion = Util.round((pctDuracion * pctDiseñoTecnico * (estimacion.getEsfuerzo() - tareaFija)) / (1 + (pctDuracion * pctDiseñoTecnico)), 2);
-		log.trace("tarea duración - esfuerzo {}", tareaDuracion);
-		getTareaDuracion().setHoras(tareaDuracion);
 		// tareas por esfuerzo: pueden estar o no incluidas
-		// validar que sume 100% entre que las estén activas
 		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			log.trace("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
@@ -59,17 +52,21 @@ public class Cronograma implements Serializable {
 				pctIncluidas += t.getPorcentaje();
 			}
 		}
+		// validar que sume 100% entre que las estén activas
 		if (Util.round(pctIncluidas, 2) != 1) {
 			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + Util.round(pctIncluidas * 100, 2) + "%");
 		}
 		// calcular las tareas x esfuerzo
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			if (t.getIncluir()) {
-				t.setHoras(Util.round((estimacion.getEsfuerzo() - tareaFija - tareaDuracion) * t.getPorcentaje(), 2));
+				t.setHoras(Util.round((estimacion.getEsfuerzo() - tareaFija) * t.getPorcentaje(), 2));
 			} else {
 				t.setHoras(0.0);
 			}
 		}
+		// tarea de acompañamiento
+		getTareaAcompañamiento().setDias(getTareaDiseñoTecnico().getDias());
+		log.trace("tarea gestión - esfuerzo {}", getTareaGestion().getHoras());
 		// tarea de gestión
 		getTareaGestion().setDias(getTotalDias());
 		log.trace("tarea gestión - esfuerzo {}", getTareaGestion().getHoras());
@@ -96,7 +93,7 @@ public class Cronograma implements Serializable {
 					costos.put(t.getProveedor(), cp);
 				}
 				// sumo el costo de la tarea dentro del costoproveedor
-				cp.sumarCosto(t.getCosto());
+				cp.sumar(t.getCosto(), t.getHoras());
 			}
 		}
 		// devuelvo el valueset del mapa como lista
@@ -134,18 +131,12 @@ public class Cronograma implements Serializable {
 		return Util.round(horas - (horas * getRangoDesviacion()), 2);
 	}
 
-	public TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
-		Set<TareaCronograma> lista = mapaTareas.get(TipoCosto.ESFUERZO);
-		for (TareaCronograma t : lista) {
-			if (t.getDiseñoTecnico().equals(1)) {
-				return t;
-			}
-		}
-		throw new ExcepcionCronograma("no existe tarea de diseño técnico");
+	public TareaCronograma getTareaAcompañamiento() throws ExcepcionCronograma {
+		return getTareaPorRol(mapaTareas.get(TipoCosto.GESTION), Tarea.ROL_ACOMPAÑAMIENTO);
 	}
 
-	public TareaCronograma getTareaDuracion() throws ExcepcionCronograma {
-		return getTareaUnica(TipoCosto.DURACION);
+	public TareaCronograma getTareaDiseñoTecnico() throws ExcepcionCronograma {
+		return getTareaPorRol(mapaTareas.get(TipoCosto.ESFUERZO), Tarea.ROL_DISEÑO_TECNICO);
 	}
 
 	public TareaCronograma getTareaFija() throws ExcepcionCronograma {
@@ -153,7 +144,15 @@ public class Cronograma implements Serializable {
 	}
 
 	public TareaCronograma getTareaGestion() throws ExcepcionCronograma {
-		return getTareaUnica(TipoCosto.GESTION);
+		return getTareaPorRol(mapaTareas.get(TipoCosto.GESTION), Tarea.ROL_GESTION);
+	}
+
+	private TareaCronograma getTareaPorRol(Set<TareaCronograma> unSet, int unRol) throws ExcepcionCronograma {
+		TareaCronograma t = unSet.stream().filter(x -> (x.getRol() == unRol)).findAny().orElse(null);
+		if (t == null) {
+			throw new ExcepcionCronograma("no existe tarea con rol: " + unRol);
+		}
+		return t;
 	}
 
 	private TareaCronograma getTareaUnica(int unTipo) throws ExcepcionCronograma {

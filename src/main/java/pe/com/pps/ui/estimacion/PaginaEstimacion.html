@@ -44,7 +44,15 @@
             <div class="col-md-12">
                 <h3>Costo por proveedor (considerar desviación):</h3>
                 <div wicket:id="div-costos">
-                    <table>
+                    <table class="costo-proveedor">
+                        <thead>
+                        <tr class="costo-proveedor">
+                            <th>Proveedor</th>
+                            <th>Horas</th>
+                            <th>Moneda</th>
+                            <th>Monto</th>
+                        </tr>
+                        </thead>
                         <tr wicket:id="dataview-costos">
                             <td wicket:id="fila-costos"></td>
                         </tr>

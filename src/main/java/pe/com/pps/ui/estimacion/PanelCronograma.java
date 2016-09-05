@@ -2,7 +2,6 @@ package pe.com.pps.ui.estimacion;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -10,14 +9,11 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
-import pe.com.pps.ui.providers.ProviderCostoProveedor;
 
 public class PanelCronograma extends Panel {
 
@@ -49,7 +45,7 @@ public class PanelCronograma extends Panel {
 			log.error("no hay tarea fija");
 		}
 		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaDuracion(rv.newChildId(), new Model<>(cronograma.getTareaDuracion())), "duracion");
+			agregarTareaCronograma(rv, new PanelFilaTareaDuracion(rv.newChildId(), new Model<>(cronograma.getTareaAcompañamiento())), "duracion");
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}

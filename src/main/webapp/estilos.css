@@ -26,8 +26,18 @@ padding: 10px;
   margin: 40px 0;
 }
 
+tr.costo-proveedor th {
+width: 70px;
+text-align: left;
+}
+
+tr.costo-proveedor td:first-of-type {
+  text-align:left;
+}
+
 tr.costo-proveedor td {
-  width: 50px;
+  width: 70px;
+  text-align:left;
 }
 
 .consulta table.casos-de-uso,.consulta table.actores {
@@ -293,8 +303,7 @@ width:50%;
 }
 
 tr.costo-proveedor td:first-of-type {
-font-weight:700;
-width:60%;
+width:40%;
 }
 
 tr.costo-proveedor td:last-of-type {

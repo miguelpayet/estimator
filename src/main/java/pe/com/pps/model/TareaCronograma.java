@@ -43,10 +43,6 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return dias != null ? dias : 0;
 	}
 
-	public Integer getDiseñoTecnico() {
-		return getTarea() != null ? getTarea().getDiseñoTecnico() : 0;
-	}
-
 	public Estimacion getEstimacion() {
 		return estimacion;
 	}
@@ -106,6 +102,10 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 
 	public Double getRecursos() {
 		return recursos;
+	}
+
+	public Integer getRol() {
+		return getTarea() != null ? getTarea().getRol() : 0;
 	}
 
 	public Tarea getTarea() {

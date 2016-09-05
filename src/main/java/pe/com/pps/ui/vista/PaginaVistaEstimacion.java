@@ -77,7 +77,7 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarCostoProveedor() {
-		List<PropertyPopulatorClase<CostoProveedor>> columns = crearColumnas(new String[] { "proveedor", "moneda", "costo"}, "proveedor");
+		List<PropertyPopulatorClase<CostoProveedor>> columns = crearColumnas(new String[] { "proveedor", "horas", "moneda", "costo"}, "proveedor");
 		ProviderCostoProveedor pc = new ProviderCostoProveedor(cronograma);
 		DataGridView<CostoProveedor> dgv = new DataGridView<>("repetidor-costos", columns, pc);
 		add(dgv);

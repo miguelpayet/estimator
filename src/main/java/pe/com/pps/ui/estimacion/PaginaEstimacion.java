@@ -106,6 +106,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 				CostoProveedor costo = item.getModelObject();
 				RepeatingView rv = new RepeatingView("fila-costos");
 				rv.add(new Label(rv.newChildId(), costo.getProveedor().getNombre()));
+				rv.add(new Label(rv.newChildId(), costo.getDescripcionHoras()));
 				rv.add(new Label(rv.newChildId(), costo.getMoneda()));
 				rv.add(new Label(rv.newChildId(), costo.getDescripcionCosto()));
 				item.add(rv);
