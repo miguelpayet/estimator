@@ -169,6 +169,20 @@ public class Cronograma implements Serializable {
 		return lista;
 	}
 
+	/**
+	 * multiplica las horas * el costo y calcula el costo total de proveedores
+	 *
+	 * @return el costo de proveedores del proyecto
+	 */
+	public Double getTotalCosto() {
+		Double totalCosto = 0d;
+		// pasa por la lista de tareas sumando costos
+		for (TareaCronograma t : mapaTareas.values()) {
+			totalCosto += (t.getCosto());
+		}
+		return totalCosto;
+	}
+
 	public Double getTotalDias() {
 		Double totalDias = 0.0;
 		for (TareaCronograma tc : mapaTareas.values()) {

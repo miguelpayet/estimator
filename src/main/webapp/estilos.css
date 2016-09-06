@@ -26,6 +26,10 @@ padding: 10px;
   margin: 40px 0;
 }
 
+table.costo-proveedor tr.totales {
+border-top: double 3px #000;
+}
+
 tr.costo-proveedor th {
 width: 70px;
 text-align: left;
@@ -33,6 +37,10 @@ text-align: left;
 
 tr.costo-proveedor td:first-of-type {
   text-align:left;
+}
+
+tr.costo-proveedor td:last-of-type, table.costo-proveedor tr.totales td:last-of-type {
+  text-align:right;
 }
 
 tr.costo-proveedor td {
@@ -304,10 +312,6 @@ width:50%;
 
 tr.costo-proveedor td:first-of-type {
 width:40%;
-}
-
-tr.costo-proveedor td:last-of-type {
-font-style:italic;
 }
 
 tr.total-cronograma {

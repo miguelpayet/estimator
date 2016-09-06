@@ -8,14 +8,13 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
 
-public class PanelCronograma extends Panel {
+public class PanelCronograma extends PanelBaseEstimacion {
 
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
 
@@ -23,9 +22,8 @@ public class PanelCronograma extends Panel {
 	private FeedbackPanel feedback;
 	private Form formCronograma;
 
-	public PanelCronograma(String id, IModel unModelo) {
+	public PanelCronograma(String id, IModel<Estimacion> unModelo) {
 		super(id, unModelo);
-		init(getEstimacion());
 		crearFormCronograma();
 		agregarFactoresAmbiente();
 		agregarFactoresTecnicos();
@@ -68,6 +66,9 @@ public class PanelCronograma extends Panel {
 				log.info("actualizar cronograma");
 				try {
 					getEstimacion().generarCronograma();
+					// obtener la página a la que pertenece el panel y refrescar los componentes registrados
+					PaginaEstimacion pe = findParent(PaginaEstimacion.class);
+					pe.getTargets().forEach(target::add);
 				} catch (ExcepcionCronograma e) {
 					error("error al generar cronograma: " + e.getMessage());
 					log.error(e.getMessage());
@@ -124,11 +125,7 @@ public class PanelCronograma extends Panel {
 		formCronograma.add(meses);
 	}
 
-	private Estimacion getEstimacion() {
-		return (Estimacion) getDefaultModel().getObject();
-	}
-
-	private void init(Estimacion unaEstimacion) {
+	protected void init(Estimacion unaEstimacion) {
 		cronograma = new Cronograma(unaEstimacion);
 	}
 

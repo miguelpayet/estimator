@@ -3,20 +3,16 @@ package pe.com.pps.ui.estimacion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -35,11 +31,12 @@ import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderActor;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
-import pe.com.pps.ui.providers.ProviderCostoProveedor;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AuthorizeInstantiation("usuario")
 public class PaginaEstimacion extends PaginaBaseEstimacion {
@@ -47,9 +44,9 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
-	WebMarkupContainer costoProveedor;
 	private FeedbackPanel feedback;
-	private TextField<Integer> proyecto;
+	TextField proyecto;
+	private Set<Component> targets;
 
 	public PaginaEstimacion() {
 		this(new PageParameters());
@@ -62,6 +59,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	 */
 	public PaginaEstimacion(final PageParameters unosParametros) {
 		super(unosParametros);
+		// conjunto de elementos que hay que refrescar cada vez que se calcule
+		targets = new HashSet<>();
 		// leer la estimación del parametro
 		leerEstimacion(unosParametros);
 		// si la estimación del parámetro no existe (o no había estimación en el parámetro) crear una nueva estimación
@@ -75,8 +74,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		agregarGridActores();
 		agregarGridCasosDeUso();
 		agregarCronograma();
+		agregarPanelCostos();
 		agregarGridCostos();
-		agregarCostoProveedores();
 		agregarCostoTotal();
 	}
 
@@ -94,28 +93,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(getEstimacion(), "nombre"));
 		campos.add(descripcion);
-	}
-
-	private void agregarCostoProveedores() {
-		log.debug("agregarCostoProveedores");
-		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(getEstimacion().getCronograma());
-		costoProveedor = new WebMarkupContainer("div-costos");
-		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("dataview-costos", proveedor) {
-			@Override
-			protected void populateItem(Item<CostoProveedor> item) {
-				CostoProveedor costo = item.getModelObject();
-				RepeatingView rv = new RepeatingView("fila-costos");
-				rv.add(new Label(rv.newChildId(), costo.getProveedor().getNombre()));
-				rv.add(new Label(rv.newChildId(), costo.getDescripcionHoras()));
-				rv.add(new Label(rv.newChildId(), costo.getMoneda()));
-				rv.add(new Label(rv.newChildId(), costo.getDescripcionCosto()));
-				item.add(rv);
-				item.add(new AttributeModifier("class", "costo-proveedor"));
-			}
-		};
-		costoProveedor.add(dv);
-		costoProveedor.setOutputMarkupId(true);
-		add(costoProveedor);
 	}
 
 	private void agregarCronograma() {
@@ -231,7 +208,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 					de.grabar(getEstimacion());
 					proyecto.setEnabled(false);
 					target.add(proyecto);
-					target.add(costoProveedor);
 					success("éxito");
 				} catch (Exception e) {
 					log.error(e.getMessage());
@@ -280,6 +256,13 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			}
 		};
 		add(linkImprimir);
+	}
+
+	private void agregarPanelCostos() {
+		PanelCostos pc = new PanelCostos("panel-costos", new Model<Estimacion>(getEstimacion()));
+		pc.setOutputMarkupId(true);
+		add(pc);
+		targets.add(pc);
 	}
 
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasCasosDeUso() {
@@ -342,6 +325,15 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		};
 		columns.add(complejidad);
 		return columns;
+	}
+
+	/**
+	 * retornal la lista de targets que se debe actualizar cuando se calcula el panel cronograma
+	 *
+	 * @return lista de targets para refresh via ajax
+	 */
+	public Set<Component> getTargets() {
+		return targets;
 	}
 
 }

@@ -22,13 +22,6 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	private Cronograma cronograma;
 
 	/**
-	 * constructor vacío
-	 */
-	public ProviderCostoProveedor() {
-		throw new RuntimeException("¡sorpresa!");
-	}
-
-	/**
 	 * constructor que recibe el cronograma de la estimación cuya tabla de costos es la razón de ser
 	 *
 	 * @param unCronograma
