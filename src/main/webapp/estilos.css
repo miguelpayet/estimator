@@ -6,48 +6,6 @@ border:1px dotted #ddd;
 padding:10px 2px;
 }
 
-.login .recuperar {
-  text-align:right;
-}
-
-.login .row {
-padding: 5px 0;
-}
-
-.login form {
-border: 1px solid #ddd;
-padding: 10px;
-}
-
-.login input {
-  text-align: left;
-}
-.login {
-  margin: 40px 0;
-}
-
-table.costo-proveedor tr.totales {
-border-top: double 3px #000;
-}
-
-tr.costo-proveedor th {
-width: 70px;
-text-align: left;
-}
-
-tr.costo-proveedor td:first-of-type {
-  text-align:left;
-}
-
-tr.costo-proveedor td:last-of-type, table.costo-proveedor tr.totales td:last-of-type {
-  text-align:right;
-}
-
-tr.costo-proveedor td {
-  width: 70px;
-  text-align:left;
-}
-
 .consulta table.casos-de-uso,.consulta table.actores {
 width:700px;
 }
@@ -80,20 +38,12 @@ border-bottom:1px solid #ddd;
 }
 
 .cronograma .totales {
-border-top:3px double #000;
+border-top:3px double #ddd;
 background-color:rgba(255,207,0,0.5);
 }
 
 .cronograma h2 {
 margin-top:0;
-}
-
-.cronograma td,table.actores,table.casos-de-uso {
-padding:5px 0;
-}
-
-.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas,.cronograma .porcentaje input,.cronograma .recursos input,.cronograma .dias input,.tabla td.puntos,.tabla td.esfuerzo {
-text-align:right;
 }
 
 .cronograma th,.cronograma .incluir,.tabla td.fecha {
@@ -152,6 +102,27 @@ list-style-type:none;
 border-bottom:1px solid #ddd;
 padding-bottom:10px;
 margin:10px 0;
+}
+
+.login {
+margin:40px 0;
+}
+
+.login .recuperar,tr.costo-proveedor td:last-of-type,table.costo-proveedor tr.totales td:last-of-type,.cronograma td.recursos,.recursos input,.cronograma td.dias,.dias input,.cronograma td.horas,.cronograma .porcentaje input,.cronograma .recursos input,.cronograma .dias input,.tabla td.puntos,.tabla td.esfuerzo {
+text-align:right;
+}
+
+.login .row,.cronograma td,table.actores,table.casos-de-uso {
+padding:5px 0;
+}
+
+.login form {
+border:1px solid #ddd;
+padding:10px;
+}
+
+.login input {
+text-align:left;
 }
 
 .puntuable tbody {
@@ -260,6 +231,10 @@ table.costo-proveedor {
 width:30em;
 }
 
+table.costo-proveedor tr.totales {
+border-top:double 3px #ddd;
+}
+
 table.estimacion {
 width:100%;
 border-bottom:1px solid #ccc;
@@ -311,7 +286,13 @@ width:50%;
 }
 
 tr.costo-proveedor td:first-of-type {
+text-align:left;
 width:40%;
+}
+
+tr.costo-proveedor th,tr.costo-proveedor td {
+text-align:left;
+width:70px;
 }
 
 tr.total-cronograma {

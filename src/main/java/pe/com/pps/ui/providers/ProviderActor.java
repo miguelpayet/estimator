@@ -3,10 +3,9 @@ package pe.com.pps.ui.providers;
 import pe.com.pps.model.Actor;
 import pe.com.pps.model.Estimacion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-public class ProviderActor extends ProviderGenerico<Actor> {
+public class ProviderActor extends ProviderPuntuable<Actor> {
 
 	public ProviderActor(Estimacion unaEstimacion) {
 		super(unaEstimacion);
@@ -18,8 +17,8 @@ public class ProviderActor extends ProviderGenerico<Actor> {
 	}
 
 	@Override
-	protected List<Actor> getData() {
-		return new ArrayList<>(estimacion.getActores());
+	protected Set<Actor> getDataSet() {
+		return estimacion.getActores();
 	}
 
 	@Override

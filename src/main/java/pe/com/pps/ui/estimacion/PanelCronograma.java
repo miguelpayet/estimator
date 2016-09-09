@@ -14,11 +14,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
 
-public class PanelCronograma extends PanelBaseEstimacion {
+public class PanelCronograma extends PanelBaseCronograma {
 
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
 
-	Cronograma cronograma;
 	private FeedbackPanel feedback;
 	private Form formCronograma;
 
@@ -28,8 +27,12 @@ public class PanelCronograma extends PanelBaseEstimacion {
 		agregarFactoresAmbiente();
 		agregarFactoresTecnicos();
 		agregarCronograma();
-		agregarRangoDesviacion();
+		agregarPanelResumen();
 		agregarFeedback();
+	}
+
+	private void agregarPanelResumen() {
+		formCronograma.add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
 	}
 
 	private void agregarCronograma() { // todo: refactorizar este metodo
@@ -57,7 +60,7 @@ public class PanelCronograma extends PanelBaseEstimacion {
 		} catch (ExcepcionCronograma e) {
 			log.error("no hay tarea de acompañamiento");
 		}
-		PanelFilaTotal pft = new PanelFilaTotal(rv.newChildId(), new Model(cronograma));
+		PanelFilaTotal pft = new PanelFilaTotal(rv.newChildId(), new Model<>(cronograma));
 		pft.add(new AttributeAppender("class", "totales"));
 		rv.add(pft);
 		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
@@ -104,11 +107,6 @@ public class PanelCronograma extends PanelBaseEstimacion {
 		formCronograma.add(feedback);
 	}
 
-	private void agregarRangoDesviacion() {
-		formCronograma.add(new Label("desviacion-minimo", new PropertyModel<Double>(cronograma, "rangoMinimo")));
-		formCronograma.add(new Label("desviacion-maximo", new PropertyModel<Double>(cronograma, "rangoMaximo")));
-	}
-
 	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {
 		unPanel.add(new AttributeAppender("class", unaClase));
 		unRepetidor.add(unPanel);
@@ -117,16 +115,6 @@ public class PanelCronograma extends PanelBaseEstimacion {
 	private void crearFormCronograma() {
 		formCronograma = new Form<>("form-cronograma", new Model<>(getEstimacion()));
 		add(formCronograma);
-		Label puntosEstimacion = new Label("puntos-ajustados", new PropertyModel<Double>(getEstimacion(), "puntos"));
-		formCronograma.add(puntosEstimacion);
-		Label horasEstimacion = new Label("horas-esfuerzo", new PropertyModel<Double>(getEstimacion(), "esfuerzo"));
-		formCronograma.add(horasEstimacion);
-		Label meses = new Label("meses-cronograma", new PropertyModel<Double>(cronograma, "totalMeses"));
-		formCronograma.add(meses);
-	}
-
-	protected void init(Estimacion unaEstimacion) {
-		cronograma = new Cronograma(unaEstimacion);
 	}
 
 }

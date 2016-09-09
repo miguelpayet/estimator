@@ -3,10 +3,9 @@ package pe.com.pps.ui.providers;
 import pe.com.pps.model.CasoDeUso;
 import pe.com.pps.model.Estimacion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-public class ProviderCasoDeUso extends ProviderGenerico<CasoDeUso> {
+public class ProviderCasoDeUso extends ProviderPuntuable<CasoDeUso> {
 
 	public ProviderCasoDeUso(Estimacion unaEstimacion) {
 		super(unaEstimacion);
@@ -18,8 +17,8 @@ public class ProviderCasoDeUso extends ProviderGenerico<CasoDeUso> {
 	}
 
 	@Override
-	protected List<CasoDeUso> getData() {
-		return new ArrayList<>(estimacion.getCasosDeUso());
+	protected Set<CasoDeUso> getDataSet() {
+		return estimacion.getCasosDeUso();
 	}
 
 	@Override

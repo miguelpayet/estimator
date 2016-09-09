@@ -71,14 +71,17 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		agregarCampos();
 		agregarLinks();
 		agregarFeedback();
-		agregarGridActores();
-		agregarGridCasosDeUso();
+		agregarPanelesPuntuables();
 		agregarCronograma();
 		agregarPanelCostos();
 		agregarGridCostos();
 		agregarCostoTotal();
 	}
 
+	private void agregarPanelesPuntuables() {
+		add(new PanelCasosDeUso("panel-casos-de-uso", getEstimacion(), feedback));
+		add(new PanelActores("panel-actores", getEstimacion(), feedback));
+	}
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
@@ -105,62 +108,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		add(feedback);
-	}
-
-	private void agregarGridActores() {
-		EditableGrid<Actor, String> grid = new EditableGrid<Actor, String>("grid-actores", columnasPuntuable(), new ProviderActor(getEstimacion()), 10, Actor.class) {
-
-			@Override
-			protected void onCancel(AjaxRequestTarget target) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onDelete(AjaxRequestTarget target, IModel<Actor> rowModel) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onSave(AjaxRequestTarget target, IModel<Actor> rowModel) {
-				target.add(feedback);
-			}
-
-		};
-		grid.setTableCss("actores");
-		add(grid);
-	}
-
-	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasCasosDeUso(), new ProviderCasoDeUso(getEstimacion()), 10, CasoDeUso.class) {
-
-			@Override
-			protected void onCancel(AjaxRequestTarget target) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onDelete(AjaxRequestTarget target, IModel<CasoDeUso> rowModel) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target) {
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onSave(AjaxRequestTarget target, IModel<CasoDeUso> rowModel) {
-				target.add(feedback);
-			}
-
-		};
-		grid.setTableCss("casos-de-uso");
-		add(grid);
 	}
 
 	private void agregarGridCostos() {
@@ -265,19 +212,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		targets.add(pc);
 	}
 
-	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasCasosDeUso() {
-		List<AbstractEditablePropertyColumn<T, String>> columns = columnasPuntuable();
-		DaoPlataforma dp = new DaoPlataforma();
-		List<Plataforma> plataformas = dp.listar();
-		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
-			@Override
-			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<>(componentId, this, plataformas);
-			}
-		});
-		return columns;
-	}
-
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
 		List<AbstractEditablePropertyColumn<CostoAdicional, String>> columns = new ArrayList<>();
 		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
@@ -306,29 +240,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		return columns;
 	}
 
-	// http://stackoverflow.com/questions/13995755/generic-method-in-non-generic-class
-	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasPuntuable() {
-		List<AbstractEditablePropertyColumn<T, String>> columns = new ArrayList<>();
-		RequiredEditableTextFieldColumn<T, String> descripcion = new RequiredEditableTextFieldColumn<T, String>(new Model<>("Descripción"), "descripcion") {
-			@Override
-			protected void addBehaviors(final FormComponent<T> editorComponent) {
-				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
-			}
-		};
-		columns.add(descripcion);
-		AbstractEditablePropertyColumn<T, String> complejidad = new AbstractEditablePropertyColumn<T, String>(new Model<>("Complejidad"), "complejidadStr") {
-			@Override
-			public EditableCellPanel getEditableCellPanel(String componentId) {
-				return new EditableRequiredDropDownCellPanel<>(componentId, this, Complejidad.getLista());
-			}
-		};
-		columns.add(complejidad);
-		return columns;
-	}
-
 	/**
-	 * retornal la lista de targets que se debe actualizar cuando se calcula el panel cronograma
+	 * retorna la lista de targets que se debe actualizar cuando se calcula el panel cronograma
 	 *
 	 * @return lista de targets para refresh via ajax
 	 */

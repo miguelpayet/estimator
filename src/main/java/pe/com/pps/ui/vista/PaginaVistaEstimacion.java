@@ -7,11 +7,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.PropertyPopul
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.collections.ArrayListStack;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
+import pe.com.pps.ui.estimacion.PanelCostos;
+import pe.com.pps.ui.estimacion.PanelResumen;
 import pe.com.pps.ui.providers.*;
 
 import java.util.List;
@@ -77,10 +80,8 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarCostoProveedor() {
-		List<PropertyPopulatorClase<CostoProveedor>> columns = crearColumnas(new String[] { "proveedor", "horas", "moneda", "costo"}, "proveedor");
-		ProviderCostoProveedor pc = new ProviderCostoProveedor(cronograma);
-		DataGridView<CostoProveedor> dgv = new DataGridView<>("repetidor-costos", columns, pc);
-		add(dgv);
+		PanelCostos pc = new PanelCostos("costo-proveedor", new Model<>(getEstimacion()));
+		add(pc);
 	}
 
 	/**
@@ -113,14 +114,17 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 		add(dgvt);
 	}
 
-	private <T, V> void agregarGrid(List<PropertyPopulatorClase<T>> unasColumnas, V unProvider) {
-		//DataGridView<T> dgv = new DataGridView<T>("repetidor-costo-adicional", unasColumnas, unProvider);
-	}
-
 	private void agregarIndicadores() {
+		add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
+		/*
 		add(new Label("desviacion-minimo", new PropertyModel<Double>(cronograma, "rangoMinimo")));
 		add(new Label("desviacion-maximo", new PropertyModel<Double>(cronograma, "rangoMaximo")));
 		add(new Label("meses-cronograma", new PropertyModel<Double>(cronograma, "totalMeses")));
+		*/
+	}
+
+	private <T> List<PropertyPopulatorClase<T>> columnasActor() {
+		return crearColumnas(new String[]{"descripcion", "complejidadStr"}, "puntuable");
 	}
 
 	private List<PropertyPopulatorClase<TareaCronograma>> columnasCronograma() {
@@ -131,10 +135,6 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 		return crearColumnas(new String[]{"nombre", "valor", "peso", "complejidad"}, "factor");
 	}
 
-
-	private <T> List<PropertyPopulatorClase<T>> columnasActor() {
-		return crearColumnas(new String[]{"descripcion", "complejidadStr"}, "puntuable");
-	}
 	private <T> List<PropertyPopulatorClase<T>> columnasPuntuable() {
 		return crearColumnas(new String[]{"descripcion", "complejidadStr", "plataforma"}, "puntuable");
 	}
