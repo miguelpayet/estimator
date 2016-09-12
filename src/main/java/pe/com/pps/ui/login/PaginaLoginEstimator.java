@@ -15,7 +15,7 @@ public class PaginaLoginEstimator extends PaginaBaseEstimador {
 	public PaginaLoginEstimator(PageParameters parameters) {
 		super(parameters);
 		agregarTitulo("login estimador");
-		//agregarLogo();
+		agregarLogo();
 		agregarPanelLogin();
 	}
 
