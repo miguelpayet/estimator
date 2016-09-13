@@ -8,6 +8,7 @@ import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -24,12 +25,11 @@ import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoParametro;
-import pe.com.pps.dao.DaoPlataforma;
-import pe.com.pps.model.*;
+import pe.com.pps.model.CostoAdicional;
+import pe.com.pps.model.Estimacion;
+import pe.com.pps.model.Moneda;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.com.pps.ui.providers.ProviderActor;
-import pe.com.pps.ui.providers.ProviderCasoDeUso;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 
@@ -78,10 +78,6 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		agregarCostoTotal();
 	}
 
-	private void agregarPanelesPuntuables() {
-		add(new PanelCasosDeUso("panel-casos-de-uso", getEstimacion(), feedback));
-		add(new PanelActores("panel-actores", getEstimacion(), feedback));
-	}
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
@@ -98,8 +94,14 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		campos.add(descripcion);
 	}
 
+	protected Label agregarCostoTotal() {
+		Label costoTotal = super.agregarCostoTotal();
+		targets.add(costoTotal);
+		return costoTotal;
+	}
+
 	private void agregarCronograma() {
-		PanelCronograma panelCronograma = new PanelCronograma("cronograma", new Model(getEstimacion()));
+		PanelCronograma panelCronograma = new PanelCronograma("cronograma", new Model<>(getEstimacion()));
 		panelCronograma.setOutputMarkupId(true);
 		add(panelCronograma);
 	}
@@ -210,6 +212,11 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		pc.setOutputMarkupId(true);
 		add(pc);
 		targets.add(pc);
+	}
+
+	private void agregarPanelesPuntuables() {
+		add(new PanelCasosDeUso("panel-casos-de-uso", getEstimacion(), feedback));
+		add(new PanelActores("panel-actores", getEstimacion(), feedback));
 	}
 
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {

@@ -25,10 +25,11 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 		leerEstimacion(unosParametros);
 	}
 
-	protected void agregarCostoTotal() {
+	protected Label agregarCostoTotal() {
 		costoTotal = new Label("costo-total", new PropertyModel<Double>(getEstimacion(), "costoTotal"));
 		costoTotal.setOutputMarkupId(true);
 		add(costoTotal);
+		return costoTotal;
 	}
 
 	protected void agregarTitulo() {
