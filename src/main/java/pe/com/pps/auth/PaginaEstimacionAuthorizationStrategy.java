@@ -11,6 +11,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import pe.com.pps.app.WicketApplication;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
@@ -45,29 +46,26 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 			// si no hay usuario autentificado, enviarlo al home
 			if (!(subject.isAuthenticated() || subject.isRemembered())) {
 				log.debug("no existe usuario autenticado - autenticado: {} - recordado: {}", subject.isAuthenticated(), subject.isRemembered());
-				throw new RestartResponseException(HomePage.class);
+				throw new RestartResponseException(WicketApplication.get().getHomePage());
 			}
 			// si no hay queryparameter, es una estimación nueva
 			Request req = RequestCycle.get().getRequest();
-			Url url = req.getUrl();
-			Url.QueryParameter qp = url.getQueryParameter("id");
+			Url.QueryParameter qp = req.getUrl().getQueryParameter("id");
 			// solamente se valida las estimaciones existentes
 			if (qp != null) {
 				// obtener el código de estimación del request
 				String id = qp.getValue();
-				// buscar la estimacion en la pe.trazos.login.base de datos
-				DaoEstimacion de = new DaoEstimacion();
-				Estimacion est = de.get(Integer.valueOf(id));
+				// buscar la estimacion en la base de datos
+				Estimacion est = Estimacion.get(Integer.valueOf(id));
 				if (est == null) {
-					log.debug("no existe estimación en pe.trazos.login.base de datos");
+					log.debug("no existe estimación {} en base de datos", id);
 					throw new RestartResponseException(HomePage.class);
 				}
 				// buscar el usuario en la pe.trazos.login.base de datos
-				DaoUsuario du = new DaoUsuario();
-				Usuario u = du.getUsuarioActual();
+				Usuario u = Usuario.getActual();
 				if (u == null) {
-					log.debug("no existe usuario [{}] en pe.trazos.login.base de datos", subject.getPrincipal());
-					throw new RestartResponseException(HomePage.class);
+					log.debug("no existe usuario {} en base de datos", subject.getPrincipal());
+					throw new RestartResponseException(WicketApplication.get().getHomePage());
 				}
 				// compararlo con el usuario de la estimación
 				if (!u.equals(est.getUsuario())) {
