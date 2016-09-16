@@ -2,10 +2,7 @@ package pe.com.pps.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pe.com.pps.dao.DaoActor;
-import pe.com.pps.dao.DaoCasoDeUso;
-import pe.com.pps.dao.DaoCostoAdicional;
-import pe.com.pps.dao.DaoCronograma;
+import pe.com.pps.dao.*;
 import pe.trazos.login.modelo.Usuario;
 
 import javax.persistence.*;
@@ -49,6 +46,11 @@ public class Estimacion implements Serializable {
 	@Version
 	@Column(name = "version")
 	private Integer version;
+
+	public static Estimacion get(Integer id) {
+		DaoEstimacion de = new DaoEstimacion();
+		return de.get(Integer.valueOf(id));
+	}
 
 	public Estimacion() {
 		actores = new HashSet<>();
