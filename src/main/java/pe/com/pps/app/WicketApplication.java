@@ -90,10 +90,14 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 	@Override
 	public void init() {
 		super.init();
-		// request cycle listener
-		IRequestCycleListener miListener;
-		miListener = new MiRequestListener();
-		getRequestCycleListeners().add(miListener);
+		// hibernate request cycle listener
+		IRequestCycleListener hibernateListener;
+		hibernateListener = new HibernateRequestListener();
+		getRequestCycleListeners().add(hibernateListener);
+		// locale request cycle listener
+		IRequestCycleListener localeListener;
+		localeListener = new LocaleRequestListener();
+		getRequestCycleListeners().add(localeListener);
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// role checking strategy para autorización

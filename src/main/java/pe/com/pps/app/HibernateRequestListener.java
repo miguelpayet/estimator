@@ -10,15 +10,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-//todo:  manejar excepciones: http://stackoverflow.com/questions/12456302/how-to-handle-exceptions-thrown-in-wicket-custom-model/12476006
+//manejar excepciones: http://stackoverflow.com/questions/12456302/how-to-handle-exceptions-thrown-in-wicket-custom-model/12476006
 
-public class MiRequestListener implements IRequestCycleListener {
+public class HibernateRequestListener implements IRequestCycleListener {
 
-	public static final Logger log = LogManager.getLogger(MiRequestListener.class);
+	public static final Logger log = LogManager.getLogger(HibernateRequestListener.class);
 
 	SessionFactory sf;
 
-	public MiRequestListener() {
+	public HibernateRequestListener() {
 		sf = pe.trazos.dao.HibernateUtil.getSessionFactory();
 	}
 
@@ -31,7 +31,6 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onDetach(RequestCycle cycle) {
-		log.trace("onDetach");
 	}
 
 	@Override
@@ -60,27 +59,23 @@ public class MiRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception exception) {
-		log.trace("onExceptionRequestHandlerResolved");
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("onRequestHandlerExecuted");
 	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("onRequestHandlerResolved");
 
 	}
 
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("onRequestHandlerScheduled");
 	}
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		//log.trace("onUrlMapped {}", url.toString());
 	}
+
 }
