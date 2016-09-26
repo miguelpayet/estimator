@@ -60,6 +60,10 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return idtarea;
 	}
 
+	public Boolean isIncluir() {
+		return incluir;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -80,9 +84,6 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return tipoCosto;
 	}
 
-	public Boolean isIncluir() {
-		return incluir;
-	}
 
 	public void setRol(Integer rol) {
 		this.rol = rol;

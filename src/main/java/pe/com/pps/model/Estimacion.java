@@ -8,6 +8,7 @@ import pe.trazos.login.modelo.Usuario;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "estimacion")
@@ -60,6 +61,10 @@ public class Estimacion implements Serializable {
 		factoresEstimacion = new HashSet<>();
 		tareasCronograma = new ArrayList<>();
 		version = null;
+	}
+
+	public Cronograma getCronograma() {
+		return new Cronograma(this);
 	}
 
 	public void addActor(Actor unActor) {
@@ -136,9 +141,6 @@ public class Estimacion implements Serializable {
 		return costosAdicionales;
 	}
 
-	public Cronograma getCronograma() {
-		return new Cronograma(this);
-	}
 
 	public String getEds() {
 		return eds;

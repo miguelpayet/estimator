@@ -11,6 +11,10 @@ import java.util.List;
 /**
  * forma de crear una estimación e inicializar las estructuras de datos asociadas
  */
+import pe.com.pps.dao.DaoTarea;
+
+import java.util.List;
+
 public class EstimacionFactory {
 
 	public static Estimacion crear() {

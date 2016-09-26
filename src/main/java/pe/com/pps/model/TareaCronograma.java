@@ -123,6 +123,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		} else {
 			horas = null;
 		}
+		horas = unosDias * 8; // todo: horas del proveedor
 	}
 
 	public void setEstimacion(Estimacion estimacion) {
@@ -136,6 +137,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		} else {
 			dias = null;
 		}
+		dias = unasHoras / 8; // todo: horas del proveedor
 	}
 
 	public void setIncluir(Boolean incluir) {
