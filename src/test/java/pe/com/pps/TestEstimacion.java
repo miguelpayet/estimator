@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestEstimacion extends TestBase<Estimacion> {
+public class TestEstimacion {} /*extends TestBase<Estimacion> {
 
 	private static final Integer ESTIMACION = 11312;
 	private static IDatabaseTester databaseTester;
@@ -149,3 +149,4 @@ public class TestEstimacion extends TestBase<Estimacion> {
 	}
 
 }
+*/
