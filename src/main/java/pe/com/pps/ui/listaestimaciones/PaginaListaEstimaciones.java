@@ -40,9 +40,10 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 		ClickablePropertyColumn<Estimacion, String> nombre = new ClickablePropertyColumn<>(Model.of("Nombre"), "nombre", "nombre");
 		columnas.add(nombre);
 		columnas.add(new PropertyColumnEstilo<>(Model.of("EDS"), null, "eds", "eds"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("Puntos sin ajustar"), null, "puntos", "puntos"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("Horas sin gestión"), null, "esfuerzo", "esfuerzo"));
-		columnas.add(new PropertyColumnEstilo<>(Model.of("Fecha actualización"), null, "fechaCalculo", "fecha"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Puntos sin ajustar"), null, "puntosString", "puntos"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Horas parciales"), null, "esfuerzoString", "esfuerzo"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Horas totales"), null, "esfuerzoCronograma", "esfuerzo"));
+		columnas.add(new PropertyColumnEstilo<>(Model.of("Fecha actualización"), null, "fechaCalculoString", "fecha"));
 	}
 
 	@Override
