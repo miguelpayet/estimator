@@ -29,15 +29,15 @@
 		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shiro.version>1.2.4</shiro.version>
-		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
+		<wicket.version>8.0.0-M1</wicket.version>
 		<wtp.version>none</wtp.version>
 	</properties>
 	<dependencies>
-<dependency>
-<groupId>pe.trazos</groupId>
-<artifactId>login</artifactId>
-<version>1.0-SNAPSHOT</version>
-</dependency>
+		<dependency>
+			<groupId>pe.trazos</groupId>
+			<artifactId>login</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -158,6 +158,14 @@
 			<version>2.5</version>
 		</dependency>
 	</dependencies>
+
+	<scm>
+		<connection>scm:git:git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</connection>
+		<developerConnection></developerConnection>
+		<tag>HEAD</tag>
+		<url>git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</url>
+	</scm>
+
 	<build>
 		<resources>
 			<resource>
@@ -230,7 +238,32 @@
 					<wtpversion>${wtp.version}</wtpversion>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
+					<doCheck>true</doCheck>
+					<doUpdate>false</doUpdate>
+					<format>${version}.{0,number}</format>
+					<items>
+						<item>buildNumber</item>
+					</items>
+				</configuration>
+			</plugin>
 		</plugins>
+		<finalName>
+			${project.artifactId}-${buildNumber}
+		</finalName>
 	</build>
 
 	<repositories>
