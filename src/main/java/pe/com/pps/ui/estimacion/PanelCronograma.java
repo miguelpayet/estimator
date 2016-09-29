@@ -58,7 +58,7 @@ public class PanelCronograma extends PanelBaseCronograma {
 		try {
 			agregarTareaCronograma(rv, new PanelFilaTareaGestion(rv.newChildId(), new Model<>(cronograma.getTareaGestion())), "gestion");
 		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea de acompañamiento");
+			log.error("no hay tarea de gestión");
 		}
 		PanelFilaTotal pft = new PanelFilaTotal(rv.newChildId(), new Model<>(cronograma));
 		pft.add(new AttributeAppender("class", "totales"));
@@ -68,6 +68,7 @@ public class PanelCronograma extends PanelBaseCronograma {
 			protected void onSubmit(AjaxRequestTarget target) {
 				log.info("actualizar cronograma");
 				try {
+					// generar el cronograma de la estimación
 					getEstimacion().generarCronograma();
 					// obtener la página a la que pertenece el panel y refrescar los componentes registrados
 					PaginaEstimacion pe = findParent(PaginaEstimacion.class);
