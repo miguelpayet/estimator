@@ -66,10 +66,10 @@ public class Cronograma implements Serializable {
 		}
 		// tarea de acompañamiento
 		getTareaAcompañamiento().setDias(getTareaDiseñoTecnico().getDias());
-		log.trace("tarea gestión - esfuerzo {}", getTareaGestion().getHoras());
+		log.trace("tarea acompañamiento - esfuerzo {}", getTareaAcompañamiento().getHoras());
 		// tarea de gestión
 		getTareaGestion().setDias(getTotalDias());
-		log.trace("tarea gestión - esfuerzo {}", getTareaGestion().getHoras());
+		log.trace("tarea gestión - dias {} - esfuerzo {}", getTotalDias(), getTareaGestion().getHoras());
 	}
 
 	/**
