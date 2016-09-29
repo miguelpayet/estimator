@@ -12,7 +12,6 @@ import java.util.Locale;
 public class CostoProveedor implements Serializable {
 
 	private Double costo;
-	DecimalFormat df;
 	private Double horas;
 	private Proveedor proveedor;
 
@@ -20,9 +19,6 @@ public class CostoProveedor implements Serializable {
 		proveedor = unProveedor;
 		costo = 0d;
 		horas = 0d;
-		Locale bLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
-		DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols(bLocale);
-		df = new DecimalFormat("###,###.##", unusualSymbols);
 	}
 
 	public Double getCosto() {
@@ -30,11 +26,11 @@ public class CostoProveedor implements Serializable {
 	}
 
 	public String getDescripcionCosto() {
-		return df.format(getCosto());
+		return Util.format(getCosto());
 	}
 
 	public String getDescripcionHoras() {
-		return df.format(getHoras());
+		return Util.format(getHoras());
 	}
 
 	public Double getHoras() {
