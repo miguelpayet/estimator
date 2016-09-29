@@ -8,7 +8,6 @@ import pe.trazos.login.modelo.Usuario;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "estimacion")
@@ -61,10 +60,6 @@ public class Estimacion implements Serializable {
 		factoresEstimacion = new HashSet<>();
 		tareasCronograma = new ArrayList<>();
 		version = null;
-	}
-
-	public Cronograma getCronograma() {
-		return new Cronograma(this);
 	}
 
 	public void addActor(Actor unActor) {
@@ -141,6 +136,9 @@ public class Estimacion implements Serializable {
 		return costosAdicionales;
 	}
 
+	public Cronograma getCronograma() {
+		return new Cronograma(this);
+	}
 
 	public String getEds() {
 		return eds;
@@ -149,6 +147,29 @@ public class Estimacion implements Serializable {
 	public Double getEsfuerzo() {
 		totalizar();
 		return Util.round(esfuerzo, 2);
+	}
+
+	/**
+	 * método para wicket
+	 *
+	 * @return suma el total de horas del esfuerzo de las tareas del cronograma y lo formatea
+	 */
+	public String getEsfuerzoCronograma() {
+		double total = 0d;
+		for (TareaCronograma t : tareasCronograma) {
+			total += t.getHoras();
+		}
+		return Util.format(total);
+	}
+
+	/**
+	 * método para wicket
+	 *
+	 * @return las horas de esfuerzo de la estimación (sin gestión ni acompañamiento), en formato decimal
+	 */
+	@SuppressWarnings("unused")
+	public String getEsfuerzoString() {
+		return Util.format(getEsfuerzo());
 	}
 
 	private List<FactorEstimacion> getFactoresAmbientales() {
@@ -167,6 +188,16 @@ public class Estimacion implements Serializable {
 		return fechaCalculo;
 	}
 
+	/**
+	 * método para wicket
+	 *
+	 * @return la última fecha de grabación de la estimación, en formato de fecha
+	 */
+	@SuppressWarnings("unused")
+	public String getFechaCalculoString() {
+		return Util.format(getFechaCalculo());
+	}
+
 	public Integer getIdEstimacion() {
 		return idEstimacion;
 	}
@@ -178,6 +209,16 @@ public class Estimacion implements Serializable {
 	public Double getPuntos() {
 		totalizar();
 		return puntos;
+	}
+
+	/**
+	 * método para wicket
+	 *
+	 * @return el número de puntos de la estimación en formato con 2 decimales
+	 */
+	@SuppressWarnings("unused")
+	public String getPuntosString() {
+		return Util.format(getPuntos());
 	}
 
 	public List<TareaCronograma> getTareasCronograma() {
@@ -296,9 +337,9 @@ public class Estimacion implements Serializable {
 		for (CasoDeUso cas : getCasosDeUso()) {
 			puntos += cas.getPunto().getPuntos();
 		}
-		log.debug(String.format("estimación %s - puntos antes de ajuste %s", getIdEstimacion(), puntos));
+		log.debug("estimación {} - puntos antes de ajuste {}", getIdEstimacion(), puntos);
 		puntos = Util.round(puntos * unFactor, 2);
-		log.debug(String.format("estimación %s - puntos ajustados %s", getIdEstimacion(), puntos));
+		log.debug("estimación {} - puntos ajustados {}", getIdEstimacion(), puntos);
 	}
 
 	public void totalizar() {
