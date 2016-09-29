@@ -15,17 +15,7 @@ public class PropertyColumnEstilo<T, S> extends PropertyColumn<T, S> {
 		super(displayModel, sortProperty, propertyExpression);
 		estilo = unEstilo;
 	}
-/*
-	// redefine este método para poder ponerle una clase css a la td
-	@Override
-	public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
-		Label label = new Label(componentId, getDataModel(rowModel));
-		item.add(label);
-		if (estilo != null) {
-			item.add(new AttributeAppender("class", estilo));
-		}
-	}
-*/
+
 	@Override
 	public String getCssClass() {
 		return estilo;
