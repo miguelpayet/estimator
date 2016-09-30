@@ -74,9 +74,12 @@ public class PanelCronograma extends PanelBaseCronograma {
 					PaginaEstimacion pe = findParent(PaginaEstimacion.class);
 					pe.getTargets().forEach(target::add);
 				} catch (ExcepcionCronograma e) {
+					// logear el error
+					log.error(e.getMessage(), e);
+					// mensaje en panel de feedback
 					error("error al generar cronograma: " + e.getMessage());
-					log.error(e.getMessage());
-					e.printStackTrace();
+					// mensaje como cuadro de diálogo
+					target.appendJavaScript("alert('" + e.getMessage() + "')");
 				} finally {
 					target.add(formCronograma);
 					target.add(feedback);
