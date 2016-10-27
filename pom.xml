@@ -24,15 +24,20 @@
 	<properties>
 		<dbunitVersion>2.5.2</dbunitVersion>
 		<hibernate.version>5.1.0.Final</hibernate.version>
-		<jetty9.version>9.2.13.v20150730</jetty9.version>
+		<jetty9.version>9.4.0.RC1</jetty9.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<shiro.version>1.2.4</shiro.version>
-		<wicket.version>8.0.0-M1</wicket.version>
+		<shiro.version>1.2.6</shiro.version>
+		<wicket.version>8.0.0-M2</wicket.version>
 		<wtp.version>none</wtp.version>
 	</properties>
 	<dependencies>
+                <dependency>
+                      	<groupId>pe.trazos</groupId>
+                      	<artifactId>dao</artifactId>
+			<version>1.0-SNAPSHOT</version>
+               	</dependency>
 		<dependency>
 			<groupId>pe.trazos</groupId>
 			<artifactId>login</artifactId>
@@ -138,12 +143,20 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
-		<dependency>
+		<!--dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
 			<version>${jetty9.version}</version>
 			<scope>test</scope>
+		</dependency-->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+		        <artifactId>jetty-all</artifactId>
+		        <version>${jetty9.version}</version>
+		        <scope>test</scope>
+		        <classifier>uber</classifier>
 		</dependency>
+
 		<!-- dbunit -->
 		<dependency>
 			<groupId>org.dbunit</groupId>
