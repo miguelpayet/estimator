@@ -7,6 +7,6 @@
 
 pipelines:
   default:
-      - step:
-              script:
-	                - echo "Everything is awesome!"
+    - step:
+      script:
+        - echo "Everything is awesome!"
