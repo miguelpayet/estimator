@@ -1,6 +1,5 @@
 package pe.com.pps.model;
 
-import org.jboss.logging.Param;
 import pe.com.pps.dao.DaoParametro;
 
 import javax.persistence.*;
@@ -18,19 +17,19 @@ public class Actor extends Puntuable implements Identificable<Integer> {
 	}
 
 	@Override
+	public Double getFactorProductividad() {
+		DaoParametro dp = new DaoParametro();
+		Parametro p = dp.getFactorProductividadActor();
+		return p.getValorDouble();
+	}
+
+	@Override
 	public Integer getId() {
 		return null;
 	}
 
 	public Integer getIdActor() {
 		return idActor;
-	}
-
-	@Override
-	public Double getFactorProductividad() {
-		DaoParametro dp = new DaoParametro();
-		Parametro p = dp.getFactorProductividadActor();
-		return p.getValorDouble();
 	}
 
 	public Punto getPunto() {
