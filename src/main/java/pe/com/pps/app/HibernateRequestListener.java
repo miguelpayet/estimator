@@ -9,6 +9,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import pe.trazos.dao.HibernateUtil;
 
 //manejar excepciones: http://stackoverflow.com/questions/12456302/how-to-handle-exceptions-thrown-in-wicket-custom-model/12476006
 
@@ -19,63 +20,60 @@ public class HibernateRequestListener implements IRequestCycleListener {
 	SessionFactory sf;
 
 	public HibernateRequestListener() {
-		sf = pe.trazos.dao.HibernateUtil.getSessionFactory();
+		sf = HibernateUtil.getSessionFactory();
 	}
 
 	@Override
 	public void onBeginRequest(RequestCycle cycle) {
-		log.trace("onBeginRequest");
+		log.debug("HibernateRequestListener.onBeginRequest {}", cycle.getRequest().getOriginalUrl());
 		Session sesion = sf.getCurrentSession();
 		sesion.beginTransaction();
 	}
 
 	@Override
 	public void onDetach(RequestCycle cycle) {
+		log.trace("HibernateRequestListener.onDetach {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
-		log.trace("onEndRequest");
+		log.debug("HibernateRequestListener.onEndRequest {}", cycle.getRequest().getOriginalUrl());
 		Session sesion = sf.getCurrentSession();
-		try {
-			sesion.getTransaction().commit();
-		} catch (Throwable ex) {
-			try {
-				if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
-					sesion.getTransaction().rollback();
-				}
-			} catch (Throwable rbEx) {
-				log.error("Could not rollback after exception!", rbEx);
-				rbEx.printStackTrace();
-			}
+		if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
+			log.debug("rolling back transaction");
+			sesion.getTransaction().rollback();
 		}
 	}
 
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
-		log.error("onException");
+		log.error("HibernateRequestListener.onException {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
 		return null;
 	}
 
 	@Override
-	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception exception) {
+	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception ex) {
+		log.trace("MiRequestListener.onExceptionRequestHandlerResolved {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler) {
+		log.trace("MiRequestListener.onRequestHandlerExecuted {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler) {
-
+		log.trace("MiRequestListener.onRequestHandlerResolved {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler) {
+		log.trace("MiRequestListener.onRequestHandlerScheduled {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
+		log.trace("MiRequestListener.onUrlMapped {}", cycle.getRequest().getOriginalUrl());
 	}
 
 }
