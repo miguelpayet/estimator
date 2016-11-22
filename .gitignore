@@ -1,4 +1,6 @@
 *.bmp
+favicon.ico
+.DS_Store
 *.class
 *.ear
 *.gif
