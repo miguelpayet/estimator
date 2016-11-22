@@ -9,8 +9,6 @@ import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import pe.com.pps.model.Estimacion;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,7 +34,6 @@ public abstract class ProviderGenerico<T extends Serializable> implements IEdita
 
 	@Override
 	public Iterator<T> iterator(long first, long count) {
-		log.debug("iterator first: {} count: {}", first, count);
 		List<T> list = getData();
 		long toIndex = first + count;
 		if (toIndex > list.size()) {

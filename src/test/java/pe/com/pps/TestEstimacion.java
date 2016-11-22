@@ -1,22 +1,11 @@
 package pe.com.pps;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.dataset.excel.XlsDataSet;
-import org.junit.*;
+import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import pe.com.pps.dao.DaoEstimacion;
-import pe.com.pps.dao.DaoFactorAmbiental;
-import pe.com.pps.dao.DaoFactorTecnico;
-import pe.com.pps.dao.DaoPlataforma;
-import pe.com.pps.model.*;
-
-import java.io.FileInputStream;
-import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestEstimacion {} /*extends TestBase<Estimacion> {
+public class TestEstimacion {
+} /*extends TestBase<Estimacion> {
 
 	private static final Integer ESTIMACION = 11312;
 	private static IDatabaseTester databaseTester;
@@ -46,7 +35,6 @@ public class TestEstimacion {} /*extends TestBase<Estimacion> {
 
 	@Test
 	public void crearEstimacion() {
-		logger.info("crearEstimacion()");
 		// nueva estimación
 		Estimacion est = EstimacionFactory.crear();
 		est.setIdEstimacion(ESTIMACION);
@@ -105,9 +93,6 @@ public class TestEstimacion {} /*extends TestBase<Estimacion> {
 			fea.setValor(1);
 			est.addFactorEstimacion(fea);
 		}
-		// resultado
-		logger.info("puntos: " + est.getPuntos());
-		logger.info("esfuerzo: " + est.getEsfuerzo());
 		// cronograma
 		try {
 			TareaCronograma tc = est.getCronograma().getTareaFija();
@@ -123,22 +108,17 @@ public class TestEstimacion {} /*extends TestBase<Estimacion> {
 		// grabar
 		DaoEstimacion de = new DaoEstimacion();
 		de.grabar(est);
-		logger.info("grabado");
 	}
 
 	@Test
 	public void leerEstimacion() {
-		logger.info("leerEstimacion()");
 		Integer numEst = 1;
 		DaoEstimacion de = new DaoEstimacion();
 		Estimacion est = de.get(numEst);
 		Assert.assertNotNull(est);
-		logger.info(est.getNombre());
 		Assert.assertThat(est.getNombre(), org.hamcrest.CoreMatchers.is("11312 - Reporte de Impresión para Cascos"));
-		logger.info("puntos: " + est.getPuntos());
 		Double puntos = Math.round(est.getPuntos() * 100.0) / 100.0;
 		Assert.assertThat(puntos, org.hamcrest.CoreMatchers.is(20.64));
-		logger.info("esfuerzo: " + est.getEsfuerzo());
 		Double esfuerzo = Math.round(est.getEsfuerzo() * 100.0) / 100.0;
 		Assert.assertThat(esfuerzo, org.hamcrest.CoreMatchers.is(578.04));
 		try {

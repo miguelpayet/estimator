@@ -62,7 +62,6 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 
 	@Override
 	public void irPaginaEdicion(Estimacion unaEntidad) {
-		log.info("irPaginaEdicion");
 		irPaginaEdicion(PaginaEstimacion.class, unaEntidad.getIdEstimacion());
 	}
 

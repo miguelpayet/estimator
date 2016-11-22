@@ -30,10 +30,8 @@ public class Factorama {
 	private Double calcularFactor(List<FactorEstimacion> unosFactores) {
 		Double factor = 0.0;
 		for (FactorEstimacion f : unosFactores) {
-			log.trace("{} - valor {} - peso {} - factor {}", f.getFactor().getNombre(), f.getValor(), f.getFactor().getPeso(), f.getValor() * f.getFactor().getPeso());
 			factor += (f.getValor() * f.getFactor().getPeso());
 		}
-		log.debug("factor de complejidad {}", factor);
 		return factor;
 	}
 
@@ -41,16 +39,13 @@ public class Factorama {
 		Double factor = calcularFactor(getFactoresAmbientales());
 		factor = 1.4 + (factor * -0.03);
 		factores.put(TipoFactor.AMBIENTE, factor);
-		log.debug("factor ambiental {}", factor);
 		return factor;
 	}
 
 	private Double calcularFactorTecnico() {
 		Double factor = calcularFactor(getFactoresTecnicos());
 		factor = 0.6 + (factor * 0.01);
-		log.trace("estimación {} - factor técnico {}", estimacion.getIdEstimacion(), factor);
 		factores.put(TipoFactor.TECNICO, factor);
-		log.debug("factor técnico {}", factor);
 		return factor;
 	}
 

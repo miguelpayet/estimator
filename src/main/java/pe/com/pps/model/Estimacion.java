@@ -337,9 +337,7 @@ public class Estimacion implements Serializable {
 		for (CasoDeUso cas : getCasosDeUso()) {
 			puntos += cas.getPunto().getPuntos();
 		}
-		log.debug("estimación {} - puntos antes de ajuste {}", getIdEstimacion(), puntos);
 		puntos = Util.round(puntos * unFactor, 2);
-		log.debug("estimación {} - puntos ajustados {}", getIdEstimacion(), puntos);
 	}
 
 	public void totalizar() {

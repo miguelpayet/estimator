@@ -5,13 +5,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.*;
 
 public class PanelCronograma extends PanelBaseCronograma {
@@ -29,10 +27,6 @@ public class PanelCronograma extends PanelBaseCronograma {
 		agregarCronograma();
 		agregarPanelResumen();
 		agregarFeedback();
-	}
-
-	private void agregarPanelResumen() {
-		formCronograma.add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
 	}
 
 	private void agregarCronograma() { // todo: refactorizar este metodo
@@ -66,7 +60,6 @@ public class PanelCronograma extends PanelBaseCronograma {
 		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
-				log.info("actualizar cronograma");
 				try {
 					// generar el cronograma de la estimación
 					getEstimacion().generarCronograma();
@@ -109,6 +102,10 @@ public class PanelCronograma extends PanelBaseCronograma {
 		feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		formCronograma.add(feedback);
+	}
+
+	private void agregarPanelResumen() {
+		formCronograma.add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
 	}
 
 	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {

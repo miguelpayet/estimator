@@ -27,7 +27,6 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 * @param unCronograma
 	 */
 	public ProviderCostoProveedor(Cronograma unCronograma) {
-		log.trace("ProviderCostoProveedor");
 		cronograma = unCronograma;
 	}
 
@@ -38,7 +37,6 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 */
 	@Override
 	public void add(CostoProveedor item) {
-		log.trace("add");
 	}
 
 	/**
@@ -46,7 +44,6 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 */
 	@Override
 	public void detach() {
-		log.trace("detach");
 	}
 
 	@Override
@@ -57,7 +54,6 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	@Override
 	public Iterator<? extends CostoProveedor> iterator(long first, long count) {
 		List<CostoProveedor> costos = cronograma.getCostoProveedores();
-		log.trace("iterator");
 		long toIndex = first + count;
 		if (toIndex > costos.size()) {
 			toIndex = costos.size();
@@ -73,16 +69,15 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 
 	/**
 	 * sirve para eliminar un item de la lista -- no implementado
+	 *
 	 * @param item item a eliminar
 	 */
 	@Override
 	public void remove(CostoProveedor item) {
-		log.trace("remove");
 	}
 
 	@Override
 	public long size() {
-		log.trace("size");
 		return cronograma.getCostoProveedores().size(); // evitar repetir el calculo en cada ciclo
 	}
 

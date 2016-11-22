@@ -43,11 +43,11 @@ public class Cronograma implements Serializable {
 		} else {
 			throw new ExcepcionCronograma("tarea fija no tiene horas");
 		}
-		log.trace("tarea fija - esfuerzo {}", tareaFija);
+
 		// tareas por esfuerzo: pueden estar o no incluidas
 		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
-			log.trace("tarea {} - porcentaje {}", t, Util.round(t.getPorcentaje(), 2));
+
 			if (t.getIncluir()) {
 				pctIncluidas += t.getPorcentaje();
 			}
@@ -66,10 +66,10 @@ public class Cronograma implements Serializable {
 		}
 		// tarea de acompañamiento
 		getTareaAcompañamiento().setDias(getTareaDiseñoTecnico().getDias());
-		log.trace("tarea acompañamiento - esfuerzo {}", getTareaAcompañamiento().getHoras());
+
 		// tarea de gestión
 		getTareaGestion().setDias(getTotalDias());
-		log.trace("tarea gestión - dias {} - esfuerzo {}", getTotalDias(), getTareaGestion().getHoras());
+
 	}
 
 	/**

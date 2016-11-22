@@ -24,13 +24,11 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 	@Override
 	protected void setearFiltros(QueryCriteria query) {
 		String valor = getFilterState().getNombre().trim();
-		Integer valorEntero = null;
-		log.debug("valor {}", valor);
+		Integer valorEntero;
 		try {
 			valorEntero = Integer.valueOf(valor);
-			log.debug("valor entero {}", valorEntero);
 		} catch (NumberFormatException e) {
-			log.debug("no es número");
+			valorEntero = null;
 		}
 		if (valorEntero != null) {
 			query.getCriteria().add(Restrictions.eq("idEstimacion", valorEntero));

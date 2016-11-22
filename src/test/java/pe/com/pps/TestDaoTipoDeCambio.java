@@ -11,10 +11,8 @@ public class TestDaoTipoDeCambio {
 
 	@Test
 	public void leerTipoDeCambio() {
-		log.info("leerTipoDeCambio");
 		DaoTipoDeCambio dtc = new DaoTipoDeCambio();
 		Double tipoDeCambio = dtc.leerTipoDeCambio();
-		log.info("tipo de cambio es {}", tipoDeCambio);
 	}
 
 }

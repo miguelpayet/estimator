@@ -6,10 +6,8 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.CostoProveedor;
-import pe.com.pps.model.Desviacion;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.providers.ProviderCostoProveedor;
 
@@ -26,7 +24,6 @@ public class PanelCostos extends PanelBaseCronograma {
 	}
 
 	private void agregarCostoProveedores() {
-		log.debug("agregarCostoProveedores");
 		ProviderCostoProveedor proveedor = new ProviderCostoProveedor(cronograma);
 		DataView<CostoProveedor> dv = new DataView<CostoProveedor>("dataview-costos", proveedor) {
 			@Override

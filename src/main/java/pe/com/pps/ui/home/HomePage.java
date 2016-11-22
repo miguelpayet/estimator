@@ -9,9 +9,9 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import pe.com.pps.ui.base.PaginaBaseEstimador;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.com.pps.ui.base.PaginaBaseEstimador;
 
 @AuthorizeInstantiation("usuario")
 public class HomePage extends PaginaBaseEstimador {
@@ -27,19 +27,16 @@ public class HomePage extends PaginaBaseEstimador {
 		add(new Label("page-title", "estimador funcional"));
 		add(new Link("lista_estimaciones") {
 			public void onClick() {
-				logger.info("listado de estimaciones");
 				throw new RestartResponseException(PaginaListaEstimaciones.class);
 			}
 		});
 		add(new Link("nueva_estimacion") {
 			public void onClick() {
-				logger.info("nueva estimación");
 				throw new RestartResponseException(PaginaEstimacion.class);
 			}
 		});
 		add(new Link("link-logout") {
 			public void onClick() {
-				logger.info("logout");
 				Subject subject = SecurityUtils.getSubject();
 				SecurityUtils.getSecurityManager().logout(subject);
 			}
