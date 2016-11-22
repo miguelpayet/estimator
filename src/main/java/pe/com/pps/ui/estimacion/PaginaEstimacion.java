@@ -9,15 +9,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.flow.RedirectToUrlException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.wicketstuff.egrid.EditableGrid;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
@@ -27,11 +27,13 @@ import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoParametro;
 import pe.com.pps.model.CostoAdicional;
 import pe.com.pps.model.Estimacion;
+import pe.com.pps.model.ExcepcionCronograma;
 import pe.com.pps.model.Moneda;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
+import pe.trazos.dao.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,7 +47,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 
 	private Form campos;
 	private FeedbackPanel feedback;
-	TextField proyecto;
+	private TextField proyecto;
 	private Set<Component> targets;
 
 	public PaginaEstimacion() {
@@ -148,21 +150,23 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarLinks() {
-		AjaxSubmitLink linkGrabar = new AjaxSubmitLink("grabar", campos) {
+		SubmitLink linkGrabar = new SubmitLink("grabar", campos) {
 			@Override
-			protected void onSubmit(AjaxRequestTarget target) {
-				log.debug("persistir");
+			public void onSubmit() {
 				try {
+					log.debug("grabar estimacion {}", getEstimacion().getIdEstimacion());
 					DaoEstimacion de = new DaoEstimacion();
+					getEstimacion().generarCronograma();
 					de.grabar(getEstimacion());
-					proyecto.setEnabled(false);
-					target.add(proyecto);
-					success("éxito");
-				} catch (Exception e) {
+					Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
+					if (tx.getStatus() == TransactionStatus.ACTIVE) {
+						tx.commit();
+					}
+					throw new RedirectToUrlException(this.getRequest().getOriginalUrl().toString());
+				} catch (ExcepcionCronograma e) {
 					log.error(e.getMessage());
 					error(e.getMessage());
 				}
-				target.add(feedback);
 			}
 		};
 		add(linkGrabar);
@@ -208,7 +212,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarPanelCostos() {
-		PanelCostos pc = new PanelCostos("panel-costos", new Model<Estimacion>(getEstimacion()));
+		PanelCostos pc = new PanelCostos("panel-costos", new Model<>(getEstimacion()));
 		pc.setOutputMarkupId(true);
 		add(pc);
 		targets.add(pc);
@@ -225,7 +229,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
 				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("descripcion")));
+				editorComponent.add(new AttributeModifier("class", new Model<>("descripcion")));
 			}
 		};
 		columns.add(descripcion);
@@ -240,7 +244,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
 				super.addBehaviors(editorComponent);
-				editorComponent.add(new AttributeModifier("class", new Model<String>("costo")));
+				editorComponent.add(new AttributeModifier("class", new Model<>("costo")));
 			}
 		};
 		columns.add(costo);
@@ -252,7 +256,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	 *
 	 * @return lista de targets para refresh via ajax
 	 */
-	public Set<Component> getTargets() {
+	Set<Component> getTargets() {
 		return targets;
 	}
 
