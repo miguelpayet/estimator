@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.com.pps</groupId>
 	<artifactId>estimator</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>estimator</name>
 	<description>aplicación para la estimación funcional de proyectos</description>
@@ -33,11 +33,11 @@
 		<wtp.version>none</wtp.version>
 	</properties>
 	<dependencies>
-                <dependency>
-                      	<groupId>pe.trazos</groupId>
-                      	<artifactId>dao</artifactId>
+		<dependency>
+			<groupId>pe.trazos</groupId>
+			<artifactId>dao</artifactId>
 			<version>1.0-SNAPSHOT</version>
-               	</dependency>
+		</dependency>
 		<dependency>
 			<groupId>pe.trazos</groupId>
 			<artifactId>login</artifactId>
@@ -143,20 +143,13 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
-		<!--dependency>
+		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
 			<version>${jetty9.version}</version>
 			<scope>test</scope>
-		</dependency-->
-		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-		        <artifactId>jetty-all</artifactId>
-		        <version>${jetty9.version}</version>
-		        <scope>test</scope>
-		        <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
-
 		<!-- dbunit -->
 		<dependency>
 			<groupId>org.dbunit</groupId>
