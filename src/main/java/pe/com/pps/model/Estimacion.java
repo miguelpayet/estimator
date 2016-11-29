@@ -15,6 +15,11 @@ public class Estimacion implements Serializable {
 
 	private final static Logger log = LogManager.getLogger(Estimacion.class);
 
+	public static Estimacion get(Integer id) {
+		DaoEstimacion de = new DaoEstimacion();
+		return de.get(Integer.valueOf(id));
+	}
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
 	@Transient
@@ -22,13 +27,13 @@ public class Estimacion implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<CasoDeUso> casosDeUso;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
-	Set<CostoAdicional> costosAdicionales;
+	private Set<CostoAdicional> costosAdicionales;
 	@Column(name = "eds")
 	private String eds;
 	@Column(name = "esfuerzo")
 	private Double esfuerzo;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
-	Set<FactorEstimacion> factoresEstimacion;
+	private Set<FactorEstimacion> factoresEstimacion;
 	@Column(name = "fechacalculo")
 	private Date fechaCalculo;
 	@Id
@@ -46,11 +51,6 @@ public class Estimacion implements Serializable {
 	@Version
 	@Column(name = "version")
 	private Integer version;
-
-	public static Estimacion get(Integer id) {
-		DaoEstimacion de = new DaoEstimacion();
-		return de.get(Integer.valueOf(id));
-	}
 
 	public Estimacion() {
 		actores = new HashSet<>();
@@ -195,7 +195,8 @@ public class Estimacion implements Serializable {
 	 */
 	@SuppressWarnings("unused")
 	public String getFechaCalculoString() {
-		return Util.format(getFechaCalculo());
+		Date fecha = getFechaCalculo();
+		return fecha == null ? ":" : Util.format(getFechaCalculo());
 	}
 
 	public Integer getIdEstimacion() {

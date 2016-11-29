@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import pe.com.pps.model.Estimacion;
 
@@ -19,6 +20,11 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 	@Override
 	public IModel model(Object object) {
 		return new Model<>((Estimacion) object);
+	}
+
+	@Override
+	public void ordenarQuery(QueryCriteria unQuery) {
+		unQuery.getCriteria().addOrder(Order.desc("idEstimacion"));
 	}
 
 	@Override

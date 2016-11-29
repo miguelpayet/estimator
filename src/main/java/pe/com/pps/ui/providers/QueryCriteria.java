@@ -14,15 +14,15 @@ import pe.trazos.dao.HibernateUtil;
 
 import java.util.List;
 
-public class QueryCriteria<T> {
+class QueryCriteria {
 
 	private Criteria criteria;
 
-	public QueryCriteria(Class queryClass) {
+	QueryCriteria(Class queryClass) {
 		createCriteria(queryClass);
 	}
 
-	public long contarFilas() {
+	long contarFilas() {
 		long filas;
 		criteria.setProjection(Projections.rowCount());
 		Object resultadoQuery = criteria.uniqueResult();
@@ -39,7 +39,7 @@ public class QueryCriteria<T> {
 		criteria = getSession().createCriteria(queryClass);
 	}
 
-	protected Criteria getCriteria() {
+	Criteria getCriteria() {
 		return criteria;
 	}
 
@@ -59,7 +59,7 @@ public class QueryCriteria<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> leer() {
+	<T> List<T> leer() {
 		return criteria.list();
 	}
 
@@ -69,15 +69,12 @@ public class QueryCriteria<T> {
 		}
 	}
 
-	public void setOrden() {
-	}
-
 	private void setRango(int inicio, int count) {
 		criteria.setFirstResult(inicio);
 		criteria.setMaxResults(count);
 	}
 
-	public void setRango(long inicio, long count) {
+	void setRango(long inicio, long count) {
 		setRango((int) inicio, (int) count);
 	}
 
