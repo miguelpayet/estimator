@@ -46,6 +46,7 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		clases.add(TareaEsfuerzo.class);
 		clases.add(TareaFija.class);
 		clases.add(TareaGestion.class);
+		clases.add(TareaSeguimiento.class);
 		clases.add(TipoCosto.class);
 		clases.add(TipoFactor.class);
 		clases.add(TipoPunto.class);
