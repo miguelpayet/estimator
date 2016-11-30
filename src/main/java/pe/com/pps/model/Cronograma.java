@@ -14,11 +14,10 @@ import java.util.stream.Collectors;
 
 /**
  * clase ligera para calcular el cronograma de una estimación
- * lo único que hace es modificar las tareas de la estimación de acuerdo a las reglas definidas
+ * es un agrupador y procesador para las tareas de la estimación
+ * modifica las tareas de la estimación de acuerdo a las reglas definidas
  */
 public class Cronograma implements Serializable {
-
-	private final static Logger log = LogManager.getLogger(Cronograma.class);
 
 	private Estimacion estimacion;
 	private HashMultimap<Integer, TareaCronograma> mapaTareas;
@@ -43,11 +42,9 @@ public class Cronograma implements Serializable {
 		} else {
 			throw new ExcepcionCronograma("tarea fija no tiene horas");
 		}
-
 		// tareas por esfuerzo: pueden estar o no incluidas
 		double pctIncluidas = 0;
 		for (TareaCronograma t : getTareasEsfuerzo()) {
-
 			if (t.getIncluir()) {
 				pctIncluidas += t.getPorcentaje();
 			}
@@ -56,7 +53,7 @@ public class Cronograma implements Serializable {
 		if (Util.round(pctIncluidas, 2) != 1) {
 			throw new ExcepcionCronograma("tareas incluidas no suman 100%, suman " + Util.round(pctIncluidas * 100, 2) + "%");
 		}
-		// calcular las tareas x esfuerzo
+		// calcular las tareas por esfuerzo
 		for (TareaCronograma t : getTareasEsfuerzo()) {
 			if (t.getIncluir()) {
 				t.setHoras(Util.round((estimacion.getEsfuerzo() - tareaFija) * t.getPorcentaje(), 2));
@@ -66,10 +63,8 @@ public class Cronograma implements Serializable {
 		}
 		// tarea de acompañamiento
 		getTareaAcompañamiento().setDias(getTareaDiseñoTecnico().getDias());
-
 		// tarea de gestión
 		getTareaGestion().setDias(getTotalDias());
-
 	}
 
 	/**
