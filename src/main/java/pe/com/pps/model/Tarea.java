@@ -1,5 +1,7 @@
 package pe.com.pps.model;
 
+import pe.com.pps.ui.estimacion.PanelFilaCronograma;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,14 +9,13 @@ import java.io.Serializable;
 @Table(name = "tarea")
 @DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Tarea implements Identificable<Integer>, Serializable {
+public abstract class Tarea implements Identificable<Integer>, Serializable {
 
-	public static final int ROL_DISEÑO_TECNICO = 1;
-	public static final int ROL_ACOMPAÑAMIENTO = 2;
-	public static final int ROL_GESTION = 3;
+	static final int ROL_ACOMPAÑAMIENTO = 2;
+	static final int ROL_DISEÑO_TECNICO = 1;
+	static final int ROL_GESTION = 3;
+	static final int ROL_SEGUIMIENTO = 4;
 
-	@Column(name = "rol")
-	private Integer rol;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idtarea;
@@ -29,6 +30,8 @@ public class Tarea implements Identificable<Integer>, Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idproveedor")
 	private Proveedor proveedor;
+	@Column(name = "rol")
+	private Integer rol;
 	@Column(name = "tipocosto", insertable = false, updatable = false)
 	private Integer tipoCosto;
 
@@ -51,24 +54,20 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return dias;
 	}
 
-	public Integer getRol() {
-		return rol;
-	}
+	public abstract String getClaseCss();
+
+	public abstract Class<? extends PanelFilaCronograma> getClasePanel();
 
 	@Override
 	public Integer getId() {
 		return idtarea;
 	}
 
-	public Boolean isIncluir() {
-		return incluir;
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
 
-	public Integer getOrden() {
+	Integer getOrden() {
 		return orden;
 	}
 
@@ -80,19 +79,24 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		return proveedor;
 	}
 
-	public Integer getTipoCosto() {
+	Integer getRol() {
+		return rol;
+	}
+
+	Integer getTipoCosto() {
 		return tipoCosto;
 	}
 
-
-	public void setRol(Integer rol) {
-		this.rol = rol;
+	Boolean isIncluir() {
+		return incluir;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIdtarea(Integer idtarea) {
 		this.idtarea = idtarea;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIncluir(Boolean incluir) {
 		this.incluir = incluir;
 	}
@@ -101,6 +105,7 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		this.nombre = nombre;
 	}
 
+	@SuppressWarnings("unused")
 	public void setOrden(Integer orden) {
 		this.orden = orden;
 	}
@@ -113,6 +118,12 @@ public class Tarea implements Identificable<Integer>, Serializable {
 		this.proveedor = proveedor;
 	}
 
+	@SuppressWarnings("unused")
+	public void setRol(Integer rol) {
+		this.rol = rol;
+	}
+
+	@SuppressWarnings("unused")
 	public void setTipoCosto(Integer tipoCosto) {
 		this.tipoCosto = tipoCosto;
 	}
