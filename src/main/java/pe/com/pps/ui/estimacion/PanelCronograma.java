@@ -12,51 +12,29 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import pe.com.pps.model.*;
 
-public class PanelCronograma extends PanelBaseCronograma {
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
+class PanelCronograma extends PanelBaseCronograma {
 
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
 
 	private FeedbackPanel feedback;
 	private Form formCronograma;
 
-	public PanelCronograma(String id, IModel<Estimacion> unModelo) {
+	PanelCronograma(String id, IModel<Estimacion> unModelo) {
 		super(id, unModelo);
 		crearFormCronograma();
 		agregarFactoresAmbiente();
 		agregarFactoresTecnicos();
 		agregarCronograma();
+		agregarAccionCalcular();
 		agregarPanelResumen();
 		agregarFeedback();
 	}
 
-	private void agregarCronograma() { // todo: refactorizar este metodo
-		RepeatingView rv = new RepeatingView("fila-cronograma");
-		rv.setOutputMarkupId(true);
-		formCronograma.add(rv);
-		cronograma.setEstimacion(getEstimacion());
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaFija(rv.newChildId(), new Model<>(cronograma.getTareaFija())), "fija");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea fija");
-		}
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaDuracion(rv.newChildId(), new Model<>(cronograma.getTareaAcompañamiento())), "duracion");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea de acompañamiento");
-		}
-		for (TareaCronograma t : cronograma.getTareasEsfuerzo()) {
-			PanelFilaTareaEsfuerzo panel = new PanelFilaTareaEsfuerzo(rv.newChildId(), new Model<>(t));
-			panel.setOutputMarkupId(true);
-			agregarTareaCronograma(rv, panel, "esfuerzo");
-		}
-		try {
-			agregarTareaCronograma(rv, new PanelFilaTareaGestion(rv.newChildId(), new Model<>(cronograma.getTareaGestion())), "gestion");
-		} catch (ExcepcionCronograma e) {
-			log.error("no hay tarea de gestión");
-		}
-		PanelFilaTotal pft = new PanelFilaTotal(rv.newChildId(), new Model<>(cronograma));
-		pft.add(new AttributeAppender("class", "totales"));
-		rv.add(pft);
+	private void agregarAccionCalcular() {
 		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
@@ -79,6 +57,21 @@ public class PanelCronograma extends PanelBaseCronograma {
 				}
 			}
 		});
+	}
+
+	private void agregarCronograma() {
+		RepeatingView rv = new RepeatingView("fila-cronograma");
+		rv.setOutputMarkupId(true);
+		formCronograma.add(rv);
+		cronograma.setEstimacion(getEstimacion());
+		List<TareaCronograma> tareas = getEstimacion().getTareasCronograma();
+		tareas.sort(TareaCronograma::compareTo);
+		for (TareaCronograma t : tareas) {
+			agregarTareaCronograma(rv, t);
+		}
+		PanelFilaTotal pft = new PanelFilaTotal(rv.newChildId(), new Model<>(cronograma));
+		pft.add(new AttributeAppender("class", "totales"));
+		rv.add(pft);
 	}
 
 	private void agregarFactores(String unSufijo, Integer unTipo) {
@@ -105,12 +98,31 @@ public class PanelCronograma extends PanelBaseCronograma {
 	}
 
 	private void agregarPanelResumen() {
-		formCronograma.add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
+		formCronograma.add(new PanelResumen("panel-resumen", new Model<>(getEstimacion())));
 	}
 
-	private void agregarTareaCronograma(RepeatingView unRepetidor, PanelFilaCronograma unPanel, String unaClase) {
-		unPanel.add(new AttributeAppender("class", unaClase));
-		unRepetidor.add(unPanel);
+	/**
+	 * agregar una tarea al repeatingview del cronograma
+	 *
+	 * @param unRepetidor        -> repeatingview para el cronograma
+	 * @param unaTareaCronograma -> tarea cuyo panel toca añadir
+	 */
+	private void agregarTareaCronograma(RepeatingView unRepetidor, TareaCronograma unaTareaCronograma) {
+		try {
+			// obtener la tarea
+			Tarea t = unaTareaCronograma.getTarea();
+			// obtener la clase de panel que usa la tarea y construirlo
+			Class<? extends PanelFilaCronograma> panelFila = t.getClasePanel();
+			Constructor ctor = panelFila.getConstructor(String.class, IModel.class);
+			PanelFilaCronograma panel = (PanelFilaCronograma) ctor.newInstance(unRepetidor.newChildId(), new Model<>(unaTareaCronograma));
+			// añadir el estilo css de la fila
+			panel.add(new AttributeAppender("class", t.getClaseCss()));
+			// añadir el panel al repetidor
+			panel.setOutputMarkupId(true);
+			unRepetidor.add(panel);
+		} catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+			log.error("error al construir fila del panel " + e.getMessage());
+		}
 	}
 
 	private void crearFormCronograma() {
