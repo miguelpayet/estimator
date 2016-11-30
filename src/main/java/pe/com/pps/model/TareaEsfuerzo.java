@@ -1,5 +1,8 @@
 package pe.com.pps.model;
 
+import pe.com.pps.ui.estimacion.PanelFilaCronograma;
+import pe.com.pps.ui.estimacion.PanelFilaTareaEsfuerzo;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -24,6 +27,16 @@ public class TareaEsfuerzo extends Tarea {
 			dias = Util.round((unaTarea.getHoras() / unaTarea.getRecursos()) / 8, 2); // todo: horas del proveedor
 		}
 		return dias;
+	}
+
+	@Override
+	public String getClaseCss() {
+		return "esfuerzo";
+	}
+
+	@Override
+	public Class<? extends PanelFilaCronograma> getClasePanel() {
+		return PanelFilaTareaEsfuerzo.class;
 	}
 
 }
