@@ -1,8 +1,9 @@
 package pe.com.pps.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import pe.com.pps.dao.*;
+import pe.com.pps.dao.DaoActor;
+import pe.com.pps.dao.DaoCasoDeUso;
+import pe.com.pps.dao.DaoCostoAdicional;
+import pe.com.pps.dao.DaoEstimacion;
 import pe.trazos.login.modelo.Usuario;
 
 import javax.persistence.*;
@@ -12,13 +13,6 @@ import java.util.*;
 @Entity
 @Table(name = "estimacion")
 public class Estimacion implements Serializable {
-
-	private final static Logger log = LogManager.getLogger(Estimacion.class);
-
-	public static Estimacion get(Integer id) {
-		DaoEstimacion de = new DaoEstimacion();
-		return de.get(Integer.valueOf(id));
-	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<Actor> actores;
@@ -34,6 +28,8 @@ public class Estimacion implements Serializable {
 	private Double esfuerzo;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
 	private Set<FactorEstimacion> factoresEstimacion;
+	@Column(name = "numfase")
+	private Integer fase;
 	@Column(name = "fechacalculo")
 	private Date fechaCalculo;
 	@Id
@@ -41,6 +37,8 @@ public class Estimacion implements Serializable {
 	private Integer idEstimacion;
 	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "numestimacion")
+	private Integer numero;
 	@Column(name = "puntos")
 	private Double puntos;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
@@ -51,6 +49,11 @@ public class Estimacion implements Serializable {
 	@Version
 	@Column(name = "version")
 	private Integer version;
+
+	public static Estimacion get(Integer id) {
+		DaoEstimacion de = new DaoEstimacion();
+		return de.get(id);
+	}
 
 	public Estimacion() {
 		actores = new HashSet<>();
@@ -80,13 +83,13 @@ public class Estimacion implements Serializable {
 		actualizado = false;
 	}
 
-	public void addFactorEstimacion(FactorEstimacion unFactorEstimacion) {
+	void addFactorEstimacion(FactorEstimacion unFactorEstimacion) {
 		factoresEstimacion.add(unFactorEstimacion);
 		unFactorEstimacion.setEstimacion(this);
 		actualizado = false;
 	}
 
-	public void addTareaCronograma(Tarea unaTarea) {
+	void addTareaCronograma(Tarea unaTarea) {
 		TareaCronograma tc = new TareaCronograma();
 		tc.setEstimacion(this);
 		tc.setTarea(unaTarea);
@@ -121,6 +124,12 @@ public class Estimacion implements Serializable {
 		return casosDeUso;
 	}
 
+	/**
+	 * metodo para wicket
+	 *
+	 * @return el costo total de la estimación
+	 */
+	@SuppressWarnings("unused")
 	public Double getCostoTotal() {
 		Double costo = 0.0;
 		for (TareaCronograma t : tareasCronograma) {
@@ -154,6 +163,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return suma el total de horas del esfuerzo de las tareas del cronograma y lo formatea
 	 */
+	@SuppressWarnings("unused")
 	public String getEsfuerzoCronograma() {
 		double total = 0d;
 		for (TareaCronograma t : tareasCronograma) {
@@ -172,19 +182,29 @@ public class Estimacion implements Serializable {
 		return Util.format(getEsfuerzo());
 	}
 
-	private List<FactorEstimacion> getFactoresAmbientales() {
+/*	private List<FactorEstimacion> getFactoresAmbientales() {
 		return new Factorama(this).getFactoresAmbientales();
-	}
+	}*/
 
-	public Set<FactorEstimacion> getFactoresEstimacion() {
+	Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
 	}
 
-	private List<FactorEstimacion> getFactoresTecnicos() {
-		return new Factorama(this).getFactoresAmbientales();
+	/**
+	 * método para wicket
+	 *
+	 * @return fase de la estimación
+	 */
+	@SuppressWarnings("unused")
+	public Integer getFase() {
+		return fase;
 	}
 
-	public Date getFechaCalculo() {
+	/**
+	 * @return fecha de última grabación de la estimación
+	 */
+	@SuppressWarnings("unused")
+	private Date getFechaCalculo() {
 		return fechaCalculo;
 	}
 
@@ -205,6 +225,16 @@ public class Estimacion implements Serializable {
 
 	public String getNombre() {
 		return nombre;
+	}
+
+	/**
+	 * método para wicket
+	 *
+	 * @return el número de la estimación
+	 */
+	@SuppressWarnings("unused")
+	public Integer getNumero() {
+		return numero;
 	}
 
 	public Double getPuntos() {
@@ -232,11 +262,6 @@ public class Estimacion implements Serializable {
 
 	public Integer getVersion() {
 		return version;
-	}
-
-	public List<TareaCronograma> leerTareas() {
-		DaoCronograma dc = new DaoCronograma();
-		return dc.listar();
 	}
 
 	public void removeActor(Actor unActor) {
@@ -274,11 +299,6 @@ public class Estimacion implements Serializable {
 		actualizado = false;
 	}
 
-	public void setCasosDeUso(Set<CasoDeUso> casosDeUso) {
-		this.casosDeUso = casosDeUso;
-		actualizado = false;
-	}
-
 	public void setEds(String eds) {
 		this.eds = eds;
 	}
@@ -287,15 +307,32 @@ public class Estimacion implements Serializable {
 		this.esfuerzo = esfuerzo;
 	}
 
-	public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
-		this.factoresEstimacion = factoresEstimacion;
-		actualizado = false;
+	/**
+	 * método para wicket
+	 *
+	 * @param fase -> la fase de la estimación
+	 */
+	@SuppressWarnings("unused")
+	public void setFase(Integer fase) {
+		this.fase = fase;
 	}
 
+	/**
+	 * método para wicket
+	 *
+	 * @param fechaCalculo -> la última fecha de cálculo
+	 */
+	@SuppressWarnings("unused")
 	public void setFechaCalculo(Date fechaCalculo) {
 		this.fechaCalculo = fechaCalculo;
 	}
 
+	/**
+	 * método para wicket
+	 *
+	 * @param idEstimacion -> el id de la estimación
+	 */
+	@SuppressWarnings("unused")
 	public void setIdEstimacion(Integer idEstimacion) {
 		this.idEstimacion = idEstimacion;
 	}
@@ -304,15 +341,17 @@ public class Estimacion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	private void setPuntos(Double puntos) {
-		this.puntos = puntos;
+	/**
+	 * método para wicket
+	 *
+	 * @param numero -> el número de la estimación
+	 */
+	@SuppressWarnings("unused")
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
-	public void setTareasCronograma(List<TareaCronograma> tareasCronograma) {
-		this.tareasCronograma = tareasCronograma;
-	}
-
-	public void setUsuario(Usuario usuario) {
+	void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
@@ -341,7 +380,11 @@ public class Estimacion implements Serializable {
 		puntos = Util.round(puntos * unFactor, 2);
 	}
 
-	public void totalizar() {
+	public String toString() {
+		return "estimación " + (this.idEstimacion == null ? "sin número " : this.idEstimacion.toString());
+	}
+
+	private void totalizar() {
 		totalizar(false);
 	}
 
