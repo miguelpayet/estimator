@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.flow.RedirectToUrlException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -47,9 +46,9 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 
 	private Form campos;
 	private FeedbackPanel feedback;
-	private TextField proyecto;
 	private Set<Component> targets;
 
+	@SuppressWarnings("unused")
 	public PaginaEstimacion() {
 		this(new PageParameters());
 	}
@@ -83,7 +82,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		proyecto = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "idEstimacion"));
+		TextField proyecto = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "idEstimacion"));
 		proyecto.setOutputMarkupId(true);
 		if (getEstimacion().getIdEstimacion() != null) {
 			proyecto.setEnabled(false);
@@ -154,17 +153,20 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			@Override
 			public void onSubmit() {
 				try {
-					log.debug("grabar estimacion {}", getEstimacion().getIdEstimacion());
-					DaoEstimacion de = new DaoEstimacion();
-					getEstimacion().generarCronograma();
-					de.grabar(getEstimacion());
+					log.info("grabar estimacion {}", getEstimacion().getIdEstimacion());
 					Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
 					if (tx.getStatus() == TransactionStatus.ACTIVE) {
+						DaoEstimacion de = new DaoEstimacion();
+						getEstimacion().generarCronograma();
+						de.grabar(getEstimacion());
 						tx.commit();
+						PageParameters params = new PageParameters();
+						params.add("id", getEstimacion().getIdEstimacion());
+						throw new RestartResponseException(PaginaEstimacion.class, params);
+					} else {
+						error("no está activa la transacción hibernate");
 					}
-					throw new RedirectToUrlException(this.getRequest().getOriginalUrl().toString());
 				} catch (ExcepcionCronograma e) {
-					log.error(e.getMessage());
 					error(e.getMessage());
 				}
 			}
@@ -174,25 +176,17 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
 				boolean volver = true;
-				log.info("volver");
 				// validar si el objeto ha cambiado respecto a lo que está grabado
 				if (getEstimacion().getIdEstimacion() != null && getEstimacion().getVersion() != null) {
 					DaoEstimacion de = new DaoEstimacion();
 					Estimacion grabado = de.get(getEstimacion().getIdEstimacion());
 					if (grabado != null) {
 						if (!grabado.compararCon(getEstimacion())) {
-							log.info("son distintos");
 							error("tienes cambios no grabados. puedes salir, pero no con este botón.");
 							volver = false;
 							target.add(feedback);
-						} else {
-							log.info("son iguales");
 						}
-					} else {
-						log.info("no existe");
 					}
-				} else {
-					log.info("es nuevo");
 				}
 				if (volver) {
 					throw new RestartResponseException(PaginaListaEstimaciones.class);
