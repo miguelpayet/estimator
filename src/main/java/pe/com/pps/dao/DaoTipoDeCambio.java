@@ -11,17 +11,32 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 
+/**
+ * clase para data access de la entidad tipo de cambio
+ * consume un servicio de yahoo (según la variable ruta)
+ */
 public class DaoTipoDeCambio {
 
 	private static final String CAMBIO = "USDPEN";
 	private static final String CONSULTA = "select%20*%20from%20yahoo.finance.xchange%20where%20pair%20%3D%20%22{}%22";
 	private static final String RUTA = "https://query.yahooapis.com/v1/public/yql?q={}&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 
+	/**
+	 * crear la dirección de la consulta con el cambio que se está buscando
+	 *
+	 * @return dirección de la consulta
+	 */
 	private String crearDireccion() {
 		String consulta = CONSULTA.replace("{}", CAMBIO);
 		return RUTA.replace("{}", consulta);
 	}
 
+	/**
+	 * extraer el tipo de cambio del xml devuelto por el servicio
+	 *
+	 * @param unXml -> xml devuelto por el servicio
+	 * @return tipo de cambio
+	 */
 	private Double extraerTipoDeCambio(String unXml) {
 		Double tipoDeCambio = 0d;
 		XPathFactory xpathFactory = XPathFactory.newInstance();
@@ -35,6 +50,12 @@ public class DaoTipoDeCambio {
 		return tipoDeCambio;
 	}
 
+	/**
+	 * llamar al servicio y devolver la cadena obtenida
+	 *
+	 * @param unaDireccion -> dirección del servicio
+	 * @return los datos devueltos por el servicio
+	 */
 	public String leerResultado(String unaDireccion) {
 		String resultado;
 		try {
@@ -52,6 +73,11 @@ public class DaoTipoDeCambio {
 		return resultado;
 	}
 
+	/**
+	 * obtener el tipo de cambio
+	 *
+	 * @return el tipo de cambio obtenido
+	 */
 	public Double leerTipoDeCambio() {
 		String resultado = leerResultado(crearDireccion());
 		Double tipoDeCambio = extraerTipoDeCambio(resultado);
