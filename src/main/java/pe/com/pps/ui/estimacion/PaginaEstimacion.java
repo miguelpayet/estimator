@@ -15,8 +15,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.wicketstuff.egrid.EditableGrid;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
@@ -32,7 +30,6 @@ import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
-import pe.trazos.dao.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -154,24 +151,19 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			public void onSubmit() {
 				try {
 					log.info("grabar estimacion {}", getEstimacion().getIdEstimacion());
-					Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
-					if (tx.getStatus() == TransactionStatus.ACTIVE) {
-						DaoEstimacion de = new DaoEstimacion();
-						getEstimacion().generarCronograma();
-						de.grabar(getEstimacion());
-						tx.commit();
-						PageParameters params = new PageParameters();
-						params.add("id", getEstimacion().getIdEstimacion());
-						throw new RestartResponseException(PaginaEstimacion.class, params);
-					} else {
-						error("no está activa la transacción hibernate");
-					}
+					DaoEstimacion de = new DaoEstimacion();
+					getEstimacion().generarCronograma();
+					de.grabar(getEstimacion());
+					//PageParameters params = new PageParameters();
+					//params.add("id", getEstimacion().getIdEstimacion());
+					//throw new RestartResponseException(PaginaEstimacion.class, params);
 				} catch (ExcepcionCronograma e) {
 					error(e.getMessage());
 				}
 			}
 		};
 		add(linkGrabar);
+		/*
 		AjaxSubmitLink linkVolver = new AjaxSubmitLink("volver", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
@@ -194,6 +186,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			}
 		};
 		add(linkVolver);
+		*/
 		AjaxSubmitLink linkImprimir = new AjaxSubmitLink("imprimir", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
