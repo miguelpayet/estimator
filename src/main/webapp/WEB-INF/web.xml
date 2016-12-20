@@ -55,7 +55,7 @@
 		<param-value>development</param-value>
 	</context-param>
 
-    <!-- filtro hibernate -->
+    <!-- filtro hibernate>
     <filter>
         <filter-name>wicket.hibernate</filter-name>
         <filter-class>pe.com.pps.app.HibernateFilter</filter-class>
@@ -64,21 +64,7 @@
         <filter-name>wicket.hibernate</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!-- filtro hibernate -->
+    <filtro hibernate -->
 
-    <!-- filtro wicket -->
-    <filter>
-        <filter-name>wicket.estimator</filter-name>
-        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-        <init-param>
-            <param-name>applicationClassName</param-name>
-            <param-value>pe.com.pps.app.WicketApplication</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>wicket.estimator</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- filtro wicket -->
 
 </web-app>
