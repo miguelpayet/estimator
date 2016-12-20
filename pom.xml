@@ -29,8 +29,7 @@
 		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shiro.version>1.2.6</shiro.version>
-		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
-		<wtp.version>none</wtp.version>
+		<wicket.version>8.0.0-M2</wicket.version>
 	</properties>
 	<dependencies>
 		<dependency>
