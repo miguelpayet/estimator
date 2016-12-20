@@ -25,55 +25,63 @@ public class HibernateRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onBeginRequest(RequestCycle cycle) {
-		log.debug("HibernateRequestListener.onBeginRequest {}", cycle.getRequest().getOriginalUrl());
+		log.debug("onBeginRequest {}", cycle.getRequest().getOriginalUrl());
 		Session sesion = sf.getCurrentSession();
 		sesion.beginTransaction();
 	}
 
 	@Override
 	public void onDetach(RequestCycle cycle) {
-		log.trace("HibernateRequestListener.onDetach {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onDetach {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
-		log.debug("HibernateRequestListener.onEndRequest {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onEndRequest");
 		Session sesion = sf.getCurrentSession();
-		if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
-			log.debug("rolling back transaction");
-			sesion.getTransaction().rollback();
+		try {
+			sesion.getTransaction().commit();
+		} catch (Throwable ex) {
+			try {
+				if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
+					sesion.getTransaction().rollback();
+				}
+			} catch (Throwable rbEx) {
+				log.error("Could not rollback after exception!", rbEx);
+				rbEx.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
-		log.error("HibernateRequestListener.onException {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
+		log.error("onException {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
 		return null;
 	}
 
 	@Override
 	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception ex) {
-		log.trace("MiRequestListener.onExceptionRequestHandlerResolved {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
+		log.trace("onExceptionRequestHandlerResolved {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("MiRequestListener.onRequestHandlerExecuted {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onRequestHandlerExecuted {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("MiRequestListener.onRequestHandlerResolved {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onRequestHandlerResolved {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("MiRequestListener.onRequestHandlerScheduled {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onRequestHandlerScheduled {}", cycle.getRequest().getOriginalUrl());
 	}
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		log.trace("MiRequestListener.onUrlMapped {}", cycle.getRequest().getOriginalUrl());
+		log.trace("onUrlMapped {}", cycle.getRequest().getOriginalUrl());
 	}
 
 }
