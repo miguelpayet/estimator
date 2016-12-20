@@ -22,6 +22,7 @@ import java.util.List;
 public abstract class PanelPuntuable<T extends Puntuable> extends PanelBaseEstimacion {
 
 	protected static final int FILAS_GRID = 10;
+
 	protected FeedbackPanel panelFeedback;
 	protected ProviderPuntuable<T> provider;
 
