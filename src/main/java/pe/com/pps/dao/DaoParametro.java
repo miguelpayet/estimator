@@ -46,7 +46,8 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 	 * @param unParametro -> parámetro cuya lista se busca
 	 * @return lista de valores del parámetro
 	 */
-	public List<String> getLista(String unParametro) {
+	@SuppressWarnings("unchecked")
+	private List<String> getLista(String unParametro) {
 		Criteria crit = crearCriteria();
 		crit.add(Restrictions.eq("tipo", unParametro));
 		crit.addOrder(Order.asc("codigo"));
@@ -74,7 +75,7 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 	 * @param unParametro -> nombre del parámetro
 	 * @return valor único del parámetro
 	 */
-	public Parametro getParametroUnico(String unParametro) {
+	private Parametro getParametroUnico(String unParametro) {
 		ParametroPK pk = new ParametroPK(unParametro, 1);
 		return get(pk);
 	}

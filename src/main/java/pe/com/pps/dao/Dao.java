@@ -16,14 +16,14 @@ public abstract class Dao<T> {
 	/**
 	 * clase del modelo (para tiempo de ejecución)
 	 */
-	protected Class claseModelo;
+	Class claseModelo;
 
 	/**
 	 * constructor
 	 *
 	 * @param unaClase -> clase del modelo
 	 */
-	public Dao(Class unaClase) {
+	Dao(Class unaClase) {
 		claseModelo = unaClase;
 	}
 
@@ -32,7 +32,7 @@ public abstract class Dao<T> {
 	 *
 	 * @return un criteria
 	 */
-	protected Criteria crearCriteria() {
+	Criteria crearCriteria() {
 		return getSesion().createCriteria(getClaseModelo());
 	}
 
@@ -51,6 +51,7 @@ public abstract class Dao<T> {
 	 * @param unId -> identificador del objeto (típicamente una llave sintética autogenerada)
 	 * @return objeto obtenido de la bd
 	 */
+	@SuppressWarnings("unchecked")
 	public T get(int unId) {
 		return (T) getSesion().get(claseModelo, unId);
 	}
@@ -58,7 +59,7 @@ public abstract class Dao<T> {
 	/**
 	 * @return clase de la entidad
 	 */
-	public Class getClaseModelo() {
+	Class getClaseModelo() {
 		return claseModelo;
 	}
 
@@ -66,7 +67,7 @@ public abstract class Dao<T> {
 	 * @return sesión actual de hibernate
 	 */
 
-	protected Session getSesion() {
+	Session getSesion() {
 		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
 
@@ -84,6 +85,7 @@ public abstract class Dao<T> {
 	 *
 	 * @return lista de objetos de la entidad
 	 */
+	@SuppressWarnings("unchecked")
 	public List<T> listar() {
 		Criteria crit = crearCriteria();
 		return crit.list();

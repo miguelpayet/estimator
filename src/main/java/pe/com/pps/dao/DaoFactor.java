@@ -15,7 +15,7 @@ public abstract class DaoFactor<T extends Factor> extends Dao<T> {
 	 *
 	 * @param unaClase -> clase de factor
 	 */
-	public DaoFactor(Class unaClase) {
+	DaoFactor(Class unaClase) {
 		super(unaClase);
 	}
 
@@ -24,6 +24,7 @@ public abstract class DaoFactor<T extends Factor> extends Dao<T> {
 	 *
 	 * @return lista de factores
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Factor> listarFactores() {
 		Criteria crit = getSesion().createCriteria(Factor.class);
 		return crit.list();
