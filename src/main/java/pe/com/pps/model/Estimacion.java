@@ -1,7 +1,5 @@
 package pe.com.pps.model;
 
-import pe.com.pps.dao.DaoActor;
-import pe.com.pps.dao.DaoCasoDeUso;
 import pe.com.pps.dao.DaoCostoAdicional;
 import pe.com.pps.dao.DaoEstimacion;
 import pe.trazos.login.modelo.Usuario;
@@ -14,13 +12,13 @@ import java.util.*;
 @Table(name = "estimacion")
 public class Estimacion implements Serializable {
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion", orphanRemoval = true)
 	private Set<Actor> actores;
 	@Transient
 	private boolean actualizado;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion", orphanRemoval = true)
 	private Set<CasoDeUso> casosDeUso;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion", orphanRemoval = true)
 	private Set<CostoAdicional> costosAdicionales;
 	@Column(name = "eds")
 	private String eds;
@@ -97,11 +95,11 @@ public class Estimacion implements Serializable {
 		tareasCronograma.add(tc);
 	}
 
+	@SuppressWarnings("unused")
 	public boolean compararCon(Estimacion unaEstimacion) {
 		boolean iguales;
 		String[] campos = {"eds", "esfuerzo", "fechaCalculo", "idEstimacion", "nombre", "puntos", "version"};
 		iguales = Comparador.comparar(Estimacion.class, this, unaEstimacion, campos);
-		// todo: posiblemente comparar las listas de actores
 		return iguales;
 	}
 
@@ -181,10 +179,6 @@ public class Estimacion implements Serializable {
 	public String getEsfuerzoString() {
 		return Util.format(getEsfuerzo());
 	}
-
-/*	private List<FactorEstimacion> getFactoresAmbientales() {
-		return new Factorama(this).getFactoresAmbientales();
-	}*/
 
 	Set<FactorEstimacion> getFactoresEstimacion() {
 		return factoresEstimacion;
@@ -268,8 +262,8 @@ public class Estimacion implements Serializable {
 		if (unActor != null) {
 			if (actores.contains(unActor)) {
 				actores.remove(unActor);
-				DaoActor da = new DaoActor();
-				da.eliminar(unActor);
+				DaoEstimacion de = new DaoEstimacion();
+				de.grabar(this);
 			}
 		}
 	}
@@ -278,8 +272,8 @@ public class Estimacion implements Serializable {
 		if (unCaso != null) {
 			if (casosDeUso.contains(unCaso)) {
 				casosDeUso.remove(unCaso);
-				DaoCasoDeUso dc = new DaoCasoDeUso();
-				dc.eliminar(unCaso);
+				DaoEstimacion de = new DaoEstimacion();
+				de.grabar(this);
 			}
 		}
 	}
