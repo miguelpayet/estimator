@@ -4,9 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.wicketstuff.egrid.EditableGrid;
-import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
-import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
 import pe.com.pps.model.Actor;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.providers.ProviderActor;
@@ -20,7 +18,7 @@ public class PanelActores extends PanelPuntuable<Actor> {
 
 	class EditableGridActores extends EditableGrid<Actor, String> {
 
-		public EditableGridActores(String id, List<? extends IColumn<Actor, String>> iColumns, IEditableDataProvider<Actor, String> dataProvider, long rowsPerPage, Class<Actor> clazz) {
+		EditableGridActores(String id, List<? extends IColumn<Actor, String>> iColumns, IEditableDataProvider<Actor, String> dataProvider, long rowsPerPage, Class<Actor> clazz) {
 			super(id, iColumns, dataProvider, rowsPerPage, clazz);
 		}
 
@@ -36,7 +34,7 @@ public class PanelActores extends PanelPuntuable<Actor> {
 
 	}
 
-	public PanelActores(String id, Estimacion unaEstimacion, FeedbackPanel unFeedbackPanel) {
+	PanelActores(String id, Estimacion unaEstimacion, FeedbackPanel unFeedbackPanel) {
 		super(id, unaEstimacion, unFeedbackPanel);
 		agregarGridActores();
 	}
@@ -63,6 +61,5 @@ public class PanelActores extends PanelPuntuable<Actor> {
 	protected void init(Estimacion unaEstimacion) {
 		provider = new ProviderActor(getEstimacion());
 	}
-
 
 }
