@@ -210,7 +210,7 @@ public class Estimacion implements Serializable {
 	@SuppressWarnings("unused")
 	public String getFechaCalculoString() {
 		Date fecha = getFechaCalculo();
-		return fecha == null ? ":" : Util.format(getFechaCalculo());
+		return fecha == null ? "?" : Util.format(getFechaCalculo());
 	}
 
 	public Integer getIdEstimacion() {
@@ -262,8 +262,6 @@ public class Estimacion implements Serializable {
 		if (unActor != null) {
 			if (actores.contains(unActor)) {
 				actores.remove(unActor);
-				DaoEstimacion de = new DaoEstimacion();
-				de.grabar(this);
 			}
 		}
 	}
@@ -272,8 +270,6 @@ public class Estimacion implements Serializable {
 		if (unCaso != null) {
 			if (casosDeUso.contains(unCaso)) {
 				casosDeUso.remove(unCaso);
-				DaoEstimacion de = new DaoEstimacion();
-				de.grabar(this);
 			}
 		}
 	}
@@ -282,8 +278,6 @@ public class Estimacion implements Serializable {
 		if (unCosto != null) {
 			if (costosAdicionales.contains(unCosto)) {
 				costosAdicionales.remove(unCosto);
-				DaoCostoAdicional dca = new DaoCostoAdicional();
-				dca.eliminar(unCosto);
 			}
 		}
 	}
