@@ -99,7 +99,8 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarEstimacion() {
-		add(new Label("id-estimacion", getEstimacion().getIdEstimacion()));
+		add(new Label("numero-estimacion", getEstimacion().getNumero()));
+		add(new Label("fase-estimacion", getEstimacion().getFase()));
 		add(new Label("nombre-estimacion", getEstimacion().getNombre()));
 		add(new Label("eds-estimacion", getEstimacion().getEds()));
 	}
@@ -116,11 +117,6 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 
 	private void agregarIndicadores() {
 		add(new PanelResumen("panel-resumen", new Model<Estimacion>(getEstimacion())));
-		/*
-		add(new Label("desviacion-minimo", new PropertyModel<Double>(cronograma, "rangoMinimo")));
-		add(new Label("desviacion-maximo", new PropertyModel<Double>(cronograma, "rangoMaximo")));
-		add(new Label("meses-cronograma", new PropertyModel<Double>(cronograma, "totalMeses")));
-		*/
 	}
 
 	private <T> List<PropertyPopulatorClase<T>> columnasActor() {
