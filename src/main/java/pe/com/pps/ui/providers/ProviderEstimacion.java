@@ -24,7 +24,8 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 
 	@Override
 	public void ordenarQuery(QueryCriteria unQuery) {
-		unQuery.getCriteria().addOrder(Order.desc("idEstimacion"));
+		unQuery.getCriteria().addOrder(Order.desc("numero"));
+		unQuery.getCriteria().addOrder(Order.asc("fase"));
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 			valorEntero = null;
 		}
 		if (valorEntero != null) {
-			query.getCriteria().add(Restrictions.eq("idEstimacion", valorEntero));
+			query.getCriteria().add(Restrictions.eq("numero", valorEntero));
 		} else {
 			query.getCriteria().add(Restrictions.or(Restrictions.like("nombre", "%" + valor + "%"), Restrictions.like("eds", "%" + valor + "%")));
 		}
