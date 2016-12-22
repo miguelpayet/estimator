@@ -79,12 +79,17 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private void agregarCampos() {
 		campos = new Form("campos");
 		add(campos);
-		TextField proyecto = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "idEstimacion"));
-		proyecto.setOutputMarkupId(true);
+		TextField numero = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "numero"));
+		numero.setOutputMarkupId(true);
+		campos.add(numero);
+		TextField fase = new TextField<>("fase", new PropertyModel<>(getEstimacion(), "fase"));
+		fase.setOutputMarkupId(true);
+		campos.add(fase);
+		/*
 		if (getEstimacion().getIdEstimacion() != null) {
-			proyecto.setEnabled(false);
+			fase.setEnabled(false);
 		}
-		campos.add(proyecto);
+		*/
 		DaoParametro dp = new DaoParametro();
 		DropDownChoice<String> eds = new DropDownChoice<>("eds", new PropertyModel<>(getEstimacion(), "eds"), dp.getNombreEds());
 		campos.add(eds);
