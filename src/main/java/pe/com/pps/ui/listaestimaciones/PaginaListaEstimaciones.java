@@ -17,8 +17,7 @@ import java.util.ArrayList;
 @AuthorizeInstantiation("usuario")
 public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEstimacion, Integer> {
 
-	private static final Logger log = LogManager.getLogger(PaginaListaEstimaciones.class);
-
+	@SuppressWarnings("unused")
 	public PaginaListaEstimaciones() {
 		this(new PageParameters());
 	}
@@ -34,7 +33,7 @@ public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEst
 
 	@Override
 	protected void crearColumnas(ArrayList<IColumn<Estimacion, String>> columnas) {
-		columnas.add(new ClickablePropertyColumn<>(Model.of("Número"), "numero", "idEstimacion"));
+		columnas.add(new ClickablePropertyColumn<>(Model.of("Número"), "numero", "idEstimacion", "numero"));
 		columnas.add(new PropertyColumnEstilo<>(Model.of("Fase"), null, "fase", "idEstimacion"));
 		columnas.add(new ClickablePropertyColumn<>(Model.of("Nombre"), "nombre", "nombre"));
 		columnas.add(new PropertyColumnEstilo<>(Model.of("EDS"), null, "eds", "eds"));
