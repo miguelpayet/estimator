@@ -2,6 +2,8 @@ package pe.com.pps.ui.providers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.hibernate.criterion.Order;
@@ -15,6 +17,7 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 	public ProviderEstimacion() {
 		super(new FiltroTablaNombre());
 		setClaseDominio(Estimacion.class);
+		setSort("numero", SortOrder.ASCENDING);
 	}
 
 	@Override
@@ -24,7 +27,13 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 
 	@Override
 	public void ordenarQuery(QueryCriteria unQuery) {
-		unQuery.getCriteria().addOrder(Order.desc("numero"));
+		ISortState<String> sort = getSortState();
+		SortOrder order = sort.getPropertySortOrder("numero");
+		if (order.equals(SortOrder.ASCENDING)) {
+			unQuery.getCriteria().addOrder(Order.asc("numero"));
+		} else {
+			unQuery.getCriteria().addOrder(Order.desc("numero"));
+		}
 		unQuery.getCriteria().addOrder(Order.asc("fase"));
 	}
 
