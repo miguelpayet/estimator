@@ -31,13 +31,12 @@ public class ClickablePropertyColumn<T, V> extends AbstractColumn<T, V> {
 	private String cssClass = null;
 	private String property; // la propiedad que se pasará a la celda para que la obtenga del objeto de cada fila
 
-	protected ClickablePropertyColumn(IModel<String> displayModel, String unaPropiedad) {
-		super(displayModel, null);
-		property = unaPropiedad;
+	public ClickablePropertyColumn(IModel<String> displayModel, String unaPropiedad, String unaClaseCss) {
+		this(displayModel, unaPropiedad, unaClaseCss, null);
 	}
 
-	public ClickablePropertyColumn(IModel<String> displayModel, String unaPropiedad, String unaClaseCss) {
-		super(displayModel, null);
+	public ClickablePropertyColumn(IModel<String> displayModel, String unaPropiedad, String unaClaseCss, V unSortProperty) {
+		super(displayModel, unSortProperty);
 		property = unaPropiedad;
 		cssClass = unaClaseCss;
 	}
