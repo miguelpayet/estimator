@@ -31,6 +31,7 @@ public class Estimacion implements Serializable {
 	@Column(name = "fechacalculo")
 	private Date fechaCalculo;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idestimacion", nullable = false)
 	private Integer idEstimacion;
 	@Column(name = "nombre")
