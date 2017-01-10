@@ -1,55 +1,53 @@
 <wicket:extend xmlns:wicket="http://www.w3.org/1999/xhtml">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 titulo">
-                <h1><span wicket:id="titulo"></span></h1>
-            </div>
+    <div class="row">
+        <div class="col-md-12 titulo">
+            <h1><span wicket:id="titulo"></span></h1>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <form class="estimacion" wicket:id="campos">
-                    <ul>
-                        <li class="numero">
-                            <label class="numero" for="numero">Proyecto</label>
-                            <input id="numero" wicket:id="numero" type="text"/>
-                        </li>
-                        <li class="numero">
-                            <label class="numero" for="numero">Fase</label>
-                            <input id="fase" wicket:id="fase" type="text"/>
-                        </li>
-                        <li class="descripcion">
-                            <label class=" nombre" for="nombre">Nombre</label>
-                            <input id="nombre" wicket:id="nombre" type="text"/>
-                        </li>
-                        <li class="eds">
-                            <label class="eds" for="eds">EDS</label>
-                            <select id="eds" wicket:id="eds"></select>
-                        </li>
-                    </ul>
-                </form>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="estimacion" wicket:id="campos">
+                <ul>
+                    <li class="numero">
+                        <label class="numero" for="numero">Proyecto</label>
+                        <input id="numero" wicket:id="numero" type="text" required/>
+                    </li>
+                    <li class="numero">
+                        <label class="numero" for="numero">Fase</label>
+                        <input id="fase" wicket:id="fase" type="text"/>
+                    </li>
+                    <li class="descripcion">
+                        <label class=" nombre" for="nombre">Nombre</label>
+                        <input id="nombre" wicket:id="nombre" type="text"/>
+                    </li>
+                    <li class="eds">
+                        <label class="eds" for="eds">EDS</label>
+                        <select id="eds" wicket:id="eds"></select>
+                    </li>
+                </ul>
+            </form>
         </div>
-        <div class="puntuable">
-            <div class="row">
-                <div wicket:id="panel-casos-de-uso"></div>
-                <div wicket:id="panel-actores"></div>
-            </div>
-        </div>
-        <div class="cronograma" wicket:id="cronograma"></div>
-        <div class="costos" wicket:id="panel-costos"></div>
+    </div>
+    <div class="puntuable">
         <div class="row">
-            <div class="col-md-12">
-                <div class="costos">
-                    <h3>Costos adicionales de hardware / software</h3>
-                    <div wicket:id="grid-costos">
-                    </div>
+            <div wicket:id="panel-casos-de-uso"></div>
+            <div wicket:id="panel-actores"></div>
+        </div>
+    </div>
+    <div class="cronograma" wicket:id="cronograma"></div>
+    <div class="costos" wicket:id="panel-costos"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="costos">
+                <h3>Costos adicionales de hardware / software</h3>
+                <div wicket:id="grid-costos">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Costo total: <span wicket:id="costo-total">1000</span></h3>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Costo total: <span wicket:id="costo-total">1000</span></h3>
         </div>
     </div>
     <div class="row">
@@ -68,10 +66,5 @@
                 <a class="btn btn-success" wicket:id="imprimir">imprimir</a>
             </p>
         </div>
-        <!--div class="col-md-3">
-            <p>
-                <a class="btn btn-warning" wicket:id="volver">volver</a>
-            </p>
-        </div-->
     </div>
 </wicket:extend>
