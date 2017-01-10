@@ -15,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.StringValidator;
 import org.wicketstuff.egrid.EditableGrid;
 import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
@@ -27,7 +28,6 @@ import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.ExcepcionCronograma;
 import pe.com.pps.model.Moneda;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
-import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 
@@ -81,19 +81,18 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		add(campos);
 		TextField numero = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "numero"));
 		numero.setOutputMarkupId(true);
+		numero.setRequired(true);
 		campos.add(numero);
 		TextField fase = new TextField<>("fase", new PropertyModel<>(getEstimacion(), "fase"));
 		fase.setOutputMarkupId(true);
+		fase.setRequired(true);
 		campos.add(fase);
-		/*
-		if (getEstimacion().getIdEstimacion() != null) {
-			fase.setEnabled(false);
-		}
-		*/
 		DaoParametro dp = new DaoParametro();
 		DropDownChoice<String> eds = new DropDownChoice<>("eds", new PropertyModel<>(getEstimacion(), "eds"), dp.getNombreEds());
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(getEstimacion(), "nombre"));
+		descripcion.setRequired(true);
+		descripcion.add(StringValidator.maximumLength(50)); // todo: hardcode
 		campos.add(descripcion);
 	}
 
@@ -159,39 +158,12 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 					DaoEstimacion de = new DaoEstimacion();
 					getEstimacion().generarCronograma();
 					de.grabar(getEstimacion());
-					//PageParameters params = new PageParameters();
-					//params.add("id", getEstimacion().getIdEstimacion());
-					//throw new RestartResponseException(PaginaEstimacion.class, params);
 				} catch (ExcepcionCronograma e) {
 					error(e.getMessage());
 				}
 			}
 		};
 		add(linkGrabar);
-		/*
-		AjaxSubmitLink linkVolver = new AjaxSubmitLink("volver", campos) {
-			@Override
-			protected void onSubmit(AjaxRequestTarget target) {
-				boolean volver = true;
-				// validar si el objeto ha cambiado respecto a lo que está grabado
-				if (getEstimacion().getIdEstimacion() != null && getEstimacion().getVersion() != null) {
-					DaoEstimacion de = new DaoEstimacion();
-					Estimacion grabado = de.get(getEstimacion().getIdEstimacion());
-					if (grabado != null) {
-						if (!grabado.compararCon(getEstimacion())) {
-							error("tienes cambios no grabados. puedes salir, pero no con este botón.");
-							volver = false;
-							target.add(feedback);
-						}
-					}
-				}
-				if (volver) {
-					throw new RestartResponseException(PaginaListaEstimaciones.class);
-				}
-			}
-		};
-		add(linkVolver);
-		*/
 		AjaxSubmitLink linkImprimir = new AjaxSubmitLink("imprimir", campos) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
