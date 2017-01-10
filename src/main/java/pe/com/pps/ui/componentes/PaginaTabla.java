@@ -17,10 +17,11 @@ import pe.com.pps.ui.providers.ProviderTabla;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/*
-T -> clase del modelo
-V -> provider para dicha clase
-Z -> tipo del id de la clase del modelo
+/**
+ *
+ * T -> clase del modelo
+ * V -> provider para dicha clase
+ * Z -> tipo del id de la clase del modelo
  */
 public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializable> extends PaginaBaseEstimador {
 
