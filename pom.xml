@@ -24,13 +24,13 @@
 	<properties>
 		<dbunitVersion>2.5.2</dbunitVersion>
 		<hibernate.version>5.1.0.Final</hibernate.version>
-		<jetty9.version>9.4.0.RC1</jetty9.version>
+		<jetty9.version>9.4.1.v20170120</jetty9.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shiro.version>1.2.6</shiro.version>
-		<wicket.version>8.0.0-M2</wicket.version>
-		<wicketstuff.version>8.0.0-SNAPSHOT</wicketstuff.version>
+		<wicket.version>8.0.0-M4</wicket.version>
+		<wicketstuff.version>8.0.0-M4</wicketstuff.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -233,15 +233,6 @@
 					<jettyXml>
 						${project.basedir}/src/test/jetty/jetty.xml,${project.basedir}/src/test/jetty/jetty-ssl.xml,${project.basedir}/src/test/jetty/jetty-http.xml,${project.basedir}/src/test/jetty/jetty-https.xml
 					</jettyXml>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<wtpversion>${wtp.version}</wtpversion>
 				</configuration>
 			</plugin>
 			<plugin>
