@@ -1,13 +1,11 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
-import org.apache.wicket.Session;
 import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
@@ -104,8 +102,8 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		getRequestCycleListeners().add(new HibernateRequestListener());
 		// locale request cycle listener
 		getRequestCycleListeners().add(new LocaleRequestListener());
-		// session listener
-		//getSessionListeners().add(new EstimadorSessionListener());
+		// page request handler tracker
+		getRequestCycleListeners().add(new PageRequestHandlerTracker());
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// estrategias de autorización
