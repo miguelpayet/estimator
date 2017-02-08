@@ -12,6 +12,12 @@ import java.util.*;
 @Table(name = "estimacion")
 public class Estimacion implements Serializable {
 
+	public static void grabar(Estimacion unaEstimacion) throws ExcepcionCronograma {
+		DaoEstimacion de = new DaoEstimacion();
+		unaEstimacion.generarCronograma();
+		de.grabar(unaEstimacion);
+	}
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estimacion", orphanRemoval = true)
 	private Set<Actor> actores;
 	@Transient
