@@ -37,7 +37,7 @@ public abstract class PaginaTabla<T, V extends ProviderTabla, Z extends Serializ
 		ArrayList<IColumn<T, String>> columnas = new ArrayList<>();
 		crearColumnas(columnas);
 		ProviderTabla proveedor = crearProvider();
-		DataTable<T, String> table = new DataTable<>("datatable", columnas, proveedor, 10);
+		DataTable<T, String> table = new DataTable<>("datatable", columnas, proveedor, 15);
 		table.setOutputMarkupId(true);
 		add(table);
 		// filter box
