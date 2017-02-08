@@ -3,7 +3,6 @@ package pe.com.pps.app;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.core.request.handler.IPageRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
@@ -51,6 +50,19 @@ public class HibernateRequestListener implements IRequestCycleListener {
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
 		log.debug("onEndRequest");
+		try {
+			if (sf.getCurrentSession().getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
+				sf.getCurrentSession().getTransaction().commit();
+			}
+		} catch (Throwable ex) {
+			try {
+				log.error("error al comprometer transacción");
+				sf.getCurrentSession().getTransaction().rollback();
+			} catch (Throwable rbEx) {
+				log.error("error al revertir transacción");
+				ex.printStackTrace();
+			}
+		}
 	}
 
 	public IRequestHandler onException(RequestCycle cycle, Exception e) {
@@ -80,9 +92,7 @@ public class HibernateRequestListener implements IRequestCycleListener {
 		if (sf.getCurrentSession().getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
 			sf.getCurrentSession().getTransaction().commit();
 		}
-		if (handler.getClass().equals(ListenerInterfaceRequestHandler.class)) {
-			sf.getCurrentSession().beginTransaction();
-		}
+		sf.getCurrentSession().beginTransaction();
 	}
 
 	@Override
