@@ -2,9 +2,15 @@ package pe.com.pps.app;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.wicket.core.request.handler.IPageRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
+import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,10 +23,17 @@ public class HibernateRequestListener implements IRequestCycleListener {
 
 	public static final Logger log = LogManager.getLogger(HibernateRequestListener.class);
 
-	SessionFactory sf;
+	private SessionFactory sf;
 
 	public HibernateRequestListener() {
 		sf = HibernateUtil.getSessionFactory();
+	}
+
+	private void añadirCausa(StringBuilder unBuilder, Throwable unaExcepcion) {
+		if (unaExcepcion.getCause() != null) {
+			unBuilder.append(" - ");
+			unBuilder.append(unaExcepcion.getCause().getMessage());
+		}
 	}
 
 	@Override
@@ -37,25 +50,22 @@ public class HibernateRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
-		log.trace("onEndRequest");
-		Session sesion = sf.getCurrentSession();
-		try {
-			sesion.getTransaction().commit();
-		} catch (Throwable ex) {
-			try {
-				if (sesion.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
-					sesion.getTransaction().rollback();
-				}
-			} catch (Throwable rbEx) {
-				log.error("Could not rollback after exception!", rbEx);
-				rbEx.printStackTrace();
-			}
-		}
+		log.debug("onEndRequest");
 	}
 
-	@Override
-	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
-		log.error("onException {} -> {}", cycle.getRequest().getOriginalUrl(), ex.getMessage());
+	public IRequestHandler onException(RequestCycle cycle, Exception e) {
+		log.debug("onException");
+		IPageRequestHandler handler = PageRequestHandlerTracker.getLastHandler(cycle);
+		if (handler != null) {
+			if (handler.isPageInstanceCreated()) {
+				WebPage page = (WebPage) (handler.getPage());
+				StringBuilder sb = new StringBuilder(e.getMessage());
+				añadirCausa(sb, e);
+				añadirCausa(sb, e.getCause());
+				page.error(sb.toString());
+				return new RenderPageRequestHandler(new PageProvider(page), RenderPageRequestHandler.RedirectPolicy.ALWAYS_REDIRECT);
+			}
+		}
 		return null;
 	}
 
@@ -66,7 +76,13 @@ public class HibernateRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler) {
-		log.trace("onRequestHandlerExecuted {}", cycle.getRequest().getOriginalUrl());
+		log.debug("onRequestHandlerExecuted {} - {}", cycle.getRequest().getOriginalUrl(), handler.getClass());
+		if (sf.getCurrentSession().getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
+			sf.getCurrentSession().getTransaction().commit();
+		}
+		if (handler.getClass().equals(ListenerInterfaceRequestHandler.class)) {
+			sf.getCurrentSession().beginTransaction();
+		}
 	}
 
 	@Override
@@ -81,7 +97,7 @@ public class HibernateRequestListener implements IRequestCycleListener {
 
 	@Override
 	public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url) {
-		log.trace("onUrlMapped {}", cycle.getRequest().getOriginalUrl());
+//		log.trace("onUrlMapped {}", cycle.getRequest().getOriginalUrl());
 	}
 
 }
