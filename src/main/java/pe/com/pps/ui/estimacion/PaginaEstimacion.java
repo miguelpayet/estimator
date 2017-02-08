@@ -10,7 +10,6 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -21,12 +20,12 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
-import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.dao.DaoParametro;
 import pe.com.pps.model.CostoAdicional;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.ExcepcionCronograma;
 import pe.com.pps.model.Moneda;
+import pe.com.pps.ui.MiFeedbackPanel;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
@@ -42,7 +41,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
 
 	private Form campos;
-	private FeedbackPanel feedback;
+	private MiFeedbackPanel feedback;
 	private Set<Component> targets;
 
 	@SuppressWarnings("unused")
@@ -109,7 +108,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarFeedback() {
-		feedback = new FeedbackPanel("feedback");
+		feedback = new MiFeedbackPanel("feedback-1");
 		feedback.setOutputMarkupId(true);
 		add(feedback);
 	}
@@ -155,9 +154,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			public void onSubmit() {
 				try {
 					log.info("grabar estimacion {}", getEstimacion().getIdEstimacion());
-					DaoEstimacion de = new DaoEstimacion();
-					getEstimacion().generarCronograma();
-					de.grabar(getEstimacion());
+					Estimacion.grabar(getEstimacion());
 				} catch (ExcepcionCronograma e) {
 					error(e.getMessage());
 				}
