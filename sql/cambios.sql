@@ -1,20 +1,13 @@
--- MySQL Workbench Synchronization
--- Generated: 2016-09-05 15:06
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: mpayet
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-ALTER TABLE `mydb`.`tarea`
-CHANGE COLUMN `disenotecnico` `rol` INT(1) NULL DEFAULT NULL ;
+ALTER TABLE `mydb`.`estimacion`
+CHANGE COLUMN `numestimacion` `numestimacion` INT(11) NOT NULL AFTER `idestimacion`,
+CHANGE COLUMN `numfase` `numfase` INT(11) NOT NULL AFTER `numestimacion`,
+ADD UNIQUE INDEX `numero` (`numestimacion` ASC, `numfase` ASC);
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-UPDATE `mydb`.`tarea` SET `tipocosto`=3 WHERE  `idtarea`=2;
-
