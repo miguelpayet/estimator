@@ -5,6 +5,7 @@ import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
@@ -14,12 +15,15 @@ import pe.com.pps.ui.login.PaginaCambioPasswordEstimator;
 import pe.com.pps.ui.login.PaginaLoginEstimator;
 import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
+import pe.trazos.dao.HibernateRequestListener;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.auth.AuthenticatedWebApplicationBase;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class WicketApplication extends AuthenticatedWebApplicationBase {
@@ -98,12 +102,7 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 	@Override
 	public void init() {
 		super.init();
-		// hibernate request cycle listener
-		getRequestCycleListeners().add(new HibernateRequestListener());
-		// locale request cycle listener
-		getRequestCycleListeners().add(new LocaleRequestListener());
-		// page request handler tracker
-		getRequestCycleListeners().add(new PageRequestHandlerTracker());
+		initRequestListeners();
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// estrategias de autorización
@@ -118,6 +117,17 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		mountPage("/lista", PaginaListaEstimaciones.class);
 		mountPage("/login", PaginaLoginEstimator.class);
 		mountPage("/nuevopassword", PaginaNuevoPasswordEstimator.class);
+	}
+
+	private void initRequestListeners() {
+		Collection<IRequestCycleListener> listeners = new ArrayList<>();
+		listeners.add(new HibernateRequestListener());      // hibernate request cycle listener
+		listeners.add(new LocaleRequestListener());// locale request cycle listener
+		listeners.add(new PageRequestHandlerTracker()); // page request handler tracker
+		listeners.add(new VisitasRequestListener()); // registro de visitas
+		for (IRequestCycleListener l : listeners) {
+			getRequestCycleListeners().add(l);
+		}
 	}
 
 }

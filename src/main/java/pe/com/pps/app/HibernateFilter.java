@@ -24,7 +24,7 @@ public class HibernateFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		log.trace("destroy");
+
 	}
 
 	/**
@@ -41,10 +41,10 @@ public class HibernateFilter implements Filter {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session sesion = sf.getCurrentSession();
 		try {
-			log.trace("doFilter.beginTransaction");
+
 			sesion.beginTransaction();
 			chain.doFilter(request, response);
-			log.trace("doFilter.commit");
+
 			sesion.getTransaction().commit();
 		} catch (Throwable ex) {
 			try {
@@ -53,7 +53,7 @@ public class HibernateFilter implements Filter {
 				}
 			} catch (Throwable rbEx) {
 				log.error("Could not rollback after exception!", rbEx);
-				rbEx.printStackTrace();
+
 			}
 			throw new ServletException(ex);
 		}
@@ -63,7 +63,7 @@ public class HibernateFilter implements Filter {
 	// inicializa el filtro
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		log.trace("init");
+
 	}
 
 }

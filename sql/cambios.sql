@@ -1,13 +1,11 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
-ALTER TABLE `mydb`.`estimacion`
-CHANGE COLUMN `numestimacion` `numestimacion` INT(11) NOT NULL AFTER `idestimacion`,
-CHANGE COLUMN `numfase` `numfase` INT(11) NOT NULL AFTER `numestimacion`,
-ADD UNIQUE INDEX `numero` (`numestimacion` ASC, `numfase` ASC);
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+CREATE TABLE `visita` (
+  `idvisita` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime DEFAULT NULL,
+  `request` varchar(1000) DEFAULT NULL,
+  `usuario` varchar(50) DEFAULT NULL,
+  `duracion` bigint(20) DEFAULT NULL,
+  `protocol` varchar(10) DEFAULT NULL,
+  `useragent` varchar(200) DEFAULT NULL,
+  `platform` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`idvisita`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;

@@ -11,7 +11,7 @@ public class EstimadorSessionListener implements ISessionListener {
 
 	@Override
 	public void onCreated(Session session) {
-		log.info("nueva sesión web {}", session.getId());
+
 	}
 
 	@Override

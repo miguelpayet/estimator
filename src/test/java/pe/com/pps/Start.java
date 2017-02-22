@@ -87,7 +87,7 @@ public class Start {
 			server.start();
 			server.join();
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			System.exit(100);
 		}
 	}

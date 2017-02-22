@@ -22,13 +22,13 @@ public class MiFeedbackPanel extends FeedbackPanel {
 	@Override
 	protected void onBeforeRender() {
 		super.onBeforeRender();
-		log.info("onBeforeRender");
+
 	}
 
 	@Override
 	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
 		super.onComponentTagBody(markupStream, openTag);
-		log.info("onComponentTagBody");
+
 	}
 
 }

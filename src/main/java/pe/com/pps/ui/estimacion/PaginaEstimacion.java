@@ -153,7 +153,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 			@Override
 			public void onSubmit() {
 				try {
-					log.info("grabar estimacion {}", getEstimacion().getIdEstimacion());
+
 					Estimacion.grabar(getEstimacion());
 				} catch (ExcepcionCronograma e) {
 					error(e.getMessage());
