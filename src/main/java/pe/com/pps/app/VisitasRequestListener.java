@@ -25,6 +25,7 @@ import java.util.Properties;
 /**
  * clase para registrar visitas en base de datos
  */
+@Deprecated
 public class VisitasRequestListener implements IRequestCycleListener {
 
 	private class Grabador implements Runnable {
