@@ -1,12 +1,15 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
+import org.apache.wicket.Application;
 import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.protocol.http.IRequestLogger;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
+import org.apache.wicket.settings.RequestLoggerSettings;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
@@ -103,6 +106,7 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 	public void init() {
 		super.init();
 		initRequestListeners();
+		initRequestLogger();
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// estrategias de autorización
@@ -124,10 +128,19 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		listeners.add(new HibernateRequestListener());      // hibernate request cycle listener
 		listeners.add(new LocaleRequestListener());// locale request cycle listener
 		listeners.add(new PageRequestHandlerTracker()); // page request handler tracker
-		listeners.add(new VisitasRequestListener()); // registro de visitas
 		for (IRequestCycleListener l : listeners) {
 			getRequestCycleListeners().add(l);
 		}
+	}
+
+	private void initRequestLogger() {
+		RequestLoggerSettings reqLogger = Application.get().getRequestLoggerSettings();
+		reqLogger.setRequestLoggerEnabled(true);
+	}
+
+	@Override
+	protected IRequestLogger newRequestLogger() {
+		return new RequestLoggerTabla();
 	}
 
 }
