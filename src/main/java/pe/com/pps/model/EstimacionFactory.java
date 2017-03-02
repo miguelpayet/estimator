@@ -2,18 +2,14 @@ package pe.com.pps.model;
 
 import pe.com.pps.dao.DaoFactorTecnico;
 import pe.com.pps.dao.DaoTarea;
-import pe.trazos.login.dao.DaoUsuario;
-import pe.trazos.login.modelo.Usuario;
+import pe.trazos.login.usuario.DaoUsuario;
+import pe.trazos.login.usuario.Usuario;
 
-import java.util.HashSet;
 import java.util.List;
 
 /**
  * forma de crear una estimación e inicializar las estructuras de datos asociadas
  */
-import pe.com.pps.dao.DaoTarea;
-
-import java.util.List;
 
 public class EstimacionFactory {
 

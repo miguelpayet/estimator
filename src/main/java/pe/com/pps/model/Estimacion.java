@@ -1,8 +1,7 @@
 package pe.com.pps.model;
 
-import pe.com.pps.dao.DaoCostoAdicional;
 import pe.com.pps.dao.DaoEstimacion;
-import pe.trazos.login.modelo.Usuario;
+import pe.trazos.login.usuario.Usuario;
 
 import javax.persistence.*;
 import java.io.Serializable;

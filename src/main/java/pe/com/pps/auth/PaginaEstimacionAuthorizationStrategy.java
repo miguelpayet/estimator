@@ -12,13 +12,11 @@ import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.app.WicketApplication;
-import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.home.HomePage;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
-import pe.trazos.login.dao.DaoUsuario;
-import pe.trazos.login.modelo.Usuario;
+import pe.trazos.login.usuario.Usuario;
 
 /**
  * estrategia de autorización para el acceso a la página de estimación
@@ -58,7 +56,7 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 				if (est == null) {
 					throw new RestartResponseException(HomePage.class);
 				}
-				// buscar el usuario en la pe.trazos.login.base de datos
+				// buscar el usuario en la pe.trazos.login.ui.base de datos
 				Usuario u = Usuario.getActual();
 				if (u == null) {
 					throw new RestartResponseException(WicketApplication.get().getHomePage());

@@ -60,8 +60,7 @@ public class RequestLoggerTabla extends AbstractRequestLogger {
 		}
 	}
 
-	private static Logger log = LogManager.getLogger(VisitasRequestListener.class);
-	Properties requestProps;
+	private static Logger log = LogManager.getLogger(RequestLoggerTabla.class);
 
 	@Override
 	protected void log(RequestData rd, SessionData sd) {
