@@ -48,7 +48,7 @@ public class RequestLoggerTabla extends AbstractRequestLogger {
 					pstmt.setString(5, (String) (ci == null ? "" : ci.getUserAgent()));
 					ClientProperties cp = ci.getProperties();
 					if (cp != null) {
-						pstmt.setString(6, cp.getNavigatorPlatform());
+						pstmt.setString(6, cp.getRemoteAddress());
 					} else {
 						pstmt.setString(6, "");
 					}
