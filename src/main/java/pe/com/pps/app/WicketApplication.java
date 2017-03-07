@@ -1,15 +1,12 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
-import org.apache.wicket.Application;
 import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.IRequestLogger;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
-import org.apache.wicket.settings.RequestLoggerSettings;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
@@ -20,16 +17,16 @@ import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateRequestListener;
 import pe.trazos.dao.HibernateUtil;
-import pe.trazos.login.auth.AuthenticatedWebApplicationBase;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
+import pe.trazos.login.visita.AuthenticatedWebApplicationVisita;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class WicketApplication extends AuthenticatedWebApplicationBase {
+public class WicketApplication extends AuthenticatedWebApplicationVisita {
 
 	/*lista de clases de entidad que es necesario registrar con hibernate antes de inicializarlo */
 	static {
@@ -106,7 +103,6 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 	public void init() {
 		super.init();
 		initRequestListeners();
-		initRequestLogger();
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// estrategias de autorización
@@ -131,16 +127,6 @@ public class WicketApplication extends AuthenticatedWebApplicationBase {
 		for (IRequestCycleListener l : listeners) {
 			getRequestCycleListeners().add(l);
 		}
-	}
-
-	private void initRequestLogger() {
-		RequestLoggerSettings reqLogger = Application.get().getRequestLoggerSettings();
-		reqLogger.setRequestLoggerEnabled(true);
-	}
-
-	@Override
-	protected IRequestLogger newRequestLogger() {
-		return new RequestLoggerTabla();
 	}
 
 }
