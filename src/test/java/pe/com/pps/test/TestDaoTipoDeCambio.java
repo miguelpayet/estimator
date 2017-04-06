@@ -1,4 +1,4 @@
-package pe.com.pps;
+package pe.com.pps.test;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,8 @@ public class TestDaoTipoDeCambio {
 	@Test
 	public void leerTipoDeCambio() {
 		DaoTipoDeCambio dtc = new DaoTipoDeCambio();
-		Double tipoDeCambio = dtc.leerTipoDeCambio();
+		//Double tipoDeCambio = dtc.leerTipoDeCambio();
+		//log.info("tipo de cambio: {}", tipoDeCambio);
 	}
 
 }

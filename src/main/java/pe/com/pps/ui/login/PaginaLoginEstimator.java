@@ -41,7 +41,7 @@ public class PaginaLoginEstimator extends PaginaBaseEstimador {
 	}
 
 	private void agregarPanelLogin() {
-		PanelLogin pl = new PanelLogin("panel-login", PaginaSolicitudNuevoPasswordEstimator.class);
+		PanelLogin pl = new PanelLogin("panel-login");
 		add(pl);
 	}
 

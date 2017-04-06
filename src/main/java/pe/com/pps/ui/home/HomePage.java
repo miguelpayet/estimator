@@ -25,17 +25,17 @@ public class HomePage extends PaginaBaseEstimador {
 
 	private void agregarComponentes() {
 		add(new Label("page-title", "estimador funcional"));
-		add(new Link("lista_estimaciones") {
+		add(new Link<String>("lista_estimaciones") {
 			public void onClick() {
 				throw new RestartResponseException(PaginaListaEstimaciones.class);
 			}
 		});
-		add(new Link("nueva_estimacion") {
+		add(new Link<String>("nueva_estimacion") {
 			public void onClick() {
 				throw new RestartResponseException(PaginaEstimacion.class);
 			}
 		});
-		add(new Link("link-logout") {
+		add(new Link<String>("link-logout") {
 			public void onClick() {
 				Subject subject = SecurityUtils.getSubject();
 				SecurityUtils.getSecurityManager().logout(subject);

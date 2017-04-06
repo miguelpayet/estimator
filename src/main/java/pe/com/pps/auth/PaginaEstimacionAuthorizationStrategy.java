@@ -1,7 +1,5 @@
 package pe.com.pps.auth;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.Page;
@@ -11,7 +9,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import pe.com.pps.app.WicketApplication;
+import pe.com.pps.app.Aplicacion;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.home.HomePage;
@@ -24,8 +22,6 @@ import pe.trazos.login.usuario.Usuario;
  * -> otros usuarios pasan a la página de consulta / impresión
  */
 public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthorizationStrategy {
-
-	private static final Logger log = LogManager.getLogger(PaginaEstimacionAuthorizationStrategy.class);
 
 	/**
 	 * método que valida el acceso a la página de edición o consulta de una estimación
@@ -42,7 +38,7 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 			Subject subject = SecurityUtils.getSubject();
 			// si no hay usuario autentificado, enviarlo al home
 			if (!(subject.isAuthenticated() || subject.isRemembered())) {
-				throw new RestartResponseException(WicketApplication.get().getHomePage());
+				throw new RestartResponseException(Aplicacion.get().getHomePage());
 			}
 			// si no hay queryparameter, es una estimación nueva
 			Request req = RequestCycle.get().getRequest();
@@ -59,7 +55,7 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 				// buscar el usuario en la pe.trazos.login.ui.base de datos
 				Usuario u = Usuario.getActual();
 				if (u == null) {
-					throw new RestartResponseException(WicketApplication.get().getHomePage());
+					throw new RestartResponseException(Aplicacion.get().getHomePage());
 				}
 				// compararlo con el usuario de la estimación
 				if (!u.equals(est.getUsuario())) {

@@ -2,7 +2,7 @@ package pe.com.pps.ui.login;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pe.com.pps.ui.base.PaginaBaseEstimador;
-import pe.trazos.login.ui.password.cambio.PanelCambioPassword;
+import pe.trazos.login.ui.password.PanelCambioPassword;
 
 public class PaginaCambioPasswordEstimator extends PaginaBaseEstimador {
 	public PaginaCambioPasswordEstimator() {

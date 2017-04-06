@@ -1,12 +1,15 @@
 package pe.com.pps.app;
 
 import de.agilecoders.wicket.core.Bootstrap;
+import org.apache.wicket.Application;
 import org.apache.wicket.authorization.strategies.CompoundAuthorizationStrategy;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.protocol.http.IRequestLogger;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
+import org.apache.wicket.settings.RequestLoggerSettings;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
 import pe.com.pps.model.*;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
@@ -14,19 +17,21 @@ import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 import pe.com.pps.ui.login.PaginaCambioPasswordEstimator;
 import pe.com.pps.ui.login.PaginaLoginEstimator;
 import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
+import pe.com.pps.ui.login.PaginaSolicitudNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
 import pe.trazos.dao.HibernateRequestListener;
 import pe.trazos.dao.HibernateUtil;
+import pe.trazos.login.app.LoginWebApplication;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.LoginSecurityUtil;
 import pe.trazos.login.auth.SesionShiro;
-import pe.trazos.login.visita.AuthenticatedWebApplicationVisita;
+import pe.trazos.login.visita.RequestLoggerTabla;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class WicketApplication extends AuthenticatedWebApplicationVisita {
+public class Aplicacion extends LoginWebApplication {
 
 	/*lista de clases de entidad que es necesario registrar con hibernate antes de inicializarlo */
 	static {
@@ -77,7 +82,17 @@ public class WicketApplication extends AuthenticatedWebApplicationVisita {
 	 * @return la página de login
 	 */
 	public Class<? extends WebPage> getPaginaLogin() {
-		return PaginaLoginEstimator.class;
+		return getSignInPageClass();
+	}
+
+	@Override
+	public Class<? extends WebPage> getPaginaNuevoPassword() {
+		return PaginaNuevoPasswordEstimator.class;
+	}
+
+	@Override
+	public Class<? extends WebPage> getPaginaSolicitudNuevoPassword() {
+		return PaginaSolicitudNuevoPasswordEstimator.class;
 	}
 
 	/**
@@ -102,15 +117,25 @@ public class WicketApplication extends AuthenticatedWebApplicationVisita {
 	@Override
 	public void init() {
 		super.init();
+		getMarkupSettings().setStripWicketTags(false);
 		initRequestListeners();
+		initRequestLogger();
 		// wicket bootstrap
 		Bootstrap.install(this);
 		// estrategias de autorización
+		initAuth();
+		// montar páginas
+		initPaginas();
+	}
+
+	private void initAuth() {
 		CompoundAuthorizationStrategy cps = new CompoundAuthorizationStrategy();
 		cps.add(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
 		cps.add(new PaginaEstimacionAuthorizationStrategy());
 		getSecuritySettings().setAuthorizationStrategy(cps);
-		// montar páginas
+	}
+
+	private void initPaginas() {
 		mountPage("/cambiopassword", PaginaCambioPasswordEstimator.class);
 		mountPage("/consulta", PaginaVistaEstimacion.class);
 		mountPage("/estimacion", PaginaEstimacion.class);
@@ -127,6 +152,16 @@ public class WicketApplication extends AuthenticatedWebApplicationVisita {
 		for (IRequestCycleListener l : listeners) {
 			getRequestCycleListeners().add(l);
 		}
+	}
+
+	private void initRequestLogger() {
+		RequestLoggerSettings reqLogger = Application.get().getRequestLoggerSettings();
+		reqLogger.setRequestLoggerEnabled(true);
+	}
+
+	@Override
+	protected IRequestLogger newRequestLogger() {
+		return new RequestLoggerTabla();
 	}
 
 }
