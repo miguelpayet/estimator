@@ -19,6 +19,7 @@ import pe.com.pps.ui.login.PaginaLoginEstimator;
 import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
 import pe.com.pps.ui.login.PaginaSolicitudNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
+import pe.trazos.dao.ExcepcionRequestListener;
 import pe.trazos.dao.HibernateRequestListener;
 import pe.trazos.dao.HibernateUtil;
 import pe.trazos.login.app.LoginWebApplication;
@@ -146,6 +147,7 @@ public class Aplicacion extends LoginWebApplication {
 
 	private void initRequestListeners() {
 		Collection<IRequestCycleListener> listeners = new ArrayList<>();
+		listeners.add(new ExcepcionRequestListener());      // hibernate request cycle listener
 		listeners.add(new HibernateRequestListener());      // hibernate request cycle listener
 		listeners.add(new LocaleRequestListener());// locale request cycle listener
 		listeners.add(new PageRequestHandlerTracker()); // page request handler tracker
