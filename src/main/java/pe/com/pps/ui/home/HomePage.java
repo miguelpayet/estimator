@@ -1,7 +1,5 @@
 package pe.com.pps.ui.home;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.RestartResponseException;
@@ -15,8 +13,6 @@ import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
 
 @AuthorizeInstantiation("usuario")
 public class HomePage extends PaginaBaseEstimador {
-
-	private static final Logger logger = LogManager.getLogger(HomePage.class);
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
