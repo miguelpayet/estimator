@@ -40,9 +40,10 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 			titulo = getEstimacion().getNombre();
 		}
 		add(new Label("titulo", titulo));
-		super.agregarTitulo((getEstimacion().getIdEstimacion() == null ? "" : getEstimacion().getIdEstimacion() + " - ") + titulo);
+		super.agregarTitulo((getEstimacion().getNumero() == null ? "" : getEstimacion().getNumero() + " - ") + titulo);
 	}
 
+	@SuppressWarnings("unused")
 	private Set<CasoDeUso> getCasosDeUso() {
 		return getEstimacion().getCasosDeUso();
 	}

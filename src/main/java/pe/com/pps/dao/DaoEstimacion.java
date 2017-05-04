@@ -21,7 +21,7 @@ public class DaoEstimacion extends Dao<Estimacion> {
 	 */
 	public void grabar(Estimacion unaEstimacion) {
 		unaEstimacion.totalizar(true);
-		if (unaEstimacion.getVersion() == null) {
+		if (unaEstimacion.getIdEstimacion() == null && unaEstimacion.getVersion() == null) {
 			getSesion().persist(unaEstimacion);
 		} else {
 			getSesion().update(unaEstimacion);
