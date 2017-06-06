@@ -2,6 +2,7 @@ package pe.com.pps.ui.providers;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import pe.trazos.dao.query.QueryFiltrado;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 T -> clase del modelo
 V -> clase de filtro
  */
-public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDataProvider implements IFilterStateLocator<V> {
+public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDataProvider<T, Object> implements IFilterStateLocator<V> {
 
 	private Class<T> claseDominio;
 	private V filterState;
@@ -27,26 +28,21 @@ public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDa
 	}
 
 	public Iterator<T> iterator(long first, long count) {
-		QueryCriteria query = newQuery();
+		QueryFiltrado query = newQuery();
 		query.setRango(first, count);
 		if (tieneFiltro()) {
-			setearFiltros(query);
+			filtrar(query);
 		}
 		ordenarQuery(query);
 		List<T> data = query.leer();
 		return data.iterator();
 	}
 
-	@Deprecated
-	QueryCriteria newQuery(Class unaClase) {
-		return new QueryCriteria(unaClase);
+	private QueryFiltrado newQuery() {
+		return new QueryFiltrado(claseDominio);
 	}
 
-	private QueryCriteria newQuery() {
-		return new QueryCriteria(claseDominio);
-	}
-
-	public abstract void ordenarQuery(QueryCriteria unQuery);
+	public abstract void ordenarQuery(QueryFiltrado unQuery);
 
 	public void setClaseDominio(Class<T> unaClase) {
 		claseDominio = unaClase;
@@ -56,10 +52,10 @@ public abstract class ProviderTabla<T, V extends FiltroTabla> extends SortableDa
 		filterState = state;
 	}
 
-	protected abstract void setearFiltros(QueryCriteria query);
+	protected abstract void filtrar(QueryFiltrado query);
 
 	public long size() {
-		QueryCriteria query = newQuery();
+		QueryFiltrado query = newQuery();
 		return query.contarFilas();
 	}
 
