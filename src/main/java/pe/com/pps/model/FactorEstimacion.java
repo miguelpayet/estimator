@@ -1,14 +1,12 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.Entidad;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "factor_estimacion")
-public class FactorEstimacion implements Identificable<Integer>, Serializable, Comparable<FactorEstimacion> {
-
-	public static final String FACTOR_AMBIENTAL = "1";
-	public static final String FACTOR_TECNICO = "2";
+public class FactorEstimacion extends Entidad<Integer> implements Comparable<FactorEstimacion> {
 
 	@ManyToOne
 	@JoinColumn(name = "idestimacion", nullable = false)

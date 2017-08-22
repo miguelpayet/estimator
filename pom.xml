@@ -2,7 +2,6 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.com.pps</groupId>
 	<artifactId>estimator</artifactId>
@@ -23,7 +22,11 @@
 	</licenses>
 	<properties>
 		<google.guava.version>r03</google.guava.version>
+		<log4j.version>2.1</log4j.version>
+		<jetty9.version>9.4.2.v20170220</jetty9.version>
+		<mockito.version>1.9.5</mockito.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<wicket-bootstrap.version>2.0.0-M4</wicket-bootstrap.version>
 		<wicketstuff.version>8.0.0-M6</wicketstuff.version>
 	</properties>
 	<dependencies>
@@ -50,16 +53,33 @@
 			<artifactId>guava-collections</artifactId>
 			<version>${google.guava.version}</version>
 		</dependency>
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+		</dependency>
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
 	</dependencies>
-
 	<scm>
 		<connection>scm:git:git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</connection>
 		<developerConnection></developerConnection>
 		<tag>HEAD</tag>
 		<url>git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</url>
 	</scm>
-
 	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -93,6 +113,11 @@
 			</testResource>
 		</testResources>
 		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.2</version>
+			</plugin>
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -153,7 +178,6 @@
 			${project.artifactId}-${buildNumber}
 		</finalName>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>central</id>
@@ -180,5 +204,4 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
 </project>

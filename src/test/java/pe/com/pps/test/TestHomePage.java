@@ -1,39 +1,24 @@
 package pe.com.pps.test;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
-import de.agilecoders.wicket.core.WicketApplicationTest;
+//import de.agilecoders.wicket.core.WicketApplicationTest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.SubjectThreadState;
 import org.apache.shiro.util.ThreadState;
 import org.hibernate.Session;
-import org.junit.*;
+import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
-import pe.com.pps.model.*;
-import pe.com.pps.ui.listaestimaciones.PaginaListaEstimaciones;
-import pe.com.pps.ui.login.PaginaLoginEstimator;
-import pe.trazos.dao.HibernateUtil;
-import pe.trazos.login.auth.LoginSecurityUtil;
-
-import javax.persistence.Entity;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestHomePage extends WicketApplicationTest {
+public class TestHomePage { //extends WicketApplicationTest {
 
 	private static Logger log = LogManager.getLogger(TestHomePage.class);
 	private Subject _mockSubject;
 	private ThreadState _threadState;
 	private Session sesion;
 
-	@BeforeClass
+	/*@BeforeClass
 	static public void hibernateInit() {
 		List<Class> clases = LoginSecurityUtil.getClases();
 		clases.add(Actor.class);
@@ -61,9 +46,9 @@ public class TestHomePage extends WicketApplicationTest {
 		clases.add(TipoFactor.class);
 		clases.add(TipoPunto.class);
 		HibernateUtil.inicializar(clases);
-	}
+	}*/
 
-	@Test
+/*	@Test
 	public void clases() throws IOException {
 		ClassPath cp = ClassPath.from(getClass().getClassLoader());
 		ImmutableSet<ClassPath.ClassInfo> clases = cp.getTopLevelClasses("pe.com.pps.model");
@@ -75,38 +60,39 @@ public class TestHomePage extends WicketApplicationTest {
 			}
 			log.info(c.getName());
 		}
-	}
+	}*/
 
-	@After
+/*	@After
 	public void hibernateTxClose() {
 		sesion.getTransaction().commit();
-	}
+	}*/
 
-	@Before
+/*	@Before
 	public void hibernateTxOpen() {
 		sesion = HibernateUtil.getCurrentSession();
 		sesion.beginTransaction();
-	}
+	}*/
 
-	@Test
+/*	@Test
 	public void homePageAutenticado() {
 		when(_mockSubject.isAuthenticated()).thenReturn(true);
 		tester().startPage(PaginaListaEstimaciones.class);
 		tester().assertRenderedPage(PaginaListaEstimaciones.class);
-	}
+	}*/
 
-	@Test
+/*	@Test
 	public void homePageNormal() {
 		when(_mockSubject.isAuthenticated()).thenReturn(false);
 		tester().startPage(PaginaListaEstimaciones.class);
 		tester().assertRenderedPage(PaginaLoginEstimator.class);
 		//wt.assertComponent();
-	}
+	}*/
 
-	@Before
+/*	@Before
 	public void subject() {
 		_mockSubject = Mockito.mock(Subject.class);
 		_threadState = new SubjectThreadState(_mockSubject);
 		_threadState.bind();
-	}
+	}*/
+
 }

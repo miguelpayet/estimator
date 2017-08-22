@@ -11,8 +11,8 @@ public class PaginaNuevoPasswordEstimator extends PaginaBaseEstimador {
 	}
 
 	public PaginaNuevoPasswordEstimator(PageParameters unosParametros) {
-		agregarTitulo("nuevo password");
-		add(new PanelNuevoPassword("panel-nuevo-password", unosParametros));
+		agregarTitulo("nuevo clave");
+		add(new PanelNuevoPassword("panel-nuevo-clave", unosParametros));
 	}
 
 }

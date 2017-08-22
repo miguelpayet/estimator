@@ -4,6 +4,7 @@ public class FiltroTablaNombre extends FiltroTabla {
 
 	private String nombre = "";
 
+
 	public String getNombre() {
 		return nombre;
 	}

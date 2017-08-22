@@ -21,14 +21,12 @@ import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
 import pe.com.pps.dao.DaoParametro;
-import pe.com.pps.model.CostoAdicional;
-import pe.com.pps.model.Estimacion;
-import pe.com.pps.model.ExcepcionCronograma;
-import pe.com.pps.model.Moneda;
+import pe.com.pps.model.*;
 import pe.com.pps.ui.MiFeedbackPanel;
 import pe.com.pps.ui.base.PaginaBaseEstimacion;
 import pe.com.pps.ui.providers.ProviderCostoAdicional;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
+import pe.trazos.dao.factory.DaoFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,7 +42,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private MiFeedbackPanel feedback;
 	private Set<Component> targets;
 
-	@SuppressWarnings("unused")
+
 	public PaginaEstimacion() {
 		this(new PageParameters());
 	}
@@ -58,7 +56,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		super(unosParametros);
 		// conjunto de elementos que hay que refrescar cada vez que se calcule
 		targets = new HashSet<>();
-		// leer la estimación del parametro
+		// listar la estimación del parametro
 		leerEstimacion(unosParametros);
 		// si la estimación del parámetro no existe (o no había estimación en el parámetro) crear una nueva estimación
 		if (getEstimacion() == null) {
@@ -86,7 +84,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		fase.setOutputMarkupId(true);
 		fase.setRequired(true);
 		campos.add(fase);
-		DaoParametro dp = new DaoParametro();
+		DaoParametro dp = DaoFactory.getInstance().crearDao(Parametro.class, DaoParametro.class);
 		DropDownChoice<String> eds = new DropDownChoice<>("eds", new PropertyModel<>(getEstimacion(), "eds"), dp.getNombreEds());
 		campos.add(eds);
 		TextField<String> descripcion = new TextField<>("nombre", new PropertyModel<>(getEstimacion(), "nombre"));

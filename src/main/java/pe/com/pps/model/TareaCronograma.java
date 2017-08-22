@@ -1,12 +1,13 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.EntidadPK;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "cronograma")
 @IdClass(TareaCronogramaPK.class)
-public class TareaCronograma implements Serializable, Comparable<TareaCronograma> {
+public class TareaCronograma extends EntidadPK<TareaCronogramaPK> implements Comparable<TareaCronograma> {
 
 	@Column(name = "dias")
 	protected Double dias;
@@ -51,6 +52,11 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return horas != null ? horas : 0;
 	}
 
+	@Override
+	public TareaCronogramaPK getId() {
+		return new TareaCronogramaPK(estimacion, tarea);
+	}
+
 	public Boolean getIncluir() {
 		return incluir;
 	}
@@ -84,6 +90,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return porcentaje != null ? porcentaje : 0;
 	}
 
+
 	public Double getPorcentajeTarea() {
 		return getTarea() != null ? getTarea().getPorcentaje() : 0;
 	}
@@ -95,16 +102,17 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 	 */
 	public Proveedor getProveedor() {
 		if (getTarea() != null) {
-			return getTarea().getProveedor() != null ? getTarea().getProveedor() : null;
+			return getTarea().getProveedor();
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	public Double getRecursos() {
 		return recursos;
 	}
 
-	public Integer getRol() {
+	Integer getRol() {
 		return getTarea() != null ? getTarea().getRol() : 0;
 	}
 
@@ -112,7 +120,7 @@ public class TareaCronograma implements Serializable, Comparable<TareaCronograma
 		return tarea;
 	}
 
-	public Integer getTipoCosto() {
+	Integer getTipoCosto() {
 		return getTarea() != null ? getTarea().getTipoCosto() : 0;
 	}
 

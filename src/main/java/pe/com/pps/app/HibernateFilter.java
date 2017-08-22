@@ -1,11 +1,7 @@
 package pe.com.pps.app;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pe.trazos.dao.HibernateUtil;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -15,6 +11,7 @@ import java.io.IOException;
  * crea la transacción al inicio del request
  * hace commit y destruye la transacción al final del request
  */
+@Deprecated
 public class HibernateFilter implements Filter {
 
 	private static final Logger log = LoggerFactory.getLogger(HibernateFilter.class);
@@ -38,6 +35,7 @@ public class HibernateFilter implements Filter {
 	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		/*
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session sesion = sf.getCurrentSession();
 		try {
@@ -57,7 +55,7 @@ public class HibernateFilter implements Filter {
 			}
 			throw new ServletException(ex);
 		}
-
+		*/
 	}
 
 	// inicializa el filtro

@@ -1,14 +1,15 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.Entidad;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * representa los costos adicionales de hw/sw dentro de una estimación que van aparte del desarrollo normal
  */
 @Entity
 @Table(name = "costo_adicional")
-public class CostoAdicional implements Serializable {
+public class CostoAdicional extends Entidad<Integer> {
 
 	@Column(name = "costo")
 	private Double costo;

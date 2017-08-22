@@ -1,16 +1,14 @@
 package pe.com.pps.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoPunto;
+import pe.trazos.dao.entidad.Entidad;
+import pe.trazos.dao.factory.DaoFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class Puntuable implements Serializable {
-
-	private final static Logger log = LogManager.getLogger(Actor.class);
+public abstract class Puntuable extends Entidad<Integer> implements Serializable {
 
 	@Column(name = "complejidad", nullable = false)
 	private Integer complejidad;
@@ -43,6 +41,7 @@ public abstract class Puntuable implements Serializable {
 
 	/**
 	 * método delegado a las subclases para calcular el factor de productividad del objeto puntuable
+	 *
 	 * @return el factor de productividad
 	 */
 	public abstract Double getFactorProductividad();
@@ -52,7 +51,7 @@ public abstract class Puntuable implements Serializable {
 	public Punto getPunto(Integer unTipo) {
 		if (punto == null || (complejidad != null && !complejidad.equals(complejidadAnterior))) {
 			complejidadAnterior = complejidad;
-			DaoPunto dp = new DaoPunto();
+			DaoPunto dp = DaoFactory.getInstance().crearDao(Punto.class, DaoPunto.class);
 			punto = dp.get(unTipo, complejidad);
 		}
 		return punto != null ? punto : new Punto(); // todo: por lo menos pasarle el tipo (esto debe ser complementado con una validación en la interfaz)

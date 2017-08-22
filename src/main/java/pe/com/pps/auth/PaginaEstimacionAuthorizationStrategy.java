@@ -14,7 +14,7 @@ import pe.com.pps.model.Estimacion;
 import pe.com.pps.ui.estimacion.PaginaEstimacion;
 import pe.com.pps.ui.home.HomePage;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
-import pe.trazos.login.usuario.Usuario;
+import pe.trazos.login.entidad.Usuario;
 
 /**
  * estrategia de autorización para el acceso a la página de estimación

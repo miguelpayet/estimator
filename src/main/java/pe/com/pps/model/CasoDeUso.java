@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "caso_de_uso")
-public class CasoDeUso extends Puntuable implements Identificable<Integer> {
+public class CasoDeUso extends Puntuable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

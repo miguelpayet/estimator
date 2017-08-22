@@ -1,6 +1,7 @@
 package pe.com.pps.model;
 
 import pe.com.pps.ui.estimacion.PanelFilaCronograma;
+import pe.trazos.dao.entidad.Entidad;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "tarea")
 @DiscriminatorColumn(name = "tipocosto", discriminatorType = DiscriminatorType.INTEGER)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Tarea implements Identificable<Integer>, Serializable {
+public abstract class Tarea extends Entidad<Integer> implements Serializable {
 
 	static final int ROL_ACOMPAÑAMIENTO = 2;
 	static final int ROL_DISEÑO_TECNICO = 1;
@@ -91,12 +92,12 @@ public abstract class Tarea implements Identificable<Integer>, Serializable {
 		return incluir;
 	}
 
-	@SuppressWarnings("unused")
+
 	public void setIdtarea(Integer idtarea) {
 		this.idtarea = idtarea;
 	}
 
-	@SuppressWarnings("unused")
+
 	public void setIncluir(Boolean incluir) {
 		this.incluir = incluir;
 	}
@@ -105,7 +106,7 @@ public abstract class Tarea implements Identificable<Integer>, Serializable {
 		this.nombre = nombre;
 	}
 
-	@SuppressWarnings("unused")
+
 	public void setOrden(Integer orden) {
 		this.orden = orden;
 	}
@@ -118,12 +119,12 @@ public abstract class Tarea implements Identificable<Integer>, Serializable {
 		this.proveedor = proveedor;
 	}
 
-	@SuppressWarnings("unused")
+
 	public void setRol(Integer rol) {
 		this.rol = rol;
 	}
 
-	@SuppressWarnings("unused")
+
 	public void setTipoCosto(Integer tipoCosto) {
 		this.tipoCosto = tipoCosto;
 	}

@@ -20,8 +20,8 @@ public class TareaCronogramaPK implements Serializable {
 	public TareaCronogramaPK() {
 	}
 
-	public TareaCronogramaPK(Estimacion unIdEstimacion, Tarea unaTarea) {
-		estimacion = unIdEstimacion;
+	public TareaCronogramaPK(Estimacion unaEstimacion, Tarea unaTarea) {
+		estimacion = unaEstimacion;
 		tarea = unaTarea;
 	}
 

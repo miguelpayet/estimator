@@ -1,12 +1,13 @@
 package pe.com.pps.model;
 
 import pe.com.pps.dao.DaoParametro;
+import pe.trazos.dao.factory.DaoFactory;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "actor")
-public class Actor extends Puntuable implements Identificable<Integer> {
+public class Actor extends Puntuable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +19,7 @@ public class Actor extends Puntuable implements Identificable<Integer> {
 
 	@Override
 	public Double getFactorProductividad() {
-		DaoParametro dp = new DaoParametro();
+		DaoParametro dp = DaoFactory.getInstance().crearDao(Parametro.class, DaoParametro.class);
 		Parametro p = dp.getFactorProductividadActor();
 		return p.getValorDouble();
 	}

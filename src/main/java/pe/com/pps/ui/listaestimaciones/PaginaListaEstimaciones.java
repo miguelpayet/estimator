@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @AuthorizeInstantiation("usuario")
 public class PaginaListaEstimaciones extends PaginaTabla<Estimacion, ProviderEstimacion, Integer> {
 
-	@SuppressWarnings("unused")
+
 	public PaginaListaEstimaciones() {
 		this(new PageParameters());
 	}

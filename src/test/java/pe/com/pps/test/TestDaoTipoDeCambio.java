@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import pe.com.pps.dao.DaoTipoDeCambio;
+import pe.trazos.dao.factory.DaoFactory;
 
 public class TestDaoTipoDeCambio {
 
@@ -11,7 +12,7 @@ public class TestDaoTipoDeCambio {
 
 	@Test
 	public void leerTipoDeCambio() {
-		DaoTipoDeCambio dtc = new DaoTipoDeCambio();
+		//DaoTipoDeCambio dtc = DaoFactory.getInstance().crearDao(TipoDeCambio.class, DaoTipoDeCambio.class);
 		//Double tipoDeCambio = dtc.leerTipoDeCambio();
 		//log.info("tipo de cambio: {}", tipoDeCambio);
 	}

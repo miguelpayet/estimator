@@ -1,14 +1,15 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.EntidadPK;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
 @IdClass(PuntoPK.class)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "punto")
-public class Punto implements Serializable {
+public class Punto extends EntidadPK<PuntoPK> {
 
 	@Id
 	@Column(name = "complejidad")
@@ -24,6 +25,11 @@ public class Punto implements Serializable {
 
 	public Integer getComplejidad() {
 		return complejidad;
+	}
+
+	@Override
+	public PuntoPK getId() {
+		return new PuntoPK(tipo, complejidad);
 	}
 
 	public Integer getPuntos() {

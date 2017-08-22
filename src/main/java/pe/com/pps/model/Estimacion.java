@@ -1,18 +1,24 @@
 package pe.com.pps.model;
 
 import pe.com.pps.dao.DaoEstimacion;
-import pe.trazos.login.usuario.Usuario;
+import pe.trazos.dao.entidad.Entidad;
+import pe.trazos.dao.factory.DaoFactory;
+import pe.trazos.login.entidad.Usuario;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "estimacion")
-public class Estimacion implements Serializable {
+public class Estimacion extends Entidad<Integer> {
+
+	public static Estimacion get(Integer id) {
+		DaoEstimacion de = DaoFactory.getInstance().crearDao(Estimacion.class, DaoEstimacion.class);
+		return de.get(id);
+	}
 
 	public static void grabar(Estimacion unaEstimacion) throws ExcepcionCronograma {
-		DaoEstimacion de = new DaoEstimacion();
+		DaoEstimacion de = DaoFactory.getInstance().crearDao(Estimacion.class, DaoEstimacion.class);
 		unaEstimacion.generarCronograma();
 		de.grabar(unaEstimacion);
 	}
@@ -53,11 +59,6 @@ public class Estimacion implements Serializable {
 	@Version
 	@Column(name = "version")
 	private Integer version;
-
-	public static Estimacion get(Integer id) {
-		DaoEstimacion de = new DaoEstimacion();
-		return de.get(id);
-	}
 
 	public Estimacion() {
 		actores = new HashSet<>();
@@ -101,7 +102,7 @@ public class Estimacion implements Serializable {
 		tareasCronograma.add(tc);
 	}
 
-	@SuppressWarnings("unused")
+
 	public boolean compararCon(Estimacion unaEstimacion) {
 		boolean iguales;
 		String[] campos = {"eds", "esfuerzo", "fechaCalculo", "idEstimacion", "nombre", "puntos", "version"};
@@ -133,7 +134,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return el costo total de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public Double getCostoTotal() {
 		Double costo = 0.0;
 		for (TareaCronograma t : tareasCronograma) {
@@ -167,7 +168,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return suma el total de horas del esfuerzo de las tareas del cronograma y lo formatea
 	 */
-	@SuppressWarnings("unused")
+
 	public String getEsfuerzoCronograma() {
 		double total = 0d;
 		for (TareaCronograma t : tareasCronograma) {
@@ -181,7 +182,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return las horas de esfuerzo de la estimación (sin gestión ni acompañamiento), en formato decimal
 	 */
-	@SuppressWarnings("unused")
+
 	public String getEsfuerzoString() {
 		return Util.format(getEsfuerzo());
 	}
@@ -195,7 +196,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return fase de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public Integer getFase() {
 		return fase;
 	}
@@ -203,7 +204,7 @@ public class Estimacion implements Serializable {
 	/**
 	 * @return fecha de última grabación de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	private Date getFechaCalculo() {
 		return fechaCalculo;
 	}
@@ -213,10 +214,15 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return la última fecha de grabación de la estimación, en formato de fecha
 	 */
-	@SuppressWarnings("unused")
+
 	public String getFechaCalculoString() {
 		Date fecha = getFechaCalculo();
 		return fecha == null ? "?" : Util.format(getFechaCalculo());
+	}
+
+	@Override
+	public Integer getId() {
+		return idEstimacion;
 	}
 
 	public Integer getIdEstimacion() {
@@ -232,7 +238,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return el número de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public Integer getNumero() {
 		return numero;
 	}
@@ -247,7 +253,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @return el número de puntos de la estimación en formato con 2 decimales
 	 */
-	@SuppressWarnings("unused")
+
 	public String getPuntosString() {
 		return Util.format(getPuntos());
 	}
@@ -306,7 +312,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @param fase -> la fase de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public void setFase(Integer fase) {
 		this.fase = fase;
 	}
@@ -316,7 +322,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @param fechaCalculo -> la última fecha de cálculo
 	 */
-	@SuppressWarnings("unused")
+
 	public void setFechaCalculo(Date fechaCalculo) {
 		this.fechaCalculo = fechaCalculo;
 	}
@@ -326,7 +332,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @param idEstimacion -> el id de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public void setIdEstimacion(Integer idEstimacion) {
 		this.idEstimacion = idEstimacion;
 	}
@@ -340,7 +346,7 @@ public class Estimacion implements Serializable {
 	 *
 	 * @param numero -> el número de la estimación
 	 */
-	@SuppressWarnings("unused")
+
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}

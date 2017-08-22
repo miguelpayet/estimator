@@ -10,6 +10,7 @@ import pe.com.pps.dao.DaoEstimacion;
 import pe.com.pps.model.CasoDeUso;
 import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.EstimacionFactory;
+import pe.trazos.dao.factory.DaoFactory;
 
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 		super.agregarTitulo((getEstimacion().getNumero() == null ? "" : getEstimacion().getNumero() + " - ") + titulo);
 	}
 
-	@SuppressWarnings("unused")
+
 	private Set<CasoDeUso> getCasosDeUso() {
 		return getEstimacion().getCasosDeUso();
 	}
@@ -58,7 +59,7 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 			if (parametro.toString() != null) {
 				try {
 					Integer idEntidad = parametro.toInteger();
-					DaoEstimacion de = new DaoEstimacion();
+					DaoEstimacion de = DaoFactory.getInstance().crearDao(Estimacion.class, DaoEstimacion.class);
 					estimacion = de.get(idEntidad);
 					if (estimacion == null) {
 						log.error("no existe la estimación {}", idEntidad); // todo: retroalimentar al usuario de alguna forma

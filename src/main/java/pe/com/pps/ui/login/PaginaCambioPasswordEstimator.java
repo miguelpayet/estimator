@@ -5,18 +5,19 @@ import pe.com.pps.ui.base.PaginaBaseEstimador;
 import pe.trazos.login.ui.password.PanelCambioPassword;
 
 public class PaginaCambioPasswordEstimator extends PaginaBaseEstimador {
+
 	public PaginaCambioPasswordEstimator() {
 		this(new PageParameters());
 	}
 
 	public PaginaCambioPasswordEstimator(PageParameters parameters) {
 		super(parameters);
-		agregarTitulo("cambio password estimador");
+		agregarTitulo("cambio clave estimador");
 		agregarPanelLogin();
 	}
 
 	private void agregarPanelLogin() {
-		PanelCambioPassword pc = new PanelCambioPassword("panel-cambio-password");
+		PanelCambioPassword pc = new PanelCambioPassword("panel-cambio-clave");
 		add(pc);
 	}
 

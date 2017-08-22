@@ -12,6 +12,7 @@ import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.Plataforma;
 import pe.com.pps.model.Puntuable;
 import pe.com.pps.ui.providers.ProviderCasoDeUso;
+import pe.trazos.dao.factory.DaoFactory;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PanelCasosDeUso extends PanelPuntuable<CasoDeUso> {
 
 	private <T extends Puntuable> List<AbstractEditablePropertyColumn<T, String>> columnasCasosDeUso() {
 		List<AbstractEditablePropertyColumn<T, String>> columns = columnasPuntuable();
-		DaoPlataforma dp = new DaoPlataforma();
+		DaoPlataforma dp = DaoFactory.getInstance().crearDao(Plataforma.class, DaoPlataforma.class);
 		List<Plataforma> plataformas = dp.listar();
 		columns.add(new AbstractEditablePropertyColumn<T, String>(new Model<>("Plataforma"), "plataforma") {
 			@Override

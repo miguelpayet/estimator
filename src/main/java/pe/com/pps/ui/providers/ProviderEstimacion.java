@@ -2,11 +2,9 @@ package pe.com.pps.ui.providers;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import pe.com.pps.model.Estimacion;
 import pe.trazos.dao.query.QueryFiltrado;
-import pe.trazos.dao.query.TipoAgrupacionFiltro;
-import pe.trazos.dao.query.TipoFiltro;
-import pe.trazos.dao.query.FiltroQueryAgrupado;
 
 public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNombre> {
 
@@ -17,30 +15,28 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 	}
 
 	@Override
-	protected void filtrar(QueryFiltrado query) {
+	public void filtrar(QueryFiltrado<Estimacion> query) {
 		String valor = getFilterState().getNombre().trim();
 		try {
-			query.agregarFiltro("numero", Integer.valueOf(valor), TipoFiltro.EQUAL);
+			final Integer numero = Integer.valueOf(valor);
+			query.setFiltro((qry, root, builder) -> qry.where(builder.equal(root.get("numero"), numero)));
 		} catch (NumberFormatException e) {
-			FiltroQueryAgrupado filtro = new FiltroQueryAgrupado(TipoAgrupacionFiltro.OR);
-			valor = "%" + valor + "%";
-			filtro.agregar("nombre", valor, TipoFiltro.EQUAL);
-			filtro.agregar("eds", valor, TipoFiltro.EQUAL);
-			query.agregarFiltro(filtro);
+			final String cadena = "%" + valor + "%";
+			query.setFiltro((qry, root, builder) -> qry.where(builder.or(builder.like(root.get("nombre"), cadena), builder.like(root.get("eds"), cadena))));
 		}
 	}
 
 	@Override
 	public IModel<Estimacion> model(Estimacion object) {
-		return null;
+		return new Model<>(object);
 	}
 
 	@Override
 	public void ordenarQuery(QueryFiltrado unQuery) {
 		SortOrder orden = getSortState().getPropertySortOrder("numero");
-		unQuery.addOrder("numero", orden);
-		unQuery.addOrder("fase", orden);
-		unQuery.addOrder("fase", SortOrder.ASCENDING);
+		unQuery.addOrden("numero", orden);
+		unQuery.addOrden("fase", orden);
+		unQuery.addOrden("fase", SortOrder.ASCENDING);
 	}
 
 }

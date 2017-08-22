@@ -1,6 +1,6 @@
 mail.smtp.auth = true
 mail.smtp.from = estimador@estimador.xyz
 mail.smtp.host = mail.smtp2go.com
-mail.smtp.password = dm8xdjZhMDIzcnMw
+mail.smtp.clave = dm8xdjZhMDIzcnMw
 mail.smtp.port = 2525
 mail.smtp.user = estimador

@@ -1,9 +1,8 @@
 package pe.com.pps.model;
 
 import com.google.common.collect.HashMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import pe.com.pps.dao.DaoParametro;
+import pe.trazos.dao.factory.DaoFactory;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -101,7 +100,7 @@ public class Cronograma implements Serializable {
 	 * @return valor del parámetro de desviación
 	 */
 	private Double getRangoDesviacion() {
-		DaoParametro dp = new DaoParametro();
+		DaoParametro dp = DaoFactory.getInstance().crearDao(Parametro.class, DaoParametro.class);
 		Parametro p = dp.getDesviacion();
 		return p.getValorDouble();
 	}

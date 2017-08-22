@@ -1,5 +1,7 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.Entidad;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,12 +9,10 @@ import java.io.Serializable;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "factor")
-public abstract class Factor implements Serializable {
+public abstract class Factor extends Entidad<Integer> implements Serializable {
 
 	@Column(name = "descripcion")
 	private String descripcion;
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy="factor")
-	//Set<FactorEstimacion> factoresEstimacion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idfactor")
@@ -35,21 +35,20 @@ public abstract class Factor implements Serializable {
 		return descripcion;
 	}
 
-/*
-	public Set<FactorEstimacion> getFactoresEstimacion() {
-		return factoresEstimacion;
+	public Integer getId() {
+		return idFactor;
 	}
-*/
+
 
 	public Integer getIdFactor() {
 		return idFactor;
 	}
 
-	public Integer getMaximo() {
+	Integer getMaximo() {
 		return maximo != null ? maximo : 0;
 	}
 
-	public Integer getMinimo() {
+	Integer getMinimo() {
 		return minimo != null ? minimo : 0;
 	}
 
@@ -61,7 +60,7 @@ public abstract class Factor implements Serializable {
 		return peso;
 	}
 
-	public Integer getTipoFactor() {
+	Integer getTipoFactor() {
 		return tipoFactor;
 	}
 
@@ -69,17 +68,16 @@ public abstract class Factor implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	/*public void setFactoresEstimacion(Set<FactorEstimacion> factoresEstimacion) {
-		this.factoresEstimacion = factoresEstimacion;
-	}*/
 
 	public void setIdFactor(Integer idFactor) {
 		this.idFactor = idFactor;
 	}
 
+
 	public void setMaximo(Integer maximo) {
 		this.maximo = maximo;
 	}
+
 
 	public void setMinimo(Integer minimo) {
 		this.minimo = minimo;
@@ -92,6 +90,7 @@ public abstract class Factor implements Serializable {
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
+
 
 	public void setTipoFactor(Integer tipoFactor) {
 		this.tipoFactor = tipoFactor;

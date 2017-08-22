@@ -1,12 +1,14 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.Entidad;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "proveedor")
-public class Proveedor implements Identificable<Integer>, Serializable {
+public class Proveedor extends Entidad<Integer> implements Serializable {
 
 	@Column(name = "costohora")
 	private float costo;

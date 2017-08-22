@@ -1,17 +1,20 @@
 package pe.com.pps.dao;
 
 import pe.com.pps.model.Estimacion;
+import pe.trazos.dao.Dao;
+import pe.trazos.dao.factory.DataAccessObject;
 
 /**
  * clase para data access de la entidad estimación
  */
+@DataAccessObject(Estimacion.class)
 public class DaoEstimacion extends Dao<Estimacion> {
 
 	/**
 	 * constructor
 	 */
 	public DaoEstimacion() {
-		super(Estimacion.class);
+		super();
 	}
 
 	/**
@@ -21,11 +24,7 @@ public class DaoEstimacion extends Dao<Estimacion> {
 	 */
 	public void grabar(Estimacion unaEstimacion) {
 		unaEstimacion.totalizar(true);
-		if (unaEstimacion.getIdEstimacion() == null && unaEstimacion.getVersion() == null) {
-			getSesion().persist(unaEstimacion);
-		} else {
-			getSesion().update(unaEstimacion);
-		}
+		super.grabar(unaEstimacion);
 	}
 
 }

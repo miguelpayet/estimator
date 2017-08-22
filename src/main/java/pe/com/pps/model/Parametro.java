@@ -1,11 +1,13 @@
 package pe.com.pps.model;
 
+import pe.trazos.dao.entidad.EntidadPK;
+
 import javax.persistence.*;
 
 @Entity
 @IdClass(ParametroPK.class)
 @Table(name = "lval")
-public class Parametro {
+public class Parametro extends EntidadPK<ParametroPK> {
 
 	@Id
 	@Column(name = "codlval")
@@ -18,6 +20,11 @@ public class Parametro {
 
 	public Integer getCodigo() {
 		return codigo;
+	}
+
+	@Override
+	public ParametroPK getId() {
+		return new ParametroPK(tipo, codigo);
 	}
 
 	public String getTipo() {

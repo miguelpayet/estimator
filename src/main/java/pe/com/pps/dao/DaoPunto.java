@@ -1,19 +1,20 @@
 package pe.com.pps.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import pe.com.pps.model.Punto;
+import pe.com.pps.model.PuntoPK;
+import pe.trazos.dao.factory.DataAccessObject;
 
 /**
  * clase para data access de la entidad punto
  */
-public class DaoPunto extends Dao<Punto> {
+@DataAccessObject(Punto.class)
+public class DaoPunto extends DaoPK<Punto, PuntoPK> {
 
 	/**
 	 * constructor
 	 */
 	public DaoPunto() {
-		super(Punto.class);
+		super();
 	}
 
 	/**
@@ -24,10 +25,8 @@ public class DaoPunto extends Dao<Punto> {
 	 * @return obtener el objeto de clase punto correspondiente
 	 */
 	public Punto get(Integer unTipo, Integer unaComplejidad) {
-		Criteria crit = getSesion().createCriteria(getClaseModelo());
-		crit.add(Restrictions.eq("tipo", unTipo));
-		crit.add(Restrictions.eq("complejidad", unaComplejidad));
-		return (Punto) crit.uniqueResult();
+		PuntoPK pk = new PuntoPK(unTipo, unaComplejidad);
+		return get(pk);
 	}
 
 }

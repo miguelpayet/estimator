@@ -1,17 +1,20 @@
 package pe.com.pps.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import pe.com.pps.model.Parametro;
 import pe.com.pps.model.ParametroPK;
+import pe.trazos.dao.factory.DataAccessObject;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * clase para clave primaria de la entidad parámetro de la estimación
  */
+@DataAccessObject(Parametro.class)
 public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 
 	private static final String PARAMETRO_DESVIACION = "Desviación";
@@ -23,7 +26,7 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 	 * constructor
 	 */
 	public DaoParametro() {
-		super(Parametro.class);
+		super();
 	}
 
 	/**
@@ -48,10 +51,13 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<String> getLista(String unParametro) {
-		Criteria crit = crearCriteria();
-		crit.add(Restrictions.eq("tipo", unParametro));
-		crit.addOrder(Order.asc("codigo"));
-		List<Parametro> params = crit.list();
+		CriteriaBuilder cb = getSession().getCriteriaBuilder();
+		CriteriaQuery<Parametro> q = cb.createQuery(Parametro.class);
+		Root<Parametro> c = q.from(Parametro.class);
+		cb.equal(c.get("tipo"), unParametro);
+		q.orderBy(cb.asc(c.get("codigo")));
+		TypedQuery<Parametro> query = getSession().createQuery(q);
+		List<Parametro> params = query.getResultList();
 		return params.stream().map(Parametro::getValor).collect(Collectors.toList());
 	}
 

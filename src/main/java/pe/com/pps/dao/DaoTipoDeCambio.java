@@ -1,6 +1,7 @@
 package pe.com.pps.dao;
 
 import org.xml.sax.InputSource;
+import pe.trazos.dao.factory.DataAccessObject;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
