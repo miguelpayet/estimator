@@ -60,8 +60,7 @@ public abstract class ProviderTabla<T extends Entidad<?>, V extends FiltroTabla>
 
 	public long size() {
 		QueryFiltrado query = newQuery();
-		long filas = query.contarFilas();
-		return filas;
+		return query.contarFilas();
 	}
 
 	private boolean tieneFiltro() {

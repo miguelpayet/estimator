@@ -17,6 +17,7 @@ public class PanelFilaTareaEsfuerzo extends PanelFilaCronograma {
 		agregarTarea();
 	}
 
+	@Override
 	protected void actualizarFila(AjaxCheckBox unCheckbox, AjaxRequestTarget unTarget) {
 		if (!unCheckbox.getModel().getObject()) {
 			String[] dato = {"0"};

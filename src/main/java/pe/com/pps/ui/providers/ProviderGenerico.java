@@ -14,7 +14,6 @@ import java.util.List;
 
 public abstract class ProviderGenerico<T extends Serializable> implements IEditableDataProvider<T, String> {
 
-	private static final Logger log = LogManager.getLogger(ProviderGenerico.class);
 	protected Estimacion estimacion;
 
 	public ProviderGenerico(Estimacion unaEstimacion) {

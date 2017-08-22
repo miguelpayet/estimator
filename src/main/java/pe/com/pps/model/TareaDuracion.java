@@ -2,7 +2,6 @@ package pe.com.pps.model;
 
 import pe.com.pps.ui.estimacion.PanelFilaCronograma;
 import pe.com.pps.ui.estimacion.PanelFilaTareaDuracion;
-import pe.com.pps.ui.estimacion.PanelFilaTareaEsfuerzo;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

@@ -16,7 +16,7 @@ public class ProviderFactorTecnico extends ProviderFactorEstimacion {
 
 	@Override
 	public void initFactores(Factorama f) {
-		factores = f.getFactoresTecnicos();
+		setFactores(f.getFactoresTecnicos());
 	}
 
 }

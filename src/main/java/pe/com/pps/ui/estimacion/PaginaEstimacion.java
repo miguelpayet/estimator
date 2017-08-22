@@ -1,7 +1,5 @@
 package pe.com.pps.ui.estimacion;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseException;
@@ -36,12 +34,9 @@ import java.util.Set;
 @AuthorizeInstantiation("usuario")
 public class PaginaEstimacion extends PaginaBaseEstimacion {
 
-	private static final Logger log = LogManager.getLogger(PaginaEstimacion.class);
-
 	private Form campos;
 	private MiFeedbackPanel feedback;
 	private Set<Component> targets;
-
 
 	public PaginaEstimacion() {
 		this(new PageParameters());
@@ -93,6 +88,7 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		campos.add(descripcion);
 	}
 
+	@Override
 	protected Label agregarCostoTotal() {
 		Label costoTotal = super.agregarCostoTotal();
 		targets.add(costoTotal);

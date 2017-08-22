@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "1")
 public class TareaEsfuerzo extends Tarea {
 
+	@Override
 	public Double convertirDiasAHoras(TareaCronograma unaTarea) {
 		Double horas = null;
 		if (unaTarea != null) {
@@ -21,6 +22,7 @@ public class TareaEsfuerzo extends Tarea {
 		return horas;
 	}
 
+	@Override
 	public Double convertirHorasADias(TareaCronograma unaTarea) {
 		Double dias = null;
 		if (unaTarea != null) {

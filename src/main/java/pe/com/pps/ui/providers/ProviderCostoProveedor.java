@@ -1,7 +1,5 @@
 package pe.com.pps.ui.providers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -16,8 +14,6 @@ import java.util.List;
  * data provider para la tabla de costos por proveedor que va en panelcronograma
  */
 public class ProviderCostoProveedor implements IEditableDataProvider<CostoProveedor, String> {
-
-	private static Logger log = LogManager.getLogger(ProviderCostoProveedor.class);
 
 	private Cronograma cronograma;
 
@@ -37,6 +33,7 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 */
 	@Override
 	public void add(CostoProveedor item) {
+		// método vacío
 	}
 
 	/**
@@ -44,6 +41,7 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 */
 	@Override
 	public void detach() {
+		// método vacío
 	}
 
 	@Override
@@ -74,6 +72,7 @@ public class ProviderCostoProveedor implements IEditableDataProvider<CostoProvee
 	 */
 	@Override
 	public void remove(CostoProveedor item) {
+		// método vacío
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class PanelCostos extends PanelBaseCronograma {
 				RepeatingView rv = new RepeatingView("fila-costos");
 				rv.add(new Label(rv.newChildId(), costo.getProveedor().getNombre()));
 				rv.add(new Label(rv.newChildId(), costo.getDescripcionHoras()));
-				rv.add(new Label(rv.newChildId(), costo.getMoneda()));
+				rv.add(new Label(rv.newChildId(), CostoProveedor.MONEDA));
 				rv.add(new Label(rv.newChildId(), costo.getDescripcionCosto()));
 				item.add(rv);
 				item.add(new AttributeModifier("class", "costo-proveedor"));

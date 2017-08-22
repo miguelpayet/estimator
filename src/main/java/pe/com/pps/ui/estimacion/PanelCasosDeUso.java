@@ -27,7 +27,7 @@ public class PanelCasosDeUso extends PanelPuntuable<CasoDeUso> {
 	}
 
 	private void agregarGridCasosDeUso() {
-		EditableGrid<CasoDeUso, String> grid = new EditableGrid<CasoDeUso, String>("grid-casos-de-uso", columnasCasosDeUso(), provider, FILAS_GRID, CasoDeUso.class);
+		EditableGrid<CasoDeUso, String> grid = new EditableGrid<>("grid-casos-de-uso", columnasCasosDeUso(), provider, FILAS_GRID, CasoDeUso.class);
 		grid.setTableCss("casos-de-uso");
 		add(grid);
 	}

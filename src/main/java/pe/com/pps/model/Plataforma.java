@@ -21,10 +21,6 @@ public class Plataforma extends Entidad<Integer> implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 
-	public Plataforma() {
-	}
-
-
 	public List<CasoDeUso> getCasosDeUso() {
 		return casosDeUso;
 	}
@@ -57,7 +53,7 @@ public class Plataforma extends Entidad<Integer> implements Serializable {
 	}
 
 	public String toString() {
-		return nombre; // != null ? nombre : "Sin nombre";
+		return nombre != null ? nombre : "Sin nombre";
 	}
 
 }

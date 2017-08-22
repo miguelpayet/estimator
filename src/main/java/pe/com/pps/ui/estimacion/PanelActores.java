@@ -23,11 +23,6 @@ public class PanelActores extends PanelPuntuable<Actor> {
 		}
 
 		@Override
-		protected void onAdd(AjaxRequestTarget target, Actor newRow) {
-			super.onAdd(target, newRow);
-		}
-
-		@Override
 		protected void onError(AjaxRequestTarget target) {
 			target.add(panelFeedback);
 		}
@@ -41,11 +36,6 @@ public class PanelActores extends PanelPuntuable<Actor> {
 
 	private void agregarGridActores() {
 		EditableGridActores grid = new EditableGridActores("grid-actores", columnasPuntuable(), provider, FILAS_GRID, Actor.class) {
-
-			@Override
-			protected void onAdd(AjaxRequestTarget target, Actor newRow) {
-				super.onAdd(target, newRow);
-			}
 
 			@Override
 			protected void onError(AjaxRequestTarget target) {

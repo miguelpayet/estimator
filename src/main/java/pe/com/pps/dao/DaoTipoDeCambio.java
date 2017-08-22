@@ -1,7 +1,8 @@
 package pe.com.pps.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.InputSource;
-import pe.trazos.dao.factory.DataAccessObject;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -21,6 +23,7 @@ public class DaoTipoDeCambio {
 	private static final String CAMBIO = "USDPEN";
 	private static final String CONSULTA = "select%20*%20from%20yahoo.finance.xchange%20where%20pair%20%3D%20%22{}%22";
 	private static final String RUTA = "https://query.yahooapis.com/v1/public/yql?q={}&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+	private static final Logger log = LogManager.getLogger(DaoTipoDeCambio.class);
 
 	/**
 	 * crear la dirección de la consulta con el cambio que se está buscando
@@ -45,6 +48,12 @@ public class DaoTipoDeCambio {
 		InputSource source = new InputSource(new StringReader(unXml));
 		try {
 			String status = xpath.evaluate("/query/results/rate[@id='USDPEN']/Rate", source);
+			try {
+				tipoDeCambio = Double.valueOf(status);
+			} catch (NumberFormatException ex) {
+				log.error("error al convertir status ", ex);
+				tipoDeCambio = -1d;
+			}
 		} catch (XPathExpressionException e) {
 			tipoDeCambio = 0d;
 		}
@@ -59,17 +68,26 @@ public class DaoTipoDeCambio {
 	 */
 	public String leerResultado(String unaDireccion) {
 		String resultado;
+		URL oracle;
 		try {
-			URL oracle = new URL(unaDireccion);
-			BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
-			String inputLine;
-			StringBuffer sb = new StringBuffer();
-			while ((inputLine = in.readLine()) != null)
-				sb.append(inputLine);
-			in.close();
-			resultado = sb.toString();
-		} catch (IOException e) {
-			resultado = "";
+			oracle = new URL(unaDireccion);
+		} catch (MalformedURLException ex) {
+			log.error("url mal formado", ex);
+			oracle = null;
+		}
+		if (oracle != null) {
+			try (BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()))) {
+				String inputLine;
+				StringBuilder sb = new StringBuilder();
+				while ((inputLine = in.readLine()) != null)
+					sb.append(inputLine);
+				in.close();
+				resultado = sb.toString();
+			} catch (IOException e) {
+				resultado = "";
+			}
+		} else {
+			resultado = null;
 		}
 		return resultado;
 	}
@@ -81,8 +99,7 @@ public class DaoTipoDeCambio {
 	 */
 	public Double leerTipoDeCambio() {
 		String resultado = leerResultado(crearDireccion());
-		Double tipoDeCambio = extraerTipoDeCambio(resultado);
-		return tipoDeCambio;
+		return extraerTipoDeCambio(resultado);
 	}
 
 }

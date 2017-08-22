@@ -11,10 +11,9 @@ import java.util.Properties;
 public class Util {
 
 	private static DecimalFormat df;
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy' 'HH:mm:ss");
 
 	static {
-		DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols(); //bLocale);
+		DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
 		df = new DecimalFormat("###,###,###.00", unusualSymbols);
 	}
 
@@ -23,6 +22,7 @@ public class Util {
 	}
 
 	public static String format(Date unaFecha) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy' 'HH:mm:ss");
 		return sdf.format(unaFecha);
 	}
 
@@ -36,6 +36,10 @@ public class Util {
 
 	public static double round(double unDoble, int unaPrecision) {
 		return Math.round(unDoble * Math.pow(10, unaPrecision)) / Math.pow(10, unaPrecision);
+	}
+
+	private Util() {
+		// constructor privado para impedir instanciación
 	}
 
 }

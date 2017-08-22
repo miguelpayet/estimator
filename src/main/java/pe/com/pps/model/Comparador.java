@@ -35,4 +35,8 @@ public class Comparador {
 		return iguales;
 	}
 
+	private Comparador() {
+		// constructor privado para evitar instanciación
+	}
+
 }

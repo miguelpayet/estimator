@@ -14,9 +14,6 @@ public class Actor extends Puntuable {
 	@Column(name = "idactor")
 	private Integer idActor;
 
-	public Actor() {
-	}
-
 	@Override
 	public Double getFactorProductividad() {
 		DaoParametro dp = DaoFactory.getInstance().crearDao(Parametro.class, DaoParametro.class);

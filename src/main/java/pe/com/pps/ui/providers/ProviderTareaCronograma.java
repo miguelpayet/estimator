@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ProviderTareaCronograma implements IDataProvider<TareaCronograma> {
 
-	List<TareaCronograma> tareas;
+	private List<TareaCronograma> tareas;
 
 	public ProviderTareaCronograma(Estimacion unaEstimacion) {
 		tareas = unaEstimacion.getTareasCronograma().stream().sorted(new ComparadorTareaCronograma()).filter(TareaCronograma::getIncluir).collect(Collectors.toList());
@@ -20,6 +20,7 @@ public class ProviderTareaCronograma implements IDataProvider<TareaCronograma> {
 
 	@Override
 	public void detach() {
+		// método vacío
 	}
 
 	@Override

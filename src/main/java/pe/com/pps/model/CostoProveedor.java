@@ -1,9 +1,6 @@
 package pe.com.pps.model;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 
 /**
  * clase que contiene el costo total de un proveedor dentro de una estimación
@@ -11,6 +8,7 @@ import java.util.Locale;
  */
 public class CostoProveedor implements Serializable {
 
+	public static final String MONEDA = "PEN";
 	private Double costo;
 	private Double horas;
 	private Proveedor proveedor;
@@ -35,10 +33,6 @@ public class CostoProveedor implements Serializable {
 
 	public Double getHoras() {
 		return Util.round(horas, 2);
-	}
-
-	public String getMoneda() {
-		return "PEN";
 	}
 
 	public Proveedor getProveedor() {

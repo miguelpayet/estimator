@@ -28,9 +28,6 @@ public class TareaCronograma extends EntidadPK<TareaCronogramaPK> implements Com
 	@JoinColumn(name = "idtarea", nullable = false)
 	private Tarea tarea;
 
-	public TareaCronograma() {
-	}
-
 	@Override
 	public int compareTo(TareaCronograma unaTarea) {
 		return this.getTarea().getOrden().compareTo(unaTarea.getTarea().getOrden());

@@ -23,7 +23,7 @@ public class PaginaBaseEstimador extends PaginaBaseCabecera {
 	}
 
 	protected void init() {
-		//setTitulo("estimador funcional");
+		// método vacío
 	}
 
 }

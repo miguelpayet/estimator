@@ -31,6 +31,7 @@ public class PaginaEstimacionAuthorizationStrategy extends AbstractPageAuthoriza
 	 * @return -> true o false para permitir o negar el acceso. este método siempre devuelve true, los casos donde no hay acceso los
 	 * redirige al home page o a la página de consulta según el caso
 	 */
+	@Override
 	protected <T extends Page> boolean isPageAuthorized(Class<T> pageClass) {
 		// validar el acceso a la pagina de estimacion para el eds original
 		if (pageClass == PaginaEstimacion.class) {

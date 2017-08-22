@@ -37,4 +37,8 @@ public class Complejidad {
 		return 0;
 	}
 
+	private Complejidad() {
+		// constructor privado para evitar instanciación
+	}
+
 }

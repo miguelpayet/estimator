@@ -8,10 +8,15 @@ import pe.trazos.dao.query.QueryFiltrado;
 
 public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNombre> {
 
+	private static final String CAMPO_EDS = "eds";
+	private static final String CAMPO_FASE = "fase";
+	private static final String CAMPO_NOMBRE = "nombre";
+	private static final String CAMPO_NUMERO = "numero";
+
 	public ProviderEstimacion() {
 		super(new FiltroTablaNombre());
 		setClaseDominio(Estimacion.class);
-		setSort("numero", SortOrder.DESCENDING);
+		setSort(CAMPO_NUMERO, SortOrder.DESCENDING);
 	}
 
 	@Override
@@ -19,10 +24,10 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 		String valor = getFilterState().getNombre().trim();
 		try {
 			final Integer numero = Integer.valueOf(valor);
-			query.setFiltro((qry, root, builder) -> qry.where(builder.equal(root.get("numero"), numero)));
+			query.setFiltro((qry, root, builder) -> qry.where(builder.equal(root.get(CAMPO_NUMERO), numero)));
 		} catch (NumberFormatException e) {
 			final String cadena = "%" + valor + "%";
-			query.setFiltro((qry, root, builder) -> qry.where(builder.or(builder.like(root.get("nombre"), cadena), builder.like(root.get("eds"), cadena))));
+			query.setFiltro((qry, root, builder) -> qry.where(builder.or(builder.like(root.get(CAMPO_NOMBRE), cadena), builder.like(root.get(CAMPO_EDS), cadena))));
 		}
 	}
 
@@ -33,10 +38,10 @@ public class ProviderEstimacion extends ProviderTabla<Estimacion, FiltroTablaNom
 
 	@Override
 	public void ordenarQuery(QueryFiltrado unQuery) {
-		SortOrder orden = getSortState().getPropertySortOrder("numero");
-		unQuery.addOrden("numero", orden);
-		unQuery.addOrden("fase", orden);
-		unQuery.addOrden("fase", SortOrder.ASCENDING);
+		SortOrder orden = getSortState().getPropertySortOrder(CAMPO_NUMERO);
+		unQuery.addOrden(CAMPO_NUMERO, orden);
+		unQuery.addOrden(CAMPO_FASE, orden);
+		unQuery.addOrden(CAMPO_FASE, SortOrder.ASCENDING);
 	}
 
 }

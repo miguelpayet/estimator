@@ -52,6 +52,7 @@ public class Aplicacion extends LoginWebApplication {
 	/**
 	 * @return la página de login
 	 */
+	@Override
 	public Class<? extends WebPage> getPaginaLogin() {
 		return getSignInPageClass();
 	}

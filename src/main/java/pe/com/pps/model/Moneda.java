@@ -12,4 +12,8 @@ public class Moneda {
 		return dp.getMoneda();
 	}
 
+	private Moneda() {
+		// constructor privado para impedir instanciación
+	}
+
 }

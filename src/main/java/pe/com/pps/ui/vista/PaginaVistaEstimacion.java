@@ -21,6 +21,8 @@ import java.util.List;
 
 public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 
+	private static final String CAMPO_DESCRIPCION = "descripcion";
+
 	private class PropertyPopulatorClase<T> extends PropertyPopulator<T> {
 
 		private String clase;
@@ -73,9 +75,9 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarCostoAdicional() {
-		List<PropertyPopulatorClase<CostoAdicional>> columns = crearColumnas(new String[]{"descripcion", "moneda", "costo"}, "adicional");
+		List<PropertyPopulatorClase<CostoAdicional>> columns = crearColumnas(new String[]{CAMPO_DESCRIPCION, "moneda", "costo"}, "adicional");
 		ProviderCostoAdicional pc = new ProviderCostoAdicional(getEstimacion());
-		DataGridView<CostoAdicional> dgv = new DataGridView<CostoAdicional>("repetidor-costo-adicional", columns, pc);
+		DataGridView<CostoAdicional> dgv = new DataGridView<>("repetidor-costo-adicional", columns, pc);
 		add(dgv);
 	}
 
@@ -120,7 +122,7 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private <T> List<PropertyPopulatorClase<T>> columnasActor() {
-		return crearColumnas(new String[]{"descripcion", "complejidadStr"}, "puntuable");
+		return crearColumnas(new String[]{CAMPO_DESCRIPCION, "complejidadStr"}, "puntuable");
 	}
 
 	private List<PropertyPopulatorClase<TareaCronograma>> columnasCronograma() {
@@ -132,7 +134,7 @@ public class PaginaVistaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private <T> List<PropertyPopulatorClase<T>> columnasPuntuable() {
-		return crearColumnas(new String[]{"descripcion", "complejidadStr", "plataforma"}, "puntuable");
+		return crearColumnas(new String[]{CAMPO_DESCRIPCION, "complejidadStr", "plataforma"}, "puntuable");
 	}
 
 	private <T> List<PropertyPopulatorClase<T>> crearColumnas(String[] columnas, String unSufijo) {

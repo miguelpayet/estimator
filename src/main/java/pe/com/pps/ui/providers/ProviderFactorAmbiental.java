@@ -16,7 +16,7 @@ public class ProviderFactorAmbiental extends ProviderFactorEstimacion {
 
 	@Override
 	public void initFactores(Factorama f) {
-		factores = f.getFactoresAmbientales();
+		setFactores(f.getFactoresAmbientales());
 	}
 
 }

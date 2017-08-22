@@ -271,26 +271,20 @@ public class Estimacion extends Entidad<Integer> {
 	}
 
 	public void removeActor(Actor unActor) {
-		if (unActor != null) {
-			if (actores.contains(unActor)) {
-				actores.remove(unActor);
-			}
+		if (unActor != null && actores.contains(unActor)) {
+			actores.remove(unActor);
 		}
 	}
 
 	public void removeCasoDeUso(CasoDeUso unCaso) {
-		if (unCaso != null) {
-			if (casosDeUso.contains(unCaso)) {
-				casosDeUso.remove(unCaso);
-			}
+		if (unCaso != null && casosDeUso.contains(unCaso)) {
+			casosDeUso.remove(unCaso);
 		}
 	}
 
 	public void removeCostoAdicional(CostoAdicional unCosto) {
-		if (unCosto != null) {
-			if (costosAdicionales.contains(unCosto)) {
-				costosAdicionales.remove(unCosto);
-			}
+		if (unCosto != null && costosAdicionales.contains(unCosto)) {
+			costosAdicionales.remove(unCosto);
 		}
 	}
 

@@ -45,10 +45,6 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 	}
 
 
-	private Set<CasoDeUso> getCasosDeUso() {
-		return getEstimacion().getCasosDeUso();
-	}
-
 	public Estimacion getEstimacion() {
 		return estimacion;
 	}

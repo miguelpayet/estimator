@@ -20,9 +20,6 @@ public class Punto extends EntidadPK<PuntoPK> {
 	@Column(name = "tipo", insertable = false, updatable = false)
 	private Integer tipo;
 
-	public Punto() {
-	}
-
 	public Integer getComplejidad() {
 		return complejidad;
 	}

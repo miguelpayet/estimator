@@ -38,4 +38,8 @@ public class EstimacionFactory {
 		return est;
 	}
 
+	private EstimacionFactory() {
+		// constructor privado para evitar instanciación
+	}
+
 }

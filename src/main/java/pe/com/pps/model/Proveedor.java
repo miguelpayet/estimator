@@ -21,9 +21,6 @@ public class Proveedor extends Entidad<Integer> implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
 	private List<Tarea> tareas;
 
-	public Proveedor() {
-	}
-
 	public float getCosto() {
 		return costo;
 	}

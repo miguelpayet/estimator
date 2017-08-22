@@ -12,11 +12,15 @@ import java.util.List;
 
 public abstract class ProviderFactorEstimacion extends SortableDataProvider {
 
-	List<FactorEstimacion> factores;
+	private List<FactorEstimacion> factores;
 
 	public ProviderFactorEstimacion(Estimacion unaEstimacion) {
 		Factorama f = new Factorama(unaEstimacion);
 		initFactores(f);
+	}
+
+	public List<FactorEstimacion> getFactores() {
+		return factores;
 	}
 
 	/**
@@ -34,6 +38,10 @@ public abstract class ProviderFactorEstimacion extends SortableDataProvider {
 	@Override
 	public IModel model(Object object) {
 		return new Model<>((FactorEstimacion) object);
+	}
+
+	public void setFactores(List<FactorEstimacion> factores) {
+		this.factores = factores;
 	}
 
 	@Override

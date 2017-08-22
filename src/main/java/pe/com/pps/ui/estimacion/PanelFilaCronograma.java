@@ -11,7 +11,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import pe.com.pps.model.TareaCronograma;
 
-public class PanelFilaCronograma extends FormComponentPanel<TareaCronograma> {
+public abstract class PanelFilaCronograma extends FormComponentPanel<TareaCronograma> {
 
 	private TextField campoPorcentaje;
 	private CheckBox checkboxIncluir;
@@ -25,7 +25,7 @@ public class PanelFilaCronograma extends FormComponentPanel<TareaCronograma> {
 	}
 
 	protected void actualizarFila(AjaxCheckBox unCheckbox, AjaxRequestTarget unTarget) {
-
+		// método vacío
 	}
 
 	protected void agregarTarea() {

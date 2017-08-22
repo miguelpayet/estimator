@@ -10,4 +10,8 @@ public class Desviacion {
 		return dp.getDesviacion().getValorDouble() * 100d;
 	}
 
+	private Desviacion() {
+		//constructor privado para evitar instanciación
+	}
+
 }

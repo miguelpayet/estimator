@@ -13,6 +13,7 @@ public class PanelFilaTareaGestion extends PanelFilaCronograma {
 		agregarTarea();
 	}
 
+	@Override
 	protected void agregarTarea() {
 		super.agregarTarea();
 		getCheckboxIncluir().setEnabled(false);

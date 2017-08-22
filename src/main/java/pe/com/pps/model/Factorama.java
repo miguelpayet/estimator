@@ -6,8 +6,6 @@ package pe.com.pps.model;
 
 
 import com.google.common.collect.HashMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Factorama {
-
-	private final static Logger log = LogManager.getLogger(Factorama.class);
 
 	private Estimacion estimacion;
 	private Map<Integer, Double> factores;
