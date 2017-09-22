@@ -1,25 +1,33 @@
 package pe.com.pps;
 
+import java.lang.management.ManagementFactory;
+
+import javax.management.MBeanServer;
+
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
-
-import javax.management.MBeanServer;
-import java.lang.management.ManagementFactory;
 
 /**
  * Separate startup class for people that want to run the examples directly. Use parameter
  * -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect with jconsole).
  */
-public class Start {
+public class Start
+{
 	/**
 	 * Main function, starts the jetty server.
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		System.setProperty("wicket.configuration", "development");
 
 		Server server = new Server();
@@ -36,7 +44,8 @@ public class Start {
 		server.addConnector(http);
 
 		Resource keystore = Resource.newClassPathResource("/keystore");
-		if (keystore != null && keystore.exists()) {
+		if (keystore != null && keystore.exists())
+		{
 			// if a keystore for a SSL certificate is available, start a SSL
 			// connector on port 8443.
 			// By default, the quickstart comes with a Apache Wicket Quickstart
@@ -52,13 +61,15 @@ public class Start {
 			HttpConfiguration https_config = new HttpConfiguration(http_config);
 			https_config.addCustomizer(new SecureRequestCustomizer());
 
-			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config));
+			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
+				sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config));
 			https.setPort(8443);
 			https.setIdleTimeout(500000);
 
 			server.addConnector(https);
 			System.out.println("SSL access to the examples has been enabled on port 8443");
-			System.out.println("You can access the application using SSL on https://localhost:8443");
+			System.out
+				.println("You can access the application using SSL on https://localhost:8443");
 			System.out.println();
 		}
 
@@ -83,11 +94,14 @@ public class Start {
 		server.addEventListener(mBeanContainer);
 		server.addBean(mBeanContainer);
 
-		try {
+		try
+		{
 			server.start();
 			server.join();
-		} catch (Exception e) {
-
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 			System.exit(100);
 		}
 	}

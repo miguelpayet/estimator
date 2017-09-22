@@ -1,4 +1,6 @@
+src/test/jetty/
 *.bmp
+resources-prod/
 favicon.ico
 .DS_Store
 *.class
