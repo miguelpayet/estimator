@@ -44,7 +44,6 @@ public class PaginaBaseEstimacion extends PaginaBaseEstimador {
 		super.agregarTitulo((getEstimacion().getNumero() == null ? "" : getEstimacion().getNumero() + " - ") + titulo);
 	}
 
-
 	public Estimacion getEstimacion() {
 		return estimacion;
 	}

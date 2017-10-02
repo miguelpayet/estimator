@@ -49,11 +49,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	 */
 	public PaginaEstimacion(final PageParameters unosParametros) {
 		super(unosParametros);
-		// conjunto de elementos que hay que refrescar cada vez que se calcule
 		targets = new HashSet<>();
-		// listar la estimación del parametro
 		leerEstimacion(unosParametros);
-		// si la estimación del parámetro no existe (o no había estimación en el parámetro) crear una nueva estimación
 		if (getEstimacion() == null) {
 			nuevaEstimacion();
 		}

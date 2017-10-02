@@ -16,19 +16,16 @@ public class EstimacionFactory {
 
 	public static Estimacion crear() {
 		Estimacion est = new Estimacion();
-		// tareas
 		DaoTarea dt = DaoFactory.getInstance().crearDao(Tarea.class, DaoTarea.class);
 		List<Tarea> tareas = dt.listar();
 		tareas.forEach(est::addTareaCronograma);
-		// factores
 		DaoFactorTecnico df = DaoFactory.getInstance().crearDao(FactorTecnico.class, DaoFactorTecnico.class);
-		for (Factor f : df.listar()) {
+		for (Factor f : df.listarFactores()) {
 			FactorEstimacion fet = new FactorEstimacion();
 			fet.setFactor(f);
 			fet.setValor(f.getMinimo());
 			est.addFactorEstimacion(fet);
 		}
-		// usuario
 		DaoUsuario du = DaoFactory.getInstance().crearDao(Usuario.class, DaoUsuario.class);
 		Usuario u = du.getUsuarioActual();
 		if (u == null) {

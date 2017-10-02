@@ -49,12 +49,11 @@ public class DaoParametro extends DaoPK<Parametro, ParametroPK> {
 	 * @param unParametro -> parámetro cuya lista se busca
 	 * @return lista de valores del parámetro
 	 */
-	@SuppressWarnings("unchecked")
 	private List<String> getLista(String unParametro) {
 		CriteriaBuilder cb = getSession().getCriteriaBuilder();
 		CriteriaQuery<Parametro> q = cb.createQuery(Parametro.class);
 		Root<Parametro> c = q.from(Parametro.class);
-		cb.equal(c.get("tipo"), unParametro);
+		q.where(cb.equal(c.get("tipo"), unParametro));
 		q.orderBy(cb.asc(c.get("codigo")));
 		TypedQuery<Parametro> query = getSession().createQuery(q);
 		List<Parametro> params = query.getResultList();

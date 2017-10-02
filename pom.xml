@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.com.pps</groupId>
 	<artifactId>estimator</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>quickstart</name>
-	<description></description>
+	<name>estimator</name>
+	<description>estimador funcional</description>
 
 	<properties>
-		<wicket.version>8.0.0-M7</wicket.version>
-		<jetty9.version>9.4.6.v20170531</jetty9.version>
-		<log4j.version>2.8.2</log4j.version>
-		<junit.version>4.12</junit.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<wtp.version>none</wtp.version>
-		<wicketstuff.version>8.0.0-M6</wicketstuff.version>
 		<hibernate.version>5.2.10.Final</hibernate.version>
+		<jetty9.version>9.4.6.v20170531</jetty9.version>
+		<junit.version>4.12</junit.version>
+		<log4j.version>2.8.2</log4j.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<wicket.version>8.0.0-M7</wicket.version>
+		<wicketstuff.version>8.0.0-M6</wicketstuff.version>
 	</properties>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>pe.trazos</groupId>
 			<artifactId>login</artifactId>
@@ -37,9 +36,9 @@
 			<version>${wicketstuff.version}</version>
 		</dependency>
 		<dependency>
-    		<groupId>mysql</groupId>
-    		<artifactId>mysql-connector-java</artifactId>
-    		<version>8.0.7-dmr</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.7-dmr</version>
 		</dependency>
 		<!-- c3p0 -->
 		<dependency>
@@ -47,7 +46,7 @@
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
+
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
