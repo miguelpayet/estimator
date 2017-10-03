@@ -86,6 +86,13 @@
 		</dependency>
 	</dependencies>
 
+	<scm>
+		<connection>scm:git:git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</connection>
+		<developerConnection></developerConnection>
+		<tag>HEAD</tag>
+		<url>git://127.0.0.1/c/Users/mpayet/Documents/Java/estimator</url>
+	</scm>
+
 	<build>
 		<resources>
 			<resource>
@@ -143,6 +150,32 @@
 							<directory>src/main/resources</directory>
 						</resource>
 					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>
+								create
+							</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<buildNumberPropertiesFileLocation>${basedir}/src/main/resources/buildNumber.properties
+					</buildNumberPropertiesFileLocation>
+					<revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
+					<doCheck>true</doCheck>
+					<doUpdate>false</doUpdate>
+					<format>${project.version}.{0,number}</format>
+					<items>
+						<item>buildNumber</item>
+					</items>
 				</configuration>
 			</plugin>
 		</plugins>
