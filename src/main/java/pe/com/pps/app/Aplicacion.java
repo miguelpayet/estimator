@@ -7,7 +7,6 @@ import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSessio
 import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.IRequestLogger;
-import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
 import org.apache.wicket.settings.RequestLoggerSettings;
 import pe.com.pps.auth.PaginaEstimacionAuthorizationStrategy;
@@ -18,15 +17,10 @@ import pe.com.pps.ui.login.PaginaLoginEstimator;
 import pe.com.pps.ui.login.PaginaNuevoPasswordEstimator;
 import pe.com.pps.ui.login.PaginaSolicitudNuevoPasswordEstimator;
 import pe.com.pps.ui.vista.PaginaVistaEstimacion;
-import pe.trazos.dao.ExcepcionRequestListener;
-import pe.trazos.dao.HibernateRequestListener;
 import pe.trazos.login.app.LoginWebApplication;
 import pe.trazos.login.auth.LoginRoleCheckingStrategy;
 import pe.trazos.login.auth.SesionShiro;
 import pe.trazos.login.visita.RequestLoggerTabla;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class Aplicacion extends LoginWebApplication {
 
@@ -89,19 +83,16 @@ public class Aplicacion extends LoginWebApplication {
 	@Override
 	public void init() {
 		super.init();
-		getMarkupSettings().setStripWicketTags(false);
-		initRequestListeners();
 		initRequestLogger();
 		Bootstrap.install(this); // wicket bootstrap
-		initAuth(); // estrategias de autorización
 		initPaginas(); // montar páginas
 	}
 
-	private void initAuth() {
-		CompoundAuthorizationStrategy cps = new CompoundAuthorizationStrategy();
-		cps.add(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
-		cps.add(new PaginaEstimacionAuthorizationStrategy());
-		getSecuritySettings().setAuthorizationStrategy(cps);
+	@Override
+	protected void initListeners() {
+		super.initListeners();
+		getRequestCycleListeners().add(new LocaleRequestListener());// locale request cycle listener
+		getRequestCycleListeners().add(new PageRequestHandlerTracker()); // page request handler tracker
 	}
 
 	private void initPaginas() {
@@ -113,20 +104,17 @@ public class Aplicacion extends LoginWebApplication {
 		mountPage("/nuevopassword", PaginaNuevoPasswordEstimator.class);
 	}
 
-	private void initRequestListeners() {
-		Collection<IRequestCycleListener> listeners = new ArrayList<>();
-		listeners.add(new ExcepcionRequestListener());
-		listeners.add(new HibernateRequestListener());      // hibernate request cycle listener
-		listeners.add(new LocaleRequestListener());// locale request cycle listener
-		listeners.add(new PageRequestHandlerTracker()); // page request handler tracker
-		for (IRequestCycleListener l : listeners) {
-			getRequestCycleListeners().add(l);
-		}
-	}
-
 	private void initRequestLogger() {
 		RequestLoggerSettings reqLogger = Application.get().getRequestLoggerSettings();
 		reqLogger.setRequestLoggerEnabled(true);
+	}
+
+	@Override
+	protected void initSeguridad() {
+		CompoundAuthorizationStrategy cps = new CompoundAuthorizationStrategy();
+		cps.add(new RoleAuthorizationStrategy(new LoginRoleCheckingStrategy()));
+		cps.add(new PaginaEstimacionAuthorizationStrategy());
+		getSecuritySettings().setAuthorizationStrategy(cps);
 	}
 
 	@Override

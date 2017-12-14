@@ -44,11 +44,11 @@ public abstract class ProviderTabla<T extends Entidad<?>, V extends FiltroTabla>
 	}
 
 	private QueryFiltrado<T> newQuery() {
-		Dao dao = DaoFactory.getInstance().crearDao(claseDominio);
+		Dao<T> dao = DaoFactory.getInstance().crearDao(claseDominio);
 		return new QueryFiltrado<T>(dao );
 	}
 
-	public abstract void ordenarQuery(QueryFiltrado unQuery);
+	public abstract void ordenarQuery(QueryFiltrado<T> unQuery);
 
 	public void setClaseDominio(Class<T> unaClase) {
 		claseDominio = unaClase;
@@ -59,7 +59,7 @@ public abstract class ProviderTabla<T extends Entidad<?>, V extends FiltroTabla>
 	}
 
 	public long size() {
-		QueryFiltrado query = newQuery();
+		QueryFiltrado<T> query = newQuery();
 		return query.contarFilas();
 	}
 

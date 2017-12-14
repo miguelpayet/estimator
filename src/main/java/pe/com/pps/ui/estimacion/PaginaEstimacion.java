@@ -34,7 +34,8 @@ import java.util.Set;
 @AuthorizeInstantiation("usuario")
 public class PaginaEstimacion extends PaginaBaseEstimacion {
 
-	private Form campos;
+	private static final long serialVersionUID = 1L;
+	private Form<Estimacion> campos;
 	private MiFeedbackPanel feedback;
 	private Set<Component> targets;
 
@@ -66,13 +67,13 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	}
 
 	private void agregarCampos() {
-		campos = new Form("campos");
+		campos = new Form<>("campos");
 		add(campos);
-		TextField numero = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "numero"));
+		TextField<String> numero = new TextField<>("numero", new PropertyModel<>(getEstimacion(), "numero"));
 		numero.setOutputMarkupId(true);
 		numero.setRequired(true);
 		campos.add(numero);
-		TextField fase = new TextField<>("fase", new PropertyModel<>(getEstimacion(), "fase"));
+		TextField<String> fase = new TextField<>("fase", new PropertyModel<>(getEstimacion(), "fase"));
 		fase.setOutputMarkupId(true);
 		fase.setRequired(true);
 		campos.add(fase);
@@ -106,6 +107,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 
 	private void agregarGridCostos() {
 		EditableGrid<CostoAdicional, String> grid = new EditableGrid<CostoAdicional, String>("grid-costos", columnasCostos(), new ProviderCostoAdicional(getEstimacion()), 10, CostoAdicional.class) {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onAdd(AjaxRequestTarget target, CostoAdicional newRow) {
@@ -141,6 +144,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 
 	private void agregarLinks() {
 		SubmitLink linkGrabar = new SubmitLink("grabar", campos) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSubmit() {
 				try {
@@ -153,6 +158,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		};
 		add(linkGrabar);
 		AjaxSubmitLink linkImprimir = new AjaxSubmitLink("imprimir", campos) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
 				PageParameters p = new PageParameters();
@@ -178,6 +185,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 	private List<AbstractEditablePropertyColumn<CostoAdicional, String>> columnasCostos() {
 		List<AbstractEditablePropertyColumn<CostoAdicional, String>> columns = new ArrayList<>();
 		RequiredEditableTextFieldColumn<CostoAdicional, String> descripcion = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Descripción"), "descripcion") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
 				super.addBehaviors(editorComponent);
@@ -186,6 +195,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		};
 		columns.add(descripcion);
 		AbstractEditablePropertyColumn<CostoAdicional, String> moneda = new AbstractEditablePropertyColumn<CostoAdicional, String>(new Model<>("Moneda"), "moneda") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public EditableCellPanel getEditableCellPanel(String componentId) {
 				return new EditableRequiredDropDownCellPanel<>(componentId, this, Moneda.getLista());
@@ -193,6 +204,8 @@ public class PaginaEstimacion extends PaginaBaseEstimacion {
 		};
 		columns.add(moneda);
 		RequiredEditableTextFieldColumn<CostoAdicional, String> costo = new RequiredEditableTextFieldColumn<CostoAdicional, String>(new Model<>("Costo"), "costo") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void addBehaviors(final FormComponent<CostoAdicional> editorComponent) {
 				super.addBehaviors(editorComponent);

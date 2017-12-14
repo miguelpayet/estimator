@@ -11,7 +11,7 @@ public class Comparador {
 
 	private static final Logger log = LogManager.getLogger(Comparador.class);
 
-	public static <T> boolean comparar(Class unaClase, T unObjeto, T otroObjeto, String[] unosAtributos) {
+	public static <T> boolean comparar(Class<T> unaClase, T unObjeto, T otroObjeto, String[] unosAtributos) {
 		boolean iguales = true;
 		for (String atri : unosAtributos) {
 			try {

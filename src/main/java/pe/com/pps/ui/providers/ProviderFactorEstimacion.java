@@ -10,8 +10,9 @@ import pe.com.pps.model.Factorama;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class ProviderFactorEstimacion extends SortableDataProvider {
+public abstract class ProviderFactorEstimacion extends SortableDataProvider<FactorEstimacion, String> {
 
+	private static final long serialVersionUID = 1L;
 	private List<FactorEstimacion> factores;
 
 	public ProviderFactorEstimacion(Estimacion unaEstimacion) {
@@ -31,13 +32,13 @@ public abstract class ProviderFactorEstimacion extends SortableDataProvider {
 	public abstract void initFactores(Factorama f);
 
 	@Override
-	public Iterator iterator(long first, long count) {
+	public Iterator<FactorEstimacion> iterator(long first, long count) {
 		return factores.iterator();
 	}
 
 	@Override
-	public IModel model(Object object) {
-		return new Model<>((FactorEstimacion) object);
+	public IModel<FactorEstimacion> model(FactorEstimacion object) {
+		return new Model<>(object);
 	}
 
 	public void setFactores(List<FactorEstimacion> factores) {

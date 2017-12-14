@@ -18,10 +18,12 @@ import java.util.List;
 
 class PanelCronograma extends PanelBaseCronograma {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LogManager.getLogger(PanelCronograma.class);
 
 	private FeedbackPanel feedback;
-	private Form formCronograma;
+	private Form<Estimacion> formCronograma;
 
 	PanelCronograma(String id, IModel<Estimacion> unModelo) {
 		super(id, unModelo);
@@ -36,6 +38,8 @@ class PanelCronograma extends PanelBaseCronograma {
 
 	private void agregarAccionCalcular() {
 		formCronograma.add(new AjaxSubmitLink("actualizar-cronograma", formCronograma) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
 				try {
@@ -113,7 +117,7 @@ class PanelCronograma extends PanelBaseCronograma {
 			Tarea t = unaTareaCronograma.getTarea();
 			// obtener la clase de panel que usa la tarea y construirlo
 			Class<? extends PanelFilaCronograma> panelFila = t.getClasePanel();
-			Constructor ctor = panelFila.getConstructor(String.class, IModel.class);
+			Constructor<? extends PanelFilaCronograma> ctor = panelFila.getConstructor(String.class, IModel.class);
 			PanelFilaCronograma panel = (PanelFilaCronograma) ctor.newInstance(unRepetidor.newChildId(), new Model<>(unaTareaCronograma));
 			// añadir el estilo css de la fila
 			panel.add(new AttributeAppender("class", t.getClaseCss()));
@@ -126,7 +130,7 @@ class PanelCronograma extends PanelBaseCronograma {
 	}
 
 	private void crearFormCronograma() {
-		formCronograma = new Form<>("form-cronograma", new Model<>(getEstimacion()));
+		formCronograma = new Form<Estimacion>("form-cronograma", new Model<>(getEstimacion()));
 		add(formCronograma);
 	}
 

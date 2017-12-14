@@ -12,9 +12,9 @@ import pe.com.pps.model.Estimacion;
 import pe.com.pps.model.EstimacionFactory;
 import pe.trazos.dao.factory.DaoFactory;
 
-import java.util.Set;
-
 public class PaginaBaseEstimacion extends PaginaBaseEstimador {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LogManager.getLogger(PaginaBaseEstimacion.class);
 

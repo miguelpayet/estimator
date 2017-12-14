@@ -25,7 +25,7 @@ public class PanelFactor extends FormComponentPanel<FactorEstimacion> {
 	}
 
 	private List<Integer> listar(FactorEstimacion unFactor) {
-		ArrayList<Integer> lista = new ArrayList();
+		ArrayList<Integer> lista = new ArrayList<>();
 		for (int i = unFactor.getMinimo(); i <= unFactor.getMaximo(); i++) {
 			lista.add(i);
 		}
